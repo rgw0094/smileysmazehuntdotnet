@@ -1,0 +1,12 @@
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Content\Graphics\sprites.xnb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Content\Graphics\Tiles\animations.xnb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Content\Graphics\Tiles\enemies.xnb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Content\Graphics\Tiles\itemlayer1.xnb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Content\Graphics\Tiles\itemlayer2.xnb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Content\Graphics\Tiles\mainlayer.xnb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Lib.dll
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\bin\x86\Debug\Smiley.Lib.pdb
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\obj\x86\Debug\Smiley.Lib.dll
+C:\Files\Programming\Smiley\SmileysMazeHunt\Smiley.Lib\obj\x86\Debug\Smiley.Lib.pdb
