@@ -10,6 +10,7 @@ namespace Smiley.Lib.Data
     /// </summary>
     public class EnemyData
     {
+        public string Name { get; set; }
         public int SpriteRow { get; set; }
         public int SpriteColumn { get; set; }
         public int EnemyType { get; set; }
