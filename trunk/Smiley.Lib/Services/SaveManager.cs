@@ -116,6 +116,95 @@ namespace Smiley.Lib.Services
             using (BitStream output = new BitStream())
             {
                 output.Open(file.Name, BitStreamMode.Write);
+
+                output.WriteBits(file.TimePlayed.Ticks, 64);
+
+                //Save abilties
+                foreach (Ability ability in Enum.GetValues(typeof(Ability)))
+                {
+                    output.WriteBit(file.HasAbility[ability]);
+                }
+
+                //Save keys
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        output.WriteByte(file.NumKeys[i, j]);
+                    }
+                }
+
+                //Save gems
+                foreach (Level level in Enum.GetValues(typeof(Level)))
+                {
+                    foreach (Gem gem in Enum.GetValues(typeof(Gem)))
+                    {
+                        output.WriteByte(file.NumGems[level][gem]);
+                    }
+                }
+
+                //Save money
+                output.WriteByte(file.Money);
+
+                //Save upgrades
+                foreach (Upgrade upgrade in Enum.GetValues(typeof(Upgrade)))
+                {
+                    output.WriteByte(file.NumUpgrades[upgrade]);
+                }
+
+                //Save which bosses have been slain
+                foreach (Boss boss in Enum.GetValues(typeof(Boss)))
+                {
+                    output.WriteBit(file.HasKilledBoss[boss]);
+                }
+
+                //Save player zone and location
+                output.WriteByte((int)file.Level);
+                output.WriteByte(file.GridX);
+                output.WriteByte(file.GridY);
+
+                //Health and mana
+                output.WriteByte((int)file.PlayerHealth * 4);
+                output.WriteByte((int)file.PlayerMana);
+
+                //Load changed shit
+                file.SaveChanges(output);
+
+                //Load Stats
+                output.WriteByte(file.NumTongueLicks);
+                output.WriteByte(file.NumEnemiesKilled);
+                output.WriteBits(file.PixelsTraversed, 24);
+
+                //Tutorial Man
+                output.WriteBit(file.AdviceManEncounterCompleted);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    //TODO:
+                    //smh->player->gui->setAbilityInSlot(input.ReadBits(5), i);
+                }
+
+                foreach (Level level in Enum.GetValues(typeof(Level)))
+                {
+                    output.WriteBit(file.HasVisitedLevel[level]);
+                }
+
+                output.WriteByte((int)file.Difficulty);
+
+                //Exploration data
+                foreach (Level level in Enum.GetValues(typeof(Level)))
+                {
+                    for (int j = 0; j < 256; j++)
+                    {
+                        for (int k = 0; k < 256; k++)
+                        {
+                            output.WriteBit(file.Explored[level][j, k]);
+                        }
+                    }
+                }
+
+                file.TimePlayed.Add(DateTime.Now.TimeOfDay.Subtract(file.TimeFileLoaded));
+                output.WriteBits(file.TimePlayed.Ticks, 64);
             }
         }
 
@@ -229,6 +318,7 @@ namespace Smiley.Lib.Services
             }
 
             file.TimeFileLoaded = DateTime.Now.TimeOfDay;
+            
             return file;
         }
 

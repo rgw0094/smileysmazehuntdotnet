@@ -140,8 +140,10 @@ namespace Smiley.Lib.Utils
         /// Writes a byte to the output stream. The byte should be passed in as an integer from 0-255.
         /// </summary>
         /// <param name="b"></param>
-        public void WriteByte(byte b)
+        public void WriteByte(int b)
         {
+            if (b > byte.MaxValue) throw new Exception("Value too large to write as a byte!");
+
             WriteBits(b, 8);
         }
 
@@ -159,7 +161,7 @@ namespace Smiley.Lib.Utils
         /// </summary>
         /// <param name="data"></param>
         /// <param name="numBits"></param>
-        public void WriteBits(int data, int numBits)
+        public void WriteBits(long data, int numBits)
         {
             if (_mode != BitStreamMode.Write) throw new Exception("Attempting to write to a file that is opened in read mode!");
 
