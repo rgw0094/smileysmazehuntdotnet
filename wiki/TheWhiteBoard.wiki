@@ -1,0 +1,12 @@
+#summary A list of things to do, as well as accomplishments.
+
+= Erik's to-do list =
+  * Input enemy data into source code
+  * String reader for GameText.dat (or input that as source as well)
+
+= Rob's to-do list =
+
+= Accomplished =
+
+||*Initials*||*Date*||*What was done*||
+|| || || ||
