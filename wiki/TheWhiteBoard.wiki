@@ -5,11 +5,11 @@
   * String reader for GameText.dat (or input that as source as well)
 
 = Rob's to-do list =
-* Sprite Class
-* Animation Class
-* TileSet Class
-* Figure out how to do fonts
-* Convert Smiley ResourceScript to code (THIS WILL SUCK BALLS)
+  * Sprite Class
+  * Animation Class
+  * TileSet Class
+  * Figure out how to do fonts
+  * Convert Smiley ResourceScript to code (THIS WILL SUCK BALLS)
 
 = Accomplished =
 
