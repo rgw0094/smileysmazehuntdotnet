@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
+using System.IO;
+using Smiley.Lib.Utils;
 
 namespace Smiley.Lib.Data
 {
@@ -10,7 +12,7 @@ namespace Smiley.Lib.Data
     {
         #region Private Variables
 
-        private List<Change> _changes = new List<Change>();
+        private List<Change> _changes;
 
         #endregion
 
@@ -130,6 +132,18 @@ namespace Smiley.Lib.Data
             foreach (Boss boss in Enum.GetValues(typeof(Boss)))
             {
                 HasKilledBoss[boss] = false;
+            }
+        }
+
+        public void SaveChanges(BitStream stream)
+        {
+            stream.WriteBits(_changes.Count, 16);
+
+            foreach (Change change in _changes)
+            {
+                stream.WriteByte((int)change.Level);
+                stream.WriteByte(change.X);
+                stream.WriteByte(change.Y);
             }
         }
 
