@@ -7,10 +7,10 @@ namespace Smiley.Lib.Enums
 {
     public enum Difficulty
     {
-        VeryEasy,
-        Easy,
-        Medium,
-        Hard,
-        VeryHard
+        VeryEasy = 0,
+        Easy = 1,
+        Medium = 2,
+        Hard = 3,
+        VeryHard = 4
     }
 }
