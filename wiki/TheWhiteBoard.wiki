@@ -2,8 +2,7 @@
 
 = Erik's to-do list =
   * Input enemy data into source code
-  * String reader for GameText.dat (or input that as source as well)
-
+  * Input GameText into source code
 = Rob's to-do list =
   * Sprite Class
   * Animation Class
