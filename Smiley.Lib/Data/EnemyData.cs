@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Smiley.Lib.Enums;
 
 namespace Smiley.Lib.Data
 {
@@ -13,13 +14,12 @@ namespace Smiley.Lib.Data
         public string Name { get; set; }
         public int SpriteRow { get; set; }
         public int SpriteColumn { get; set; }
-        public int EnemyType { get; set; }
-        public int WanderType { get; set; }
+        public EnemyType enemyType { get; set; }
+        public WanderType wanderType { get; set; }
         public int HP { get; set; }
         public int Speed { get; set; }
         public int Radius { get; set; }
         public int Damage { get; set; }
-        public int RangedType { get; set; }
         public bool CanTraverseLand { get; set; }
         public bool CanTraverseShallowWater { get; set; }
         public bool CanTraverseDeepWater { get; set; }
@@ -38,6 +38,7 @@ namespace Smiley.Lib.Data
         public int NumFrames { get; set; }
         public bool HasOneGraphic { get; set; }
         public bool Chases { get; set; }
+        public bool HasRangedAttack { get; set; }
         public RangedAttackData RangedAttack { get; set; }        
     }
 
@@ -47,6 +48,7 @@ namespace Smiley.Lib.Data
         public int Delay { get; set; }
         public int ProjectileSpeed { get; set; }
         public double ProjectileDamage { get; set; }
-        public double ProjectileHoming { get; set; }
+        public bool ProjectileHoming { get; set; }
+        public ProjectileType RangedType { get; set; }
     }
 }
