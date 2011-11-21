@@ -1,8 +1,8 @@
 #summary A list of things to do, as well as accomplishments.
 
 = Erik's to-do list =
-  * Input enemy data into source code
   * Input GameText into source code
+
 = Rob's to-do list =
   * Sprite Class
   * Animation Class
@@ -13,4 +13,5 @@
 = Accomplished =
 
 ||*Initials*||*Date*||*What was done*||
+||ETI||11/20/11||Enemy data inputted into source||
 ||RGW||11/20/11||SaveManager||
