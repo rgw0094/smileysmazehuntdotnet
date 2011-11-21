@@ -21,7 +21,7 @@ namespace Smiley.Lib.Framework
         /// <summary>
         /// Constructs a new Animation.
         /// </summary>
-        public Animation(SmileyTexture texture, Rectangle? rect, int frames, double fps, bool reverse, LoopMode loop, Vector2 hotSpot)
+        public Animation(SmileyTexture texture, Rectangle? rect, int frames, double fps, Vector2? hotSpot = null, bool reverse = false, LoopMode loop = LoopMode.Loop)
         {
             Rect = rect;
             Frames = frames;
@@ -92,7 +92,7 @@ namespace Smiley.Lib.Framework
         /// <summary>
         /// Center of a frame in the animation.
         /// </summary>
-        public Vector2 HotSpot
+        public Vector2? HotSpot
         {
             get;
             private set;

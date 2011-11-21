@@ -35,6 +35,10 @@ namespace Smiley.Lib.Enums
         [Description("WorldMap")]
         WorldMap,
         [Description("WorldMapBorders")]
-        WorldMapBorders
+        WorldMapBorders,
+        [Description("UserInterface")]
+        UserInterface,
+        [Description("titlescreen")]
+        TitleScreen
     }
 }
