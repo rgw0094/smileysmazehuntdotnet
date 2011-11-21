@@ -1956,11 +1956,575 @@ namespace Smiley.Lib.Data
                 }                
             };
 
+            // Pumpkin, charger
+            enemies[78] = new EnemyData
+            {
+                Name = "Mr. Pumpking",
+                SpriteColumn = 0,
+                SpriteRow = 12,
+                enemyType = EnemyType.Charger,
+                wanderType = WanderType.WanderRandomly,
+                HP = 230,
+                Damage = 125,
+                Radius = 28,
+                Speed = 125,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = true
+            };
+
+            // Pumpkin, ranged, moves horizontal
+            enemies[79] = new EnemyData
+            {
+                SpriteColumn = 0,
+                SpriteRow = 12,
+                enemyType = EnemyType.Ranged,
+                wanderType = WanderType.WanderLeftRight,
+                HP = 200,
+                Damage = 100,
+                Radius = 28,
+                Speed = 130,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = true,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 320,
+                    Delay = 1000,
+                    ProjectileSpeed = 400,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Fireball,
+                    ProjectileHoming = false
+                }   
+            };
+
+            // Pumpkin, ranged, moves vertical
+            enemies[80] = new EnemyData
+            {
+                SpriteColumn = 0,
+                SpriteRow = 12,
+                enemyType = EnemyType.Ranged,
+                wanderType = WanderType.WanderUpDown,
+                HP = 200,
+                Damage = 100,
+                Radius = 28,
+                Speed = 130,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = true,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 320,
+                    Delay = 1000,
+                    ProjectileSpeed = 400,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Fireball,
+                    ProjectileHoming = false
+                }
+            };
+
+            // Pumpkin, hopping
+            enemies[81] = new EnemyData
+            {
+                SpriteColumn = 0,
+                SpriteRow = 12,
+                enemyType = EnemyType.Hopper,
+                wanderType = WanderType.WanderRandomly,
+                HP = 180,
+                Damage = 50,
+                Radius = 28,
+                Speed = 200,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseSlime = true,
+                Chases = true
+            };
+
+            // Pumpkin, flail
+            enemies[82] = new EnemyData
+            {
+                SpriteColumn = 0,
+                SpriteRow = 12,
+                enemyType = EnemyType.Flailer,
+                wanderType = WanderType.WanderRandomly,
+                HP = 450,
+                Damage = 125,
+                Radius = 28,
+                Speed = 125,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseSlime = true,
+                CanTraverseDeepWater = true,
+                Chases = true
+            };
+
+            // Brown desert burrower
+            enemies[83] = new EnemyData
+            {
+                Name = "Rockhorn",
+                SpriteColumn = 4,
+                SpriteRow = 12,
+                enemyType = EnemyType.Burrower,
+                wanderType = WanderType.WanderStandStill,
+                HP = 75,
+                Damage = 50,
+                Radius = 28,
+                Speed = 0,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Variable1 = 1,//Burrowing animation number
+                Variable2 = 250,//Distance at which it burrows
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 525,//Range in old Smiley was 600
+                    Delay = 3000,
+                    ProjectileSpeed = 350,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Orange,
+                    ProjectileHoming = false
+                }
+            };
+
+            // Alphanoid
+            enemies[84] = new EnemyData
+            {
+                Name = "Alphanoid",
+                SpriteColumn = 0,
+                SpriteRow = 14,
+                enemyType = EnemyType.Botonoid,
+                wanderType = WanderType.WanderRandomly,
+                HP = 120,
+                Damage = 25,
+                Radius = 26,
+                Speed = 150,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseSlime = true,
+                Chases = false,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 700,
+                    Delay = 6000,
+                    ProjectileSpeed = 500,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Boomerang,
+                    ProjectileHoming = false
+                }
+            };
+
+            // Barvinoid
+            enemies[85] = new EnemyData
+            {
+                Name = "Barvinoid",
+                SpriteColumn = 4,
+                SpriteRow = 14,
+                enemyType = EnemyType.Botonoid,
+                wanderType = WanderType.WanderRandomly,
+                HP = 160,
+                Damage = 25,
+                Radius = 23,
+                Speed = 100,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = false,
+                ImmuneToLightning = true,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 700,
+                    Delay = 6000,
+                    ProjectileSpeed = 500,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Boomerang,
+                    ProjectileHoming = false
+                }
+            };
+
+            // Herbanoid
+            enemies[86] = new EnemyData
+            {
+                Name = "Herbanoid",
+                SpriteColumn = 8,
+                SpriteRow = 14,
+                enemyType = EnemyType.Botonoid,
+                wanderType = WanderType.WanderRandomly,
+                HP = 100,
+                Damage = 25,
+                Radius = 21,
+                Speed = 180,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = false,
+                ImmuneToLightning = true,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 700,
+                    Delay = 6000,
+                    ProjectileSpeed = 500,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Boomerang,
+                    ProjectileHoming = false
+                }
+            };
+
+            // Blue alien guy
+            enemies[87] = new EnemyData
+            {
+                Name = "Blue Alien Guy",
+                SpriteColumn = 8,
+                SpriteRow = 13,
+                NumFrames = 2,
+                enemyType = EnemyType.Hopper,
+                wanderType = WanderType.WanderRandomly,
+                HP = 50,
+                Damage = 25,
+                Radius = 28,
+                Speed = 150,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = true
+            };
+
+            // Green snake
+            enemies[88] = new EnemyData
+            {
+                Name = "Origsin",
+                SpriteColumn = 8,
+                SpriteRow = 2,
+                NumFrames = 2,
+                enemyType = EnemyType.Charger,
+                wanderType = WanderType.WanderRandomly,
+                HP = 80,
+                Damage = 50,
+                Radius = 28,
+                Speed = 125,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = true
+            };
+
+            // Beaker
+            enemies[89] = new EnemyData
+            {
+                Name = "Beaker",
+                SpriteColumn = 0,
+                SpriteRow = 13,
+                NumFrames = 2,
+                enemyType = EnemyType.BasicEnemy,
+                wanderType = WanderType.WanderRandomly,
+                HP = 210,
+                Damage = 50,
+                Radius = 28,
+                Speed = 80,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = false
+            };
+
+            // Cone
+            enemies[90] = new EnemyData
+            {
+                Name = "Cone",
+                SpriteColumn = 8,
+                SpriteRow = 12,
+                NumFrames = 2,
+                enemyType = EnemyType.DiagoShooter,
+                wanderType = WanderType.WanderRandomly,
+                HP = 130,
+                Damage = 50,
+                Radius = 28,
+                Speed = 120,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = false,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 500,
+                    Delay = 1500,
+                    ProjectileSpeed = 400,
+                    ProjectileDamage = 25,
+                    RangedType = ProjectileType.Orange,
+                    ProjectileHoming = false
+                }
+            };
+
+            // Fenwar eye spider
+            enemies[91] = new EnemyData
+            {
+                Name = "Fen-Eye",
+                SpriteColumn = 8,
+                SpriteRow = 3,
+                NumFrames = 2,
+                enemyType = EnemyType.FenwarEyeSpider,
+                wanderType = WanderType.WanderRandomly,
+                HP = 250,
+                Damage = 100,
+                Radius = 28,
+                Speed = 220,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = false,
+                Chases = false,
+                Variable1 = 28,
+                Variable2 = 45,
+                ImmuneToTongue = false
+            };
+
+            // Botonoid spawner 1
+            enemies[92] = new EnemyData
+            {
+                Name = "Botonoid Spawner",
+                SpriteColumn = 12,
+                SpriteRow = 14,
+                HasOneGraphic = true,
+                enemyType = EnemyType.Spawner,
+                wanderType = WanderType.WanderRandomly,
+                HP = 300,
+                Damage = 50,
+                Radius = 28,
+                Speed = 50,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = false,
+                Variable1 = 84,//These variables define which enemy
+                Variable2 = 85,//types spawn, in order of decreasing
+                Variable3 = 86,//frequency
+                ImmuneToLightning = true
+            };
+
+            // Botonoid spawner 2
+            enemies[93] = new EnemyData
+            {
+                SpriteColumn = 12,
+                SpriteRow = 14,
+                HasOneGraphic = true,
+                enemyType = EnemyType.Spawner,
+                wanderType = WanderType.WanderRandomly,
+                HP = 300,
+                Damage = 50,
+                Radius = 28,
+                Speed = 50,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = false,
+                Variable1 = 85,//These variables define which enemy
+                Variable2 = 86,//types spawn, in order of decreasing
+                Variable3 = 84,//frequency
+                ImmuneToLightning = true
+            };
+
+            // Botonoid spawner 3
+            enemies[94] = new EnemyData
+            {
+                SpriteColumn = 12,
+                SpriteRow = 14,
+                HasOneGraphic = true,
+                enemyType = EnemyType.Spawner,
+                wanderType = WanderType.WanderRandomly,
+                HP = 300,
+                Damage = 50,
+                Radius = 28,
+                Speed = 50,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = false,
+                Variable1 = 86,//These variables define which enemy
+                Variable2 = 84,//types spawn, in order of decreasing
+                Variable3 = 85,//frequency
+                ImmuneToLightning = true
+            };
+
+            // Spider
+            enemies[95] = new EnemyData
+            {
+                Name = "Lyster",
+                SpriteColumn = 0,
+                SpriteRow = 9,
+                NumFrames = 2,                
+                enemyType = EnemyType.Charger,
+                wanderType = WanderType.WanderRandomly,
+                HP = 150,
+                Damage = 100,
+                Radius = 25,
+                Speed = 225,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = true,                
+            };
+
+            // Blimp (spawns spiders)
+            enemies[96] = new EnemyData
+            {
+                Name = "Blimp",
+                SpriteColumn = 14,
+                SpriteRow = 0,
+                NumFrames = 2,
+                HasOneGraphic = true,
+                enemyType = EnemyType.Spawner,
+                wanderType = WanderType.WanderRandomly,
+                HP = 300,
+                Damage = 50,
+                Radius = 28,
+                Speed = 50,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = false,
+                Variable1 = 95,//Spawns mostly spiders, with the
+                Variable2 = 95,//occasional green croc
+                Variable3 = 97,
+                ImmuneToFreeze = true,
+                ImmuneToLightning = true
+            };
+
+            // Green croc
+            enemies[97] = new EnemyData
+            {
+                Name = "K. Greene",
+                SpriteColumn = 8,
+                SpriteRow = 10,
+                enemyType = EnemyType.Charger,
+                wanderType = WanderType.WanderRandomly,
+                HP = 250,
+                Damage = 75,
+                Radius = 27,
+                Speed = 130,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = true,
+                ImmuneToFreeze = true
+            };
+
+            // Ent
+            enemies[98] = new EnemyData
+            {
+                Name = "Ent",
+                SpriteColumn = 15,
+                SpriteRow = 0,
+                HasOneGraphic = true,
+                enemyType = EnemyType.AdjacentShooter,
+                wanderType = WanderType.WanderStandStill,
+                HP = 900,
+                Damage = 100,
+                Radius = 28,
+                Speed = 0,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = false,
+                IsInvincible = true,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 700,
+                    Delay = 500,
+                    ProjectileSpeed = 450,
+                    ProjectileDamage = 75,
+                    RangedType = ProjectileType.Orange,
+                    ProjectileHoming = false
+                }
+            };
+
+            //Super beaker            
+            enemies[99] = new EnemyData
+            {
+                Name = "Super Beaker",
+                SpriteColumn = 0,
+                SpriteRow = 15,
+                NumFrames = 2,
+                enemyType = EnemyType.BasicEnemy,
+                wanderType = WanderType.WanderRandomly,
+                HP = 550,
+                Damage = 25,
+                Radius = 28,
+                Speed = 80,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                Chases = false,
+                ImmuneToFreeze = true
+            };
+
+            // Zugzug the goblin
+            enemies[100] = new EnemyData
+            {
+                Name = "Zugzug",
+                SpriteColumn = 8,
+                SpriteRow = 15,
+                NumFrames = 2,
+                enemyType = EnemyType.ClownBalloon,
+                wanderType = WanderType.WanderRandomly,
+                HP = 220,
+                Damage = 50,
+                Radius = 28,
+                Speed = 150,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseSlime = true                
+            };
+
+            // Proennok
+            enemies[101] = new EnemyData
+            {
+                Name = "Proennok",
+                SpriteColumn = 12,
+                SpriteRow = 10,
+                enemyType = EnemyType.Ranged,
+                wanderType = WanderType.WanderRandomly,
+                HP = 290,
+                Damage = 50,
+                Radius = 28,
+                Speed = 80,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseLava = true,
+                Chases = false,
+                ImmuneToFreeze = true,
+                HasRangedAttack = true,
+                RangedAttack = new RangedAttackData
+                {
+                    Range = 300,
+                    Delay = 2000,
+                    ProjectileSpeed = 400,
+                    ProjectileDamage = 50,
+                    RangedType = ProjectileType.Skull,
+                    ProjectileHoming = true
+                }
+            };
+
+            // Batlet Distributor 2
+            enemies[102] = new EnemyData
+            {                
+                SpriteColumn = 0,
+                SpriteRow = 10,
+                NumFrames = 2,
+                enemyType = EnemyType.BatletDistributor,
+                wanderType = WanderType.WanderStandStill,
+                HP = 100,
+                Damage = 50,
+                Radius = 28,
+                Speed = 0,
+                CanTraverseLand = true,
+                CanTraverseShallowWater = true,
+                CanTraverseSlime = true,
+                IsInvincible = true
+            };
+
+
             return enemies;
         }
 
-        #endregion
+        #endregion //Create enemies
 
-        #endregion
+        #endregion //Private Methods
     }
 }
