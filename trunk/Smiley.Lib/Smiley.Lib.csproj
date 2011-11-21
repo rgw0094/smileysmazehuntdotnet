@@ -109,11 +109,14 @@
     <Compile Include="Enums\Gem.cs" />
     <Compile Include="Enums\ItemTile.cs" />
     <Compile Include="Enums\Level.cs" />
+    <Compile Include="Enums\ParticleEnums.cs" />
     <Compile Include="Enums\ProjectileType.cs" />
     <Compile Include="Enums\SaveSlot.cs" />
     <Compile Include="Enums\SmileyTexture.cs" />
     <Compile Include="Enums\Upgrade.cs" />
     <Compile Include="Framework\Animation.cs" />
+    <Compile Include="Framework\ParticleSystem.cs" />
+    <Compile Include="Framework\ParticleSystemManager.cs" />
     <Compile Include="Framework\Sprite.cs" />
     <Compile Include="Framework\TileSet.cs" />
     <Compile Include="Enums\WanderType.cs" />
