@@ -7,7 +7,6 @@ namespace Smiley.Lib.Enums
 {
     public enum ProjectileType
     {
-        NumProjectiles = 7,
         BlueBall = 0,
         Frisbee = 1,
         LightningOrb = 2,
