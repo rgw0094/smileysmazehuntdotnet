@@ -8,18 +8,19 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Smiley.Lib.Data;
 
 namespace Smiley.Lib
 {
     public class SmileyGame : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        SpriteBatch _spriteBatch;
 
         public SmileyGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "Smiley.Content";
         }
 
         /// <summary>
@@ -35,16 +36,10 @@ namespace Smiley.Lib
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            SmileyData.Load(Content);
         }
 
         /// <summary>
@@ -68,7 +63,6 @@ namespace Smiley.Lib
                 this.Exit();
 
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 

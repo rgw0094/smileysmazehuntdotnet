@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace Smiley.Lib.Data
 {
-    public static class Data
+    public static partial class SmileyData
     {
-        #region Constructor
+        #region Private Variables
 
-        static Data()
-        {
-            Abilities = CreateAbilities();
-            Enemies = CreateEnemies();
-            GemsPerArea = GetGemsPerArea();
-        }
+        private static Dictionary<SmileyTexture, Texture2D> _textures = new Dictionary<SmileyTexture, Texture2D>();
+        private static ContentManager _contentMaager;
 
         #endregion
 
@@ -43,6 +41,39 @@ namespace Smiley.Lib.Data
 
         #region Methods
 
+        public static void Load(ContentManager contentManager)
+        {
+            _contentMaager = contentManager;
+            Abilities = CreateAbilities();
+            Enemies = CreateEnemies();
+            GemsPerArea = GetGemsPerArea();
+            //TODO: precache textures
+        }
+
+        public static Texture2D GetTexture(SmileyTexture texture)
+        {
+            if (!_textures.ContainsKey(texture))
+            {
+                PreCacheTextures(texture);
+            }
+            return _textures[texture];
+        }
+
+        public static void PreCacheTextures(params SmileyTexture[] textures)
+        {
+            foreach (SmileyTexture texture in textures)
+            {
+                if (!_textures.ContainsKey(texture))
+                {
+                    _textures[texture] = _contentMaager.Load<Texture2D>(texture.GetDescription());
+                }
+            }
+        }
+
+        public static void UnloadTextures(params SmileyTexture[] textures)
+        {
+        }
+
         public static double GetDifficultyModifier(Difficulty difficulty)
         {
             switch (difficulty)
@@ -64,11 +95,15 @@ namespace Smiley.Lib.Data
 
         #endregion
 
-        #region Private Methods
+        #region GemsPerArea
 
         private static Dictionary<Level, Dictionary<Gem, int>> GetGemsPerArea()
         {
             Dictionary<Level, Dictionary<Gem, int>> gemCount = new Dictionary<Level, Dictionary<Gem, int>>();
+            foreach (Level level in Enum.GetValues(typeof(Level)))
+            {
+                gemCount[level] = new Dictionary<Gem, int>();
+            }
 
             gemCount[Level.FOUNTAIN_AREA][Gem.Small] = 8;
             gemCount[Level.FOUNTAIN_AREA][Gem.Medium] = 1;
@@ -113,7 +148,9 @@ namespace Smiley.Lib.Data
             return gemCount;
         }
 
-        #region CreateAbilities
+        #endregion
+
+        #region Abilities
 
         private static Dictionary<Ability, AbilityData> CreateAbilities()
         {
@@ -223,13 +260,11 @@ namespace Smiley.Lib.Data
 
         #endregion
 
-        #region CreateEnemies
+        #region Enemies
 
         private static Dictionary<int, EnemyData> CreateEnemies()
         {
             Dictionary<int, EnemyData> enemies = new Dictionary<int, EnemyData>();
-
-            
 
             enemies[0] = new EnemyData
             {
@@ -381,7 +416,7 @@ namespace Smiley.Lib.Data
                 Name = "Cactlet",
                 SpriteColumn = 5,
                 SpriteRow = 2,
-                HasOneGraphic = true,                
+                HasOneGraphic = true,
                 enemyType = EnemyType.BasicEnemy,
                 wanderType = WanderType.WanderUpDown,
                 HP = 51,
@@ -429,7 +464,7 @@ namespace Smiley.Lib.Data
             {
                 Name = "Mr. Bigglesworth",
                 SpriteColumn = 8,
-                SpriteRow = 4,                
+                SpriteRow = 4,
                 enemyType = EnemyType.BombGenerator,
                 wanderType = WanderType.WanderLeftRight,
                 HP = 9999,
@@ -456,7 +491,7 @@ namespace Smiley.Lib.Data
                 Radius = 28,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                CanTraverseSlime = true                
+                CanTraverseSlime = true
             };
 
             enemies[11] = new EnemyData
@@ -488,7 +523,7 @@ namespace Smiley.Lib.Data
                 Radius = 33,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                CanTraverseSlime = true                
+                CanTraverseSlime = true
             };
 
             //Sad shooter
@@ -540,12 +575,12 @@ namespace Smiley.Lib.Data
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
                 CanTraverseSlime = true,
-                ImmuneToStun=true
+                ImmuneToStun = true
             };
 
             //Small green tentacle
             enemies[16] = new EnemyData
-            {                
+            {
                 SpriteColumn = 6,
                 SpriteRow = 2,
                 enemyType = EnemyType.Tentacle,
@@ -633,7 +668,7 @@ namespace Smiley.Lib.Data
 
             //Fangy flailer
             enemies[21] = new EnemyData
-            {                
+            {
                 SpriteColumn = 0,
                 SpriteRow = 3,
                 enemyType = EnemyType.Flailer,
@@ -701,7 +736,7 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.Ranged,
                 wanderType = WanderType.WanderRandomly,
                 HP = 85,
-                Damage = 25, 
+                Damage = 25,
                 Radius = 28,
                 Speed = 100,
                 CanTraverseLand = true,
@@ -728,7 +763,7 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.BasicEnemy,
                 wanderType = WanderType.WanderRandomly,
                 HP = 85,
-                Damage = 50, 
+                Damage = 50,
                 Radius = 28,
                 Speed = 100,
                 CanTraverseLand = true,
@@ -744,7 +779,7 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.Charger,
                 wanderType = WanderType.WanderRandomly,
                 HP = 80,
-                Damage = 25, 
+                Damage = 25,
                 Radius = 28,
                 Speed = 100,
                 CanTraverseLand = true,
@@ -760,7 +795,7 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.Flailer,
                 wanderType = WanderType.WanderRandomly,
                 HP = 170,
-                Damage = 75, 
+                Damage = 75,
                 Radius = 28,
                 Speed = 100,
                 CanTraverseLand = true,
@@ -795,7 +830,7 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.Ranged,
                 wanderType = WanderType.WanderRandomly,
                 HP = 200,
-                Damage = 50 ,
+                Damage = 50,
                 Radius = 28,
                 Speed = 130,
                 CanTraverseLand = true,
@@ -1198,7 +1233,7 @@ namespace Smiley.Lib.Data
                 Speed = 125,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                CanTraverseSlime = true,                
+                CanTraverseSlime = true,
             };
 
             //Fake turret
@@ -1221,7 +1256,7 @@ namespace Smiley.Lib.Data
             // Charging squirrel
             enemies[46] = new EnemyData
             {
-                Name="Charging Squirrel",
+                Name = "Charging Squirrel",
                 SpriteColumn = 0,
                 SpriteRow = 8,
                 enemyType = EnemyType.Charger,
@@ -1316,7 +1351,7 @@ namespace Smiley.Lib.Data
             // Hopping eye
             enemies[51] = new EnemyData
             {
-                Name="Hopping Eye",
+                Name = "Hopping Eye",
                 SpriteColumn = 8,
                 SpriteRow = 8,
                 enemyType = EnemyType.Hopper,
@@ -1701,7 +1736,7 @@ namespace Smiley.Lib.Data
                 Speed = 120,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                Chases = true                
+                Chases = true
             };
 
             // Orange ranged
@@ -1743,7 +1778,7 @@ namespace Smiley.Lib.Data
                 Speed = 100,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                Chases = false                
+                Chases = false
             };
 
             // Mummy charger
@@ -1760,7 +1795,7 @@ namespace Smiley.Lib.Data
                 Speed = 130,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                Chases = false  
+                Chases = false
             };
 
             // Friigoth Moorer charger
@@ -1773,12 +1808,12 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.Charger,
                 wanderType = WanderType.WanderRandomly,
                 HP = 300,
-                Damage =  75,
+                Damage = 75,
                 Radius = 28,
                 Speed = 120,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                Chases = true                
+                Chases = true
             };
 
             // Friigoth Moorer ranged
@@ -1820,7 +1855,7 @@ namespace Smiley.Lib.Data
                 CanTraverseLand = true,
                 CanTraverseLava = false,
                 CanTraverseShallowWater = true,
-                Chases = false 
+                Chases = false
             };
 
             // Friigoth Moorer really really fast
@@ -1831,13 +1866,13 @@ namespace Smiley.Lib.Data
                 enemyType = EnemyType.BasicEnemy,
                 wanderType = WanderType.WanderRandomly,
                 HP = 80,
-                Damage = 25, 
+                Damage = 25,
                 Radius = 28,
                 Speed = 500,
                 CanTraverseLand = true,
                 CanTraverseLava = false,
                 CanTraverseShallowWater = true,
-                Chases = false 
+                Chases = false
             };
 
             // Floating red candy which spawns ice cream
@@ -1953,7 +1988,7 @@ namespace Smiley.Lib.Data
                     ProjectileDamage = 50,
                     RangedType = ProjectileType.FigureEight,
                     ProjectileHoming = true
-                }                
+                }
             };
 
             // Pumpkin, charger
@@ -1996,7 +2031,7 @@ namespace Smiley.Lib.Data
                     ProjectileDamage = 50,
                     RangedType = ProjectileType.Fireball,
                     ProjectileHoming = false
-                }   
+                }
             };
 
             // Pumpkin, ranged, moves vertical
@@ -2348,7 +2383,7 @@ namespace Smiley.Lib.Data
                 Name = "Lyster",
                 SpriteColumn = 0,
                 SpriteRow = 9,
-                NumFrames = 2,                
+                NumFrames = 2,
                 enemyType = EnemyType.Charger,
                 wanderType = WanderType.WanderRandomly,
                 HP = 150,
@@ -2358,7 +2393,7 @@ namespace Smiley.Lib.Data
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
                 CanTraverseLava = true,
-                Chases = true,                
+                Chases = true,
             };
 
             // Blimp (spawns spiders)
@@ -2469,7 +2504,7 @@ namespace Smiley.Lib.Data
                 Speed = 150,
                 CanTraverseLand = true,
                 CanTraverseShallowWater = true,
-                CanTraverseSlime = true                
+                CanTraverseSlime = true
             };
 
             // Proennok
@@ -2503,7 +2538,7 @@ namespace Smiley.Lib.Data
 
             // Batlet Distributor 2
             enemies[102] = new EnemyData
-            {                
+            {
                 SpriteColumn = 0,
                 SpriteRow = 10,
                 NumFrames = 2,
@@ -2519,12 +2554,9 @@ namespace Smiley.Lib.Data
                 IsInvincible = true
             };
 
-
             return enemies;
         }
 
-        #endregion //Create enemies
-
-        #endregion //Private Methods
+        #endregion
     }
 }

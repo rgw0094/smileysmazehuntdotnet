@@ -142,6 +142,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Smiley.Content\Smiley.Content.contentproj">
+      <Project>{2A888811-6393-49F2-A0DB-0193F9D0CDE4}</Project>
+      <Name>Smiley.Content</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
     <ProjectReference Include="..\..\Smiley.Lib\Smiley.Lib.csproj">
       <Project>{7B6FC117-2822-4843-A9F8-8BCC45BA0B37}</Project>
       <Name>Smiley.Lib</Name>
