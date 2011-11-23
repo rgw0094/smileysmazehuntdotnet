@@ -10,6 +10,7 @@
   * Convert sprite info to code
   * Convert animation info to code
   * Convert font info to code
+  * Convert texture info to code
 
 = Accomplished =
 
