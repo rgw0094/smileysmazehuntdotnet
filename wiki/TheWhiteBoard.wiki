@@ -8,6 +8,7 @@
   * Animation Class
   * TileSet Class
   * Figure out how to do fonts
+  * Figure out config mechanism (XML????? 3rd party?!??!!?)
   * Convert Smiley ResourceScript to code (THIS WILL SUCK BALLS)
 
 = Accomplished =
