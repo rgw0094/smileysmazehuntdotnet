@@ -13,6 +13,7 @@ namespace Smiley.Lib.Data
         #region Private Variables
 
         private Dictionary<SmileyTexture, Texture2D> _textures = new Dictionary<SmileyTexture, Texture2D>();
+        private Dictionary<SmileyFont, SpriteFont> _fonts = new Dictionary<SmileyFont, SpriteFont>();
         private ContentManager _contentMaager;
 
         #endregion
@@ -25,9 +26,6 @@ namespace Smiley.Lib.Data
             Abilities = CreateAbilities();
             GemsPerArea = GetGemsPerArea();
             CreateEnemies();
-            LoadSprites();
-            LoadAnimations();
-            LoadFonts(contentManager);
 
             //TODO: precache textures
         }
@@ -51,6 +49,15 @@ namespace Smiley.Lib.Data
         #endregion
 
         #region Methods
+
+        public SpriteFont GetFont(SmileyFont font)
+        {
+            if (!_fonts.ContainsKey(font))
+            {
+                _fonts[font] = _contentMaager.Load<SpriteFont>(font.GetDescription());
+            }
+            return _fonts[font];
+        }
 
         public Texture2D GetTexture(SmileyTexture texture)
         {
@@ -269,5 +276,13 @@ namespace Smiley.Lib.Data
         }
 
         #endregion
+    }
+
+    public class AbilityInfo
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int ManaCost { get; set; }
+        public AbilityType Type { get; set; }
     }
 }

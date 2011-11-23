@@ -65,11 +65,11 @@ namespace Smiley.Lib.Framework.UIControls
         public override void Draw()
         {
             if (_isHighlighted)
-                SMH.Graphics.DrawSprite(SMH.Data.Sprite_ButtonBackgroundHighlighted, X, Y);
+                SMH.Graphics.DrawSprite(Sprites.ButtonBackgroundHighlighted, X, Y);
             else
-                SMH.Graphics.DrawSprite(SMH.Data.Sprite_ButtonBackground, X, Y);
+                SMH.Graphics.DrawSprite(Sprites.ButtonBackground, X, Y);
 
-            SMH.Graphics.DrawStringCentered(SMH.Data.Font_Button, Text, X + _collisionRect.Width / 2.0f, Y + 5.0f);
+            SMH.Graphics.DrawStringCentered(SmileyFont.Button, Text, X + _collisionRect.Width / 2f, Y + _collisionRect.Height / 2f);
         }
 
         public override void Update(float dt)

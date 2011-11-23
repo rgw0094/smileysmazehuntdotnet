@@ -77,6 +77,10 @@ namespace Smiley.Lib.Services
             Cursor = new Vector2(mouseState.X, mouseState.Y);
             IsCursorInWindow = SMH.Graphics.IsPointInWindow(Cursor);
             IsMouseDown = mouseState.LeftButton == ButtonState.Pressed;
+
+            if (IsMouseDown)
+            {
+            }
 #endif
 
 #if XBOX

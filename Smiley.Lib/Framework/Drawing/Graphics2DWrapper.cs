@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Smiley.Lib.Framework.Drawing;
+using Smiley.Lib.Data;
 
 namespace Smiley.Lib.Framework.Drawing
 {
@@ -69,9 +70,9 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="text"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void DrawString(SpriteFont font, string text, float x, float y)
+        public void DrawString(SmileyFont font, string text, float x, float y)
         {
-            _spriteBatch.DrawString(font, text, new Vector2(x, y), Color.Black);
+            _spriteBatch.DrawString(SMH.Data.GetFont(font), text, new Vector2(x, y), Color.Black);
         }
 
         /// <summary>
@@ -81,9 +82,9 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="text"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void DrawStringCentered(SpriteFont font, string text, float x, float y)
+        public void DrawStringCentered(SmileyFont font, string text, float x, float y)
         {
-            Vector2 v = font.MeasureString(text);
+            Vector2 v = SMH.Data.GetFont(font).MeasureString(text);
             DrawString(font, text, x - v.X / 2f, y - v.Y / 2f);
         }
 
