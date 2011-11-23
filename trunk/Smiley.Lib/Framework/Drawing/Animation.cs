@@ -16,18 +16,30 @@ namespace Smiley.Lib.Framework.Drawing
 
     public class Animation : GameObject
     {
+        #region Private Variables
+
+        private TileSet _tileSet;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
         /// Constructs a new Animation.
         /// </summary>
-        public Animation(SmileyTexture texture, Rectangle? rect, int frames, double fps, Vector2? hotSpot = null, bool reverse = false, LoopMode loop = LoopMode.Loop)
+        /// <param name="texture"></param>
+        /// <param name="rect"></param>
+        /// <param name="numFrames"></param>
+        /// <param name="fps"></param>
+        /// <param name="hotSpot"></param>
+        /// <param name="reverse"></param>
+        /// <param name="loop"></param>
+        public Animation(SmileyTexture texture, Rectangle rect, int numFrames, double fps, Vector2? hotSpot = null, bool reverse = false, LoopMode loop = LoopMode.Loop)
         {
-            Rect = rect;
-            Frames = frames;
+            _tileSet = new TileSet(texture, numFrames, rect, hotSpot);
+            NumFrames = numFrames;
             FPS = fps;
             Reverse = reverse;
-            HotSpot = hotSpot;
             LoopMode = loop;
         }
 
@@ -36,27 +48,9 @@ namespace Smiley.Lib.Framework.Drawing
         #region Properties
 
         /// <summary>
-        /// Texture for the animation.
-        /// </summary>
-        public SmileyTexture Texture
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Rectangle within the texture to use, or null to use the whole texture.
-        /// </summary>
-        public Rectangle? Rect
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// The number of frames in the animation.
         /// </summary>
-        public int Frames
+        public int NumFrames
         {
             get;
             private set;
@@ -84,15 +78,6 @@ namespace Smiley.Lib.Framework.Drawing
         /// Whether or not to loop the animation.
         /// </summary>
         public LoopMode LoopMode
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Center of a frame in the animation.
-        /// </summary>
-        public Vector2? HotSpot
         {
             get;
             private set;

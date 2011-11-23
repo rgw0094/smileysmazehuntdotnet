@@ -20,6 +20,8 @@ namespace Smiley.Lib.Enums
         ItemLayer1,
         [Description("Graphics\\itemlayer2")]
         ItemLayer2,
+        [Description("Graphics\\loading")]
+        Loading,
         [Description("Graphics\\mainlayer")]
         MainLayer,
         [Description("Graphics\\walkLayer")]
@@ -27,9 +29,13 @@ namespace Smiley.Lib.Enums
         [Description("Graphics\\fountain")]
         Fountain,
         [Description("Graphics\\Cinematic")]
-        Cinematic,
+        OpeningCinematic,
         [Description("Graphics\\psychedelic")]
         Psychedelic,
+        [Description("Graphics\\particles")]
+        Particles,
+        [Description("Graphics\\projectiles")]
+        Projectiles,
         [Description("Graphics\\EndingCinematic")]
         EndingCinematic,
         [Description("Graphics\\WorldMap")]
@@ -39,6 +45,29 @@ namespace Smiley.Lib.Enums
         [Description("Graphics\\UserInterface")]
         UserInterface,
         [Description("Graphics\\titlescreen")]
-        TitleScreen
+        TitleScreen,
+        [Description("Graphics\\grotesque")]
+        Grotesque,
+
+        [Description("Graphics\\bartli")]
+        Bartli,
+        [Description("Graphics\\Barvinoid")]
+        Barvinoid,
+        [Description("Graphics\\brian")]
+        BrianFungus,
+        [Description("Graphics\\calypso")]
+        Calypso,
+        [Description("Graphics\\cornwallis")]
+        Cornwallis,
+        [Description("Graphics\\fireboss")]
+        Fireboss,
+        [Description("Graphics\\garmborn")]
+        Garmborn,
+        [Description("Graphics\\Lovecraft")]
+        Magnitogorsk,
+        [Description("Graphics\\penguin")]
+        PortlyPenguin,
+        [Description("Graphics\\tut")]
+        Tut
     }
 }

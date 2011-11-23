@@ -94,14 +94,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Data\AbilityInfo.cs" />
-    <Compile Include="Data\SmileyData.Animations.cs" />
+    <Compile Include="Data\Animations.cs" />
     <Compile Include="Data\SmileyData.cs" />
-    <Compile Include="Data\EnemyInfo.cs" />
     <Compile Include="Data\SaveFile.cs" />
     <Compile Include="Data\SmileyData.Enemies.cs" />
-    <Compile Include="Data\SmileyData.Fonts.cs" />
-    <Compile Include="Data\SmileyData.Sprites.cs" />
+    <Compile Include="Enums\SmileyFont.cs" />
+    <Compile Include="Data\Sprites.cs" />
+    <Compile Include="Data\TileSets.cs" />
     <Compile Include="Enums\Ability.cs" />
     <Compile Include="Enums\Boss.cs" />
     <Compile Include="Enums\CollisionTile.cs" />

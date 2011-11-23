@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Smiley.Lib.Framework.UIControls;
+using Smiley.Lib.Data;
 
 namespace Smiley.Lib.Menu
 {
@@ -72,7 +73,7 @@ namespace Smiley.Lib.Menu
             }
 
             //Draw title
-            SMH.Graphics.DrawSpriteScaled(SMH.Data.Sprite_SmileyTitle, _smileyTitleX, _smileyTitleY, _smileyTitleSize);
+            SMH.Graphics.DrawSpriteScaled(Sprites.SmileyTitle, _smileyTitleX, _smileyTitleY, _smileyTitleSize);
         }
 
         public override void Update(float dt)

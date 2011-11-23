@@ -72,10 +72,10 @@ namespace Smiley.Lib.Menu
         {
             if (_currentScreen.ShouldDrawBackground)
             {
-                SMH.Graphics.DrawSprite(SMH.Data.Sprite_MenuBackground, 0.0f, 0.0f);
+                SMH.Graphics.DrawSprite(Sprites.MenuBackground, 0.0f, 0.0f);
 
                 //smh->resources->GetFont("controls")->SetScale(0.9);
-                SMH.Graphics.DrawString(SMH.Data.Font_Controls, "www.smileysmazehunt.com", 760f, 740f);
+                SMH.Graphics.DrawString(SmileyFont.Controls, "www.smileysmazehunt.com", 760f, 740f);
                 //smh->resources->GetFont("controls")->SetScale(1.0);
             }
 
@@ -83,7 +83,7 @@ namespace Smiley.Lib.Menu
 
             if (SMH.Input.IsCursorInWindow && _currentScreen.ShouldDrawMouse)
             {
-                SMH.Graphics.DrawSprite(SMH.Data.Sprite_MouseCursor, SMH.Input.Cursor);
+                SMH.Graphics.DrawSprite(Sprites.MouseCursor, SMH.Input.Cursor);
             }
         }
 
