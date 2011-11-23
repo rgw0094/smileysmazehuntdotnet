@@ -6,6 +6,8 @@
 = Rob's to-do list =
   * Animation Class
   * TileSet Class
+  * MainMenu
+  * Create 2D Drawing facade
   * Figure out how to do fonts
   * Choose config mechanism (XML????? 3rd party?!??!!?)
   * Convert Smiley ResourceScript to code (THIS WILL SUCK BALLS)
