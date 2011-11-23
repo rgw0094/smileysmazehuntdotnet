@@ -15,9 +15,9 @@
 
 ||*Initials*||*Date*||*What was done*||
 ||ETI||11/20/11||Enemy data inputted into source||
-||RGW||11/20/11||SaveManager||
+||RGW||11/20/11||Ported SaveManager||
 ||RGW||11/21/11||Sprite class||
-||RGW||11/22/11||ported Button class||
-||RGW||11/22/11||ported ControlActionGroup class||
-||RGW||11/22/11||ported InputManager class||
-||RGW||11/22/11||ported MainMenu class||
+||RGW||11/22/11||ported Button||
+||RGW||11/22/11||ported ControlActionGroup||
+||RGW||11/22/11||ported InputManager||
+||RGW||11/22/11||ported MainMenu||
