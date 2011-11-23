@@ -5,7 +5,7 @@ using System.Text;
 using Smiley.Lib.Enums;
 using Microsoft.Xna.Framework;
 
-namespace Smiley.Lib.Framework
+namespace Smiley.Lib.Framework.Drawing
 {
     public enum LoopMode
     {

@@ -76,6 +76,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -93,12 +94,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Data\AbilityData.cs" />
-    <Compile Include="Data\Animations.cs" />
+    <Compile Include="Data\AbilityInfo.cs" />
+    <Compile Include="Data\SmileyData.Animations.cs" />
     <Compile Include="Data\SmileyData.cs" />
-    <Compile Include="Data\EnemyData.cs" />
+    <Compile Include="Data\EnemyInfo.cs" />
     <Compile Include="Data\SaveFile.cs" />
-    <Compile Include="Data\Sprites.cs" />
+    <Compile Include="Data\SmileyData.Enemies.cs" />
+    <Compile Include="Data\SmileyData.Fonts.cs" />
+    <Compile Include="Data\SmileyData.Sprites.cs" />
     <Compile Include="Enums\Ability.cs" />
     <Compile Include="Enums\Boss.cs" />
     <Compile Include="Enums\CollisionTile.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="Enums\EnemyType.cs" />
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\Gem.cs" />
+    <Compile Include="Enums\Input.cs" />
     <Compile Include="Enums\ItemTile.cs" />
     <Compile Include="Enums\Level.cs" />
     <Compile Include="Enums\ParticleEnums.cs" />
@@ -114,19 +118,27 @@
     <Compile Include="Enums\SaveSlot.cs" />
     <Compile Include="Enums\SmileyTexture.cs" />
     <Compile Include="Enums\Upgrade.cs" />
-    <Compile Include="Framework\Animation.cs" />
+    <Compile Include="Framework\Drawing\Animation.cs" />
+    <Compile Include="Framework\GameObject.cs" />
+    <Compile Include="Framework\Drawing\Rect.cs" />
+    <Compile Include="Framework\Drawing\Sprite.cs" />
+    <Compile Include="Framework\Drawing\TileSet.cs" />
     <Compile Include="Framework\ParticleSystem.cs" />
     <Compile Include="Framework\ParticleSystemManager.cs" />
-    <Compile Include="Framework\Sprite.cs" />
-    <Compile Include="Framework\TileSet.cs" />
     <Compile Include="Enums\WanderType.cs" />
+    <Compile Include="Menu\BaseMenuScreen.cs" />
+    <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\InputManager.cs" />
     <Compile Include="Services\SaveManager.cs" />
-    <Compile Include="SmileyGame.cs" />
-    <Compile Include="Utils\BitStream.cs" />
-    <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="SMH.cs" />
+    <Compile Include="Framework\UIControls\Button.cs" />
+    <Compile Include="Framework\BitStream.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

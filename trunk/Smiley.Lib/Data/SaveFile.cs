@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
 using System.IO;
-using Smiley.Lib.Utils;
+using Smiley.Lib.Framework;
 
 namespace Smiley.Lib.Data
 {

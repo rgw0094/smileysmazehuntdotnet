@@ -9,7 +9,7 @@ namespace Smiley.Lib.Data
     /// <summary>
     /// Encapsulates data about an enemy type that is stored in a resource file.
     /// </summary>
-    public class EnemyData
+    public class EnemyInfo
     {
         public string Name { get; set; }
         public int SpriteRow { get; set; }
@@ -39,10 +39,10 @@ namespace Smiley.Lib.Data
         public bool HasOneGraphic { get; set; }
         public bool Chases { get; set; }
         public bool HasRangedAttack { get; set; }
-        public RangedAttackData RangedAttack { get; set; }        
+        public RangedAttackInfo RangedAttack { get; set; }        
     }
 
-    public class RangedAttackData
+    public class RangedAttackInfo
     {
         public int Range { get; set; }
         public int Delay { get; set; }

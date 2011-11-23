@@ -15,11 +15,6 @@ namespace Smiley.Lib.Framework
             
         }
 
-        public ~ParticleSystemManager()
-        {
-        
-        }
-
         public void Update(float dt)
         {
         
