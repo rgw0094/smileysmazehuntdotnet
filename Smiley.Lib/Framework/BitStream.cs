@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Smiley.Lib.Utils
+namespace Smiley.Lib.Framework
 {
     public enum BitStreamMode
     {

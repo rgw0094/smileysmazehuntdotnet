@@ -6,7 +6,7 @@ using Smiley.Lib.Enums;
 
 namespace Smiley.Lib.Data
 {
-    public class AbilityData
+    public class AbilityInfo
     {
         public string Name { get; set; }
         public string Description { get; set; }

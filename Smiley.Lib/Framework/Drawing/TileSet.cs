@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Smiley.Lib.Framework
+namespace Smiley.Lib.Framework.Drawing
 {
     public class TileSet
     {

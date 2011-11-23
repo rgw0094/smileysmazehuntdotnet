@@ -11,7 +11,7 @@ namespace Smiley.Client.Windows
         /// </summary>
         static void Main(string[] args)
         {
-            using (SmileyGame game = new SmileyGame())
+            using (SMH game = new SMH())
             {
                 game.Run();
             }

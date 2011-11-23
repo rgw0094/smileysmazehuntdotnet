@@ -9,29 +9,45 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Smiley.Lib.Data;
+using Smiley.Lib.Services;
 
 namespace Smiley.Lib
 {
-    public class SmileyGame : Game
+    public class SMH : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch _spriteBatch;
+        #region Private Variables
 
-        public SmileyGame()
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new SmileyGame.
+        /// </summary>
+        public SMH()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Smiley.Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        #endregion
+
+        #region Singletons
+
+        public static InputManager Input { get; private set; }
+        public static GraphicsDevice VideoDevice { get; private set; }
+
+        #endregion
+
+        #region Game Overrides
+
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            Input = new InputManager();
+            VideoDevice = this.GraphicsDevice;
 
             base.Initialize();
         }
@@ -80,5 +96,7 @@ namespace Smiley.Lib
 
             base.Draw(gameTime);
         }
+
+        #endregion
     }
 }
