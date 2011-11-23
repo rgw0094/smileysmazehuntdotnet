@@ -17,8 +17,8 @@
 ||ETI||11/20/11||Enemy data inputted into source||
 ||RGW||11/20/11||Ported SaveManager||
 ||RGW||11/21/11||Created Sprite class||
-||RGW||11/22/11||ported Button||
-||RGW||11/22/11||ported ControlActionGroup||
-||RGW||11/22/11||ported InputManager||
-||RGW||11/22/11||ported MainMenu||
+||RGW||11/22/11||Ported Button||
+||RGW||11/22/11||Ported ControlActionGroup||
+||RGW||11/22/11||Ported InputManager||
+||RGW||11/22/11||Ported MainMenu||
 ||RGW||11/22/11||Created 2d drawing facade||
