@@ -12,6 +12,7 @@ using Smiley.Lib.Data;
 using Smiley.Lib.Services;
 using Smiley.Lib.Menu;
 using Smiley.Lib.Framework;
+using Smiley.Lib.Framework.Drawing;
 
 namespace Smiley.Lib
 {
