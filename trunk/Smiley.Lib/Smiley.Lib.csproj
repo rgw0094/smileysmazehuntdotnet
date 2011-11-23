@@ -117,7 +117,7 @@
     <Compile Include="Enums\SaveSlot.cs" />
     <Compile Include="Enums\SmileyTexture.cs" />
     <Compile Include="Enums\Upgrade.cs" />
-    <Compile Include="Framework\Graphics.cs" />
+    <Compile Include="Framework\Drawing\Graphics2DWrapper.cs" />
     <Compile Include="Framework\Drawing\Animation.cs" />
     <Compile Include="Framework\GameObject.cs" />
     <Compile Include="Framework\Drawing\Rect.cs" />

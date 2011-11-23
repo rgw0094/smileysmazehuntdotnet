@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Smiley.Lib.Framework.Drawing;
 
-namespace Smiley.Lib.Framework
+namespace Smiley.Lib.Framework.Drawing
 {
     /// <summary>
     /// Wraps the XNA 2D stuff to provide a cleaner API for our needs.
@@ -23,7 +23,7 @@ namespace Smiley.Lib.Framework
         #region Constructors
 
         /// <summary>
-        /// Constructs a new Garaphics.
+        /// Constructs a new Graphics2DWrapper.
         /// </summary>
         /// <param name="game"></param>
         public Graphics2DWrapper(GraphicsDeviceManager graphicsDeviceManager)
