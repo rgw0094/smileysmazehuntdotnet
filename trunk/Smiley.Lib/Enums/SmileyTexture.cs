@@ -8,37 +8,37 @@ namespace Smiley.Lib.Enums
 {
     public enum SmileyTexture
     {
-        [Description("animations")]
+        [Description("Graphics\\animations")]
         Animations,
-        [Description("sprites")]
+        [Description("Graphics\\sprites")]
         General,
-        [Description("enemies")]
+        [Description("Graphics\\enemies")]
         Enemies,
-        [Description("npcs")]
+        [Description("Graphics\\npcs")]
         NPCs,
-        [Description("itemlayer1")]
+        [Description("Graphics\\itemlayer1")]
         ItemLayer1,
-        [Description("itemlayer2")]
+        [Description("Graphics\\itemlayer2")]
         ItemLayer2,
-        [Description("mainlayer")]
+        [Description("Graphics\\mainlayer")]
         MainLayer,
-        [Description("walkLayer")]
+        [Description("Graphics\\walkLayer")]
         WalkLayer,
-        [Description("fountain")]
+        [Description("Graphics\\fountain")]
         Fountain,
-        [Description("Cinematic")]
+        [Description("Graphics\\Cinematic")]
         Cinematic,
-        [Description("psychedelic")]
+        [Description("Graphics\\psychedelic")]
         Psychedelic,
-        [Description("EndingCinematic")]
+        [Description("Graphics\\EndingCinematic")]
         EndingCinematic,
-        [Description("WorldMap")]
+        [Description("Graphics\\WorldMap")]
         WorldMap,
-        [Description("WorldMapBorders")]
+        [Description("Graphics\\WorldMapBorders")]
         WorldMapBorders,
-        [Description("UserInterface")]
+        [Description("Graphics\\UserInterface")]
         UserInterface,
-        [Description("titlescreen")]
+        [Description("Graphics\\titlescreen")]
         TitleScreen
     }
 }

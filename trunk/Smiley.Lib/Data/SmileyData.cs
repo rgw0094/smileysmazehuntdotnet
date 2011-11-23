@@ -8,34 +8,18 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Smiley.Lib.Data
 {
-    public static partial class SmileyData
+    public partial class SmileyData
     {
         #region Private Variables
 
-        private static Dictionary<SmileyTexture, Texture2D> _textures = new Dictionary<SmileyTexture, Texture2D>();
-        private static ContentManager _contentMaager;
+        private Dictionary<SmileyTexture, Texture2D> _textures = new Dictionary<SmileyTexture, Texture2D>();
+        private ContentManager _contentMaager;
 
         #endregion
 
-        #region Properties
+        #region Constructors
 
-        public static Dictionary<Ability, AbilityInfo> Abilities
-        {
-            get;
-            private set;
-        }
-
-        public static Dictionary<Level, Dictionary<Gem, int>> GemsPerArea
-        {
-            get;
-            private set;
-        }
-
-        #endregion
-
-        #region Methods
-
-        public static void Load(ContentManager contentManager)
+        public SmileyData(ContentManager contentManager)
         {
             _contentMaager = contentManager;
             Abilities = CreateAbilities();
@@ -48,7 +32,27 @@ namespace Smiley.Lib.Data
             //TODO: precache textures
         }
 
-        public static Texture2D GetTexture(SmileyTexture texture)
+        #endregion
+
+        #region Properties
+
+        public Dictionary<Ability, AbilityInfo> Abilities
+        {
+            get;
+            private set;
+        }
+
+        public Dictionary<Level, Dictionary<Gem, int>> GemsPerArea
+        {
+            get;
+            private set;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public Texture2D GetTexture(SmileyTexture texture)
         {
             if (!_textures.ContainsKey(texture))
             {
@@ -57,7 +61,7 @@ namespace Smiley.Lib.Data
             return _textures[texture];
         }
 
-        public static void PreCacheTextures(params SmileyTexture[] textures)
+        public void PreCacheTextures(params SmileyTexture[] textures)
         {
             foreach (SmileyTexture texture in textures)
             {
@@ -68,7 +72,7 @@ namespace Smiley.Lib.Data
             }
         }
 
-        public static void UnloadTextures(params SmileyTexture[] textures)
+        public void UnloadTextures(params SmileyTexture[] textures)
         {
             foreach (SmileyTexture texture in textures)
             {
@@ -80,7 +84,7 @@ namespace Smiley.Lib.Data
             }
         }
 
-        public static double GetDifficultyModifier(Difficulty difficulty)
+        public double GetDifficultyModifier(Difficulty difficulty)
         {
             switch (difficulty)
             {
@@ -103,7 +107,7 @@ namespace Smiley.Lib.Data
 
         #region GemsPerArea
 
-        private static Dictionary<Level, Dictionary<Gem, int>> GetGemsPerArea()
+        private Dictionary<Level, Dictionary<Gem, int>> GetGemsPerArea()
         {
             Dictionary<Level, Dictionary<Gem, int>> gemCount = new Dictionary<Level, Dictionary<Gem, int>>();
             foreach (Level level in Enum.GetValues(typeof(Level)))
@@ -158,7 +162,7 @@ namespace Smiley.Lib.Data
 
         #region Abilities
 
-        private static Dictionary<Ability, AbilityInfo> CreateAbilities()
+        private Dictionary<Ability, AbilityInfo> CreateAbilities()
         {
             Dictionary<Ability, AbilityInfo> abilities = new Dictionary<Ability, AbilityInfo>();
 

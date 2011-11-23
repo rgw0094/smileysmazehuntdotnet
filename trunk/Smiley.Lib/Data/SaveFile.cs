@@ -80,7 +80,7 @@ namespace Smiley.Lib.Data
         /// </summary>
         public double DamageModifer
         {
-            get { return (1.0 + NumUpgrades[Upgrade.Damage] * 0.2) * SmileyData.GetDifficultyModifier(Difficulty); }
+            get { return (1.0 + NumUpgrades[Upgrade.Damage] * 0.2) * SMH.Data.GetDifficultyModifier(Difficulty); }
         }
 
         /// <summary>

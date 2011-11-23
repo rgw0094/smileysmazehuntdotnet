@@ -8,30 +8,30 @@ using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.Data
 {
-    public static partial class SmileyData
+    public partial class SmileyData
     {
-        public static Animation Animation_Fenwar;
-        public static Animation Animation_FenwarFace;
-        public static Animation Animation_FountainRipple;
-        public static Animation Animation_Water;
-        public static Animation Animation_GreenWater;
-        public static Animation Animation_Lava;
-        public static Animation Animation_Spring;
-        public static Animation Animation_SuperSpring;
-        public static Animation Animation_SilverSwitch;
-        public static Animation Animation_BrownSwitch;
-        public static Animation Animation_BlueSwitch;
-        public static Animation Animation_GreenSwitch;
-        public static Animation Animation_YellowSwitch;
-        public static Animation Animation_WhiteSwitch;
-        public static Animation Animation_SavePoint;
-        public static Animation Animation_Smilelet;
-        public static Animation Animation_MirrorSwitch;
-        public static Animation Animation_ShrinkTunnelSwitch;
-        public static Animation Animation_BunnySwitch;
-        public static Animation Animation_Abilities;
+        public Animation Animation_Fenwar;
+        public Animation Animation_FenwarFace;
+        public Animation Animation_FountainRipple;
+        public Animation Animation_Water;
+        public Animation Animation_GreenWater;
+        public Animation Animation_Lava;
+        public Animation Animation_Spring;
+        public Animation Animation_SuperSpring;
+        public Animation Animation_SilverSwitch;
+        public Animation Animation_BrownSwitch;
+        public Animation Animation_BlueSwitch;
+        public Animation Animation_GreenSwitch;
+        public Animation Animation_YellowSwitch;
+        public Animation Animation_WhiteSwitch;
+        public Animation Animation_SavePoint;
+        public Animation Animation_Smilelet;
+        public Animation Animation_MirrorSwitch;
+        public Animation Animation_ShrinkTunnelSwitch;
+        public Animation Animation_BunnySwitch;
+        public Animation Animation_Abilities;
 
-        private static void LoadAnimations()
+        private void LoadAnimations()
         {
             Animation_Fenwar = new Animation(
                 SmileyTexture.General,

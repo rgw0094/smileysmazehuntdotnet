@@ -6,15 +6,15 @@ using Smiley.Lib.Enums;
 
 namespace Smiley.Lib.Data
 {
-    public static partial class SmileyData
+    public partial class SmileyData
     {
-        public static Dictionary<int, EnemyInfo> Enemies
+        public Dictionary<int, EnemyInfo> Enemies
         {
             get;
             private set;
         }
 
-        private static void CreateEnemies()
+        private void CreateEnemies()
         {
             Enemies = new Dictionary<int, EnemyInfo>();
 

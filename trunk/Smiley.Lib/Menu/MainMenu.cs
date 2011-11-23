@@ -5,6 +5,7 @@ using System.Text;
 using Smiley.Lib.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Smiley.Lib.Data;
+using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.Menu
 {
@@ -23,6 +24,7 @@ namespace Smiley.Lib.Menu
         /// </summary>
         public MainMenu()
         {
+            ShowScreen<TitleScreen>();
         }
 
         #endregion
@@ -36,7 +38,7 @@ namespace Smiley.Lib.Menu
         public void ShowScreen<TScreen>()
             where TScreen : BaseMenuScreen
         {
-            ShowScreen((BaseMenuScreen)typeof(TScreen).GetType().GetConstructor(Type.EmptyTypes).Invoke(null));
+            ShowScreen((BaseMenuScreen)typeof(TScreen).GetConstructor(Type.EmptyTypes).Invoke(null));
         }
 
         /// <summary>
@@ -46,14 +48,6 @@ namespace Smiley.Lib.Menu
         public void ShowScreen(BaseMenuScreen screen)
         {
             _currentScreen = screen;
-        }
-
-        /// <summary>
-        /// Closes the current screen.
-        /// </summary>
-        public void CloseScreen()
-        {
-            _currentScreen = null;
         }
 
         public void OpenLoadScreen(int file, bool fromLoadingScreen)
@@ -74,23 +68,22 @@ namespace Smiley.Lib.Menu
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            //TODO:
-            //        if (currentScreen != MenuScreens::CLOSING_CINEMATIC_SCREEN && 
-            //    currentScreen != MenuScreens::CINEMATIC_SCREEN &&
-            //    currentScreen != MenuScreens::CREDITS_SCREEN)
-            //{
-            SmileyData.Sprite_MenuBackground.Draw(spriteBatch, 0.0f, 0.0f);
-
-            //smh->resources->GetFont("controls")->SetScale(0.9);
-            //smh->resources->GetFont("controls")->printf(1015.0, 740.0, HGETEXT_RIGHT, "www.smileysmazehunt.com");
-            //smh->resources->GetFont("controls")->SetScale(1.0);
-            //}
-
-            if (_currentScreen != null)
+            if (_currentScreen.ShouldDrawBackground)
             {
-                _currentScreen.Draw(spriteBatch);
+                SMH.Graphics.DrawSprite(SMH.Data.Sprite_MenuBackground, 0.0f, 0.0f);
+
+                //smh->resources->GetFont("controls")->SetScale(0.9);
+                SMH.Graphics.DrawString(SMH.Data.Font_Controls, "www.smileysmazehunt.com", 760f, 740f);
+                //smh->resources->GetFont("controls")->SetScale(1.0);
+            }
+
+            _currentScreen.Draw();
+
+            if (SMH.Input.IsCursorInWindow && _currentScreen.ShouldDrawMouse)
+            {
+                SMH.Graphics.DrawSprite(SMH.Data.Sprite_MouseCursor, SMH.Input.Cursor);
             }
         }
 

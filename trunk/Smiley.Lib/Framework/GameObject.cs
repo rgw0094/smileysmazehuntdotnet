@@ -14,8 +14,7 @@ namespace Smiley.Lib.Framework
         /// <summary>
         /// Draws the object.
         /// </summary>
-        /// <param name="spriteBatch">The current SpriteBatch</param>
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw()
         {
         }
 

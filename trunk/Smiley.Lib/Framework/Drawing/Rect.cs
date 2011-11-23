@@ -8,35 +8,42 @@ namespace Smiley.Lib.Framework.Drawing
 {
     public class Rect
     {
-        public Rect(Vector2 topLeft, float width, float height)
+        public Rect(float x, float y, float width, float height)
         {
-            TopLeft = topLeft;
+            X = x;
+            Y = y;
             Width = width;
             Height = height;
         }
 
-        public Vector2 TopLeft
+        public float X
         {
             get;
-            private set;
+            set;
+        }
+
+        public float Y
+        {
+            get;
+            set;
         }
 
         public float Width
         {
             get;
-            private set;
+            set;
         }
 
         public float Height
         {
             get;
-            private set;
+            set;
         }
 
         public bool Contains(Vector2 v)
         {
-            return v.X >= TopLeft.X && v.X <= TopLeft.X + Width &&
-                   v.Y >= TopLeft.Y && v.Y <= TopLeft.Y + Height;
+            return v.X >= X && v.X <= X + Width &&
+                   v.Y >= Y && v.Y <= Y + Height;
         }
     }
 }
