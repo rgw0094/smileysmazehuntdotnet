@@ -4,7 +4,6 @@
   * Input GameText into source code
 
 = Rob's to-do list =
-  * Sprite Class
   * Animation Class
   * TileSet Class
   * Figure out how to do fonts
@@ -16,3 +15,4 @@
 ||*Initials*||*Date*||*What was done*||
 ||ETI||11/20/11||Enemy data inputted into source||
 ||RGW||11/20/11||SaveManager||
+||RGW||11/21/11||Sprite class||
