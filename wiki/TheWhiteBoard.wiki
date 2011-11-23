@@ -6,11 +6,13 @@
 = Rob's to-do list =
   * Animation Class
   * TileSet Class
+  * SoundManager
   * Choose config mechanism (XML????? 3rd party?!??!!?)
   * Convert sprite info to code
   * Convert animation info to code
   * Convert font info to code
   * Convert texture info to code
+  * Convert sound info to code
 
 = Accomplished =
 
