@@ -6,9 +6,10 @@
 = Rob's to-do list =
   * Animation Class
   * TileSet Class
-  * Figure out how to do fonts
   * Choose config mechanism (XML????? 3rd party?!??!!?)
-  * Convert Smiley ResourceScript to code (THIS WILL SUCK BALLS)
+  * Convert sprite info to code
+  * Convert animation info to code
+  * Convert font info to code
 
 = Accomplished =
 
