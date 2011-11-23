@@ -1,5 +1,7 @@
 using System;
 using Smiley.Lib;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Smiley.Client.Windows
 {
@@ -13,6 +15,9 @@ namespace Smiley.Client.Windows
         {
             using (SMH game = new SMH())
             {
+#if windows
+                ((form)form.fromhandle(game.window.handle)).icon = new icon("game.ico");
+#endif
                 game.Run();
             }
         }

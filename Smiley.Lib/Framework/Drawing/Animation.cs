@@ -14,7 +14,7 @@ namespace Smiley.Lib.Framework.Drawing
         PingPong
     }
 
-    public class Animation
+    public class Animation : GameObject
     {
         #region Constructors
 
@@ -120,7 +120,11 @@ namespace Smiley.Lib.Framework.Drawing
 
         }
 
-        public void Update(double dt)
+        public override void Update(float dt)
+        {
+        }
+
+        public override void Draw()
         {
         }
 

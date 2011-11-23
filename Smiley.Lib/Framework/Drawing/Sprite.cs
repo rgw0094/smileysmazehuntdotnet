@@ -11,6 +11,8 @@ namespace Smiley.Lib.Framework.Drawing
 {
     public class Sprite
     {
+        #region Constructors
+
         /// <summary>
         /// Constructs a new Sprite.
         /// </summary>
@@ -33,6 +35,10 @@ namespace Smiley.Lib.Framework.Drawing
             Rect = rect;
             HotSpot = hotSpot;
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// The texture containing the sprite.
@@ -62,37 +68,6 @@ namespace Smiley.Lib.Framework.Drawing
             private set;
         }
 
-        /// <summary>
-        /// Draws the sprite.
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public void Draw(SpriteBatch spriteBatch, int x, int y)
-        {
-            Draw(spriteBatch, (float)x, (float)y);
-        }
-
-        /// <summary>
-        /// Draws the sprite.
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public void Draw(SpriteBatch spriteBatch, float x, float y)
-        {
-            Draw(spriteBatch, new Vector2(x, y));
-        }
-
-        /// <summary>
-        /// Draws the sprite.
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="position"></param>
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
-        {
-            Vector2 drawPosition = drawPosition = new Vector2(position.X - HotSpot.X, position.Y - HotSpot.Y);
-            spriteBatch.Draw(SmileyData.GetTexture(Texture), drawPosition, Rect, Color.White);
-        }
+        #endregion
     }
 }

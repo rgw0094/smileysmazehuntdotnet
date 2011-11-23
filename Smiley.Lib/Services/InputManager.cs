@@ -75,7 +75,7 @@ namespace Smiley.Lib.Services
 #if WINDOWS
             MouseState mouseState = Mouse.GetState();
             Cursor = new Vector2(mouseState.X, mouseState.Y);
-            IsCursorInWindow = SMH.VideoDevice.Viewport.Bounds.Contains(new Point((int)Cursor.X, (int)Cursor.Y));
+            IsCursorInWindow = SMH.Graphics.IsPointInWindow(Cursor);
             IsMouseDown = mouseState.LeftButton == ButtonState.Pressed;
 #endif
 
@@ -89,6 +89,7 @@ namespace Smiley.Lib.Services
             foreach (InputState input in _inputs.Values)
             {
                 input.WasDownLastFrame = input.IsDown;
+                input.IsDown = false;
                 if (input.Device == InputDevice.GamePad)
                 {
                     if (gamePadState.IsButtonDown(input.Button))

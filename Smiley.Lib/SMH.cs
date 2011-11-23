@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Smiley.Lib.Data;
 using Smiley.Lib.Services;
+using Smiley.Lib.Menu;
+using Smiley.Lib.Framework;
 
 namespace Smiley.Lib
 {
@@ -17,8 +19,7 @@ namespace Smiley.Lib
     {
         #region Private Variables
 
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private GraphicsDeviceManager _graphicsDeviceManager;
 
         #endregion
 
@@ -29,72 +30,78 @@ namespace Smiley.Lib
         /// </summary>
         public SMH()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            _graphicsDeviceManager = new GraphicsDeviceManager(this);
+            _graphicsDeviceManager.PreferredBackBufferWidth = 1024;
+            _graphicsDeviceManager.PreferredBackBufferHeight = 768;
+
             Content.RootDirectory = "Smiley.Content";
+            Window.Title = "Smiley's Maze Hunt";
         }
 
         #endregion
 
-        #region Singletons
+        #region Static Shit
 
         public static InputManager Input { get; private set; }
-        public static GraphicsDevice VideoDevice { get; private set; }
+        public static SmileyData Data { get; private set; }
+        public static Graphics2DWrapper Graphics { get; private set; }
+        public static MainMenu MainMenu { get; private set; }
+
+        /// <summary>
+        /// Returns the current time in seconds.
+        /// </summary>
+        public static float Now
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Returns whether or not the specified amount of time has passed since the start time.
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static bool TimePassed(float startTime, float amount)
+        {
+            return Now - startTime >= amount;
+        }
 
         #endregion
 
         #region Game Overrides
 
-        protected override void Initialize()
-        {
-            Input = new InputManager();
-            VideoDevice = this.GraphicsDevice;
-
-            base.Initialize();
-        }
-
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            SmileyData.Load(Content);
+            Graphics = new Graphics2DWrapper(_graphicsDeviceManager);            
+            Data = new SmileyData(Content);
+            Input = new InputManager();
+            MainMenu = new MainMenu();
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            //TODO: save settings and shit
+
+            Content.Unload();
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            Now = (float)gameTime.TotalGameTime.Ticks / 10000000f;
+            float dt = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
 
-            // TODO: Add your update logic here
+            MainMenu.Update(dt);
+            Input.Update(dt);
+
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            //Content.Load<Texture2D>(
-
-            base.Draw(gameTime);
+            Graphics.BeginFrame();
+            MainMenu.Draw();
+            Graphics.EndFrame();
         }
 
         #endregion
