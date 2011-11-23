@@ -5,13 +5,11 @@
 
 = Rob's to-do list =
   * Animation Class
-  * TileSet Class
   * SoundManager
   * Choose config mechanism (XML????? 3rd party?!??!!?)
   * Convert sprite info to code
   * Convert animation info to code
   * Convert font info to code
-  * Convert texture info to code
   * Convert sound info to code
 
 = Accomplished =
@@ -19,9 +17,11 @@
 ||*Initials*||*Date*||*What was done*||
 ||ETI||11/20/11||Enemy data inputted into source||
 ||RGW||11/20/11||Ported SaveManager||
-||RGW||11/21/11||Created Sprite class||
+||RGW||11/21/11||Implemented Sprite class||
 ||RGW||11/22/11||Ported Button||
 ||RGW||11/22/11||Ported ControlActionGroup||
 ||RGW||11/22/11||Ported InputManager||
 ||RGW||11/22/11||Ported MainMenu||
 ||RGW||11/22/11||Created 2d drawing facade||
+||RGW||11/23/11||Implemented TileSet class||
+||RGW||11/23/11||Converted texture info to code||
