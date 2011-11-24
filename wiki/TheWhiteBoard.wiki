@@ -7,8 +7,6 @@
   * Animation Class
   * SoundManager
   * Choose config mechanism (XML????? 3rd party?!??!!?)
-  * Convert sprite info to code
-  * Convert animation info to code
   * Convert font info to code
   * Convert sound info to code
 
@@ -25,3 +23,5 @@
 ||RGW||11/22/11||Created 2d drawing facade||
 ||RGW||11/23/11||Implemented TileSet class||
 ||RGW||11/23/11||Converted texture info to code||
+||RGW||11/23/11||Converted sprite info to code||
+||RGW||11/23/11||Converted animation info to code||
