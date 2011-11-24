@@ -50,7 +50,10 @@ namespace Smiley.Lib.Framework
 
         public void Transpose(float x, float y)
         {
-        
+            foreach (ParticleSystem p in _psList)
+            {
+                p.Transpose(x, y);
+            }
         }
 
         public Vector2 GetTransposition()
@@ -63,6 +66,10 @@ namespace Smiley.Lib.Framework
 
         public void KillPS(ParticleSystem ps)
         {
+            foreach (ParticleSystem p in _psList)
+            {
+                //IF p = ps then kill it. Need to add the EQUALS operation.
+            }
         }
 
         public void KillAll()
