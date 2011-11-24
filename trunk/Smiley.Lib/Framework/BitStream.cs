@@ -199,6 +199,23 @@ namespace Smiley.Lib.Framework
             return data;
         }
 
+        /// <summary>
+        /// Reads a float from the stream.
+        /// </summary>
+        /// <returns></returns>
+        public float ReadFloat()
+        {
+            if (_mode != BitStreamMode.Read) throw new Exception("Attemping to read from a stream that is opened in write mode!");
+
+            byte[] bytes = new byte[4];
+            bytes[0] = (byte)ReadByte();
+            bytes[1] = (byte)ReadByte();
+            bytes[2] = (byte)ReadByte();
+            bytes[3] = (byte)ReadByte();
+
+            return BitConverter.ToSingle(bytes, 0);
+        }
+
         #endregion
 
         #region IDisposable Members
