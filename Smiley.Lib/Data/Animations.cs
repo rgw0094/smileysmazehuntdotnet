@@ -104,8 +104,7 @@ namespace Smiley.Lib.Data
             5,
             20.0,
             new Vector2(0, 0),
-            false,
-            LoopMode.PingPong);
+            false, false, true);
 
         public static Animation ShrinkTunnelSwitch = new Animation(
             SmileyTexture.Animations,
@@ -113,8 +112,7 @@ namespace Smiley.Lib.Data
             5,
             20.0,
             new Vector2(0, 0),
-            false,
-            LoopMode.PingPong);
+            false, false, true);
 
         public static Animation BunnySwitch = new Animation(
             SmileyTexture.Animations,
@@ -122,8 +120,7 @@ namespace Smiley.Lib.Data
             4,
             16.0,
             new Vector2(0, 0),
-            false,
-            LoopMode.PingPong);
+            false, false, true);
 
         public static Animation SmileyTongue = new Animation(
             SmileyTexture.Animations,
@@ -131,5 +128,134 @@ namespace Smiley.Lib.Data
             13,
             118.0,
             new Vector2(6, 84));
+
+        public static Animation GroundSpike = new Animation(
+            SmileyTexture.Cornwallis,
+            new Rectangle(20, 158, 20, 60),
+            5,
+            20.0,
+            new Vector2(10, 50));
+
+        public static Animation PhyreBawz = new Animation(
+            SmileyTexture.Fireboss,
+            new Rectangle(0, 0, 97, 158),
+            4,
+            20.0,
+            new Vector2(48, 79));
+
+        public static Animation PhyreBawzDownMouth = new Animation(
+            SmileyTexture.Fireboss,
+            new Rectangle(0, 158, 32, 17),
+            4,
+            12.0,
+            new Vector2(0, 0),
+            false, false, true);
+
+        public static Animation PhyreBawzLeftMouth = new Animation(
+            SmileyTexture.Fireboss,
+            new Rectangle(0, 175, 27, 13),
+            4,
+            12.0,
+            new Vector2(0, 0),
+            false, false, true);
+
+        public static Animation PhyreBawzRightMouth = new Animation(
+            SmileyTexture.Fireboss,
+            new Rectangle(0, 188, 27, 13),
+            4,
+            12.0,
+            new Vector2(0, 0),
+            false, false, true);
+
+        public static Animation Owlet = new Animation(
+            SmileyTexture.Garmborn,
+            new Rectangle(0, 192, 84, 36),
+            4,
+            20.0,
+            new Vector2(42, 18),
+            false, true, true);
+
+        public static Animation Bartli = new Animation(
+            SmileyTexture.Bartli,
+            new Rectangle(0, 0, 110, 132),
+            2,
+            20.0,
+            new Vector2(55, 132),
+            false, true, true);
+
+        public static Animation LightningEye = new Animation(
+            SmileyTexture.Magnitogorsk,
+            new Rectangle(0, 193, 88, 41),
+            5,
+            10.0,
+            new Vector2(44, 20),
+            false, true, false);
+
+        public static Animation IceEye = new Animation(
+            SmileyTexture.Magnitogorsk,
+            new Rectangle(0, 235, 88, 41),
+            5,
+            10.0,
+            new Vector2(44, 20),
+            false, true, false);
+
+        public static Animation FireEye = new Animation(
+            SmileyTexture.Magnitogorsk,
+            new Rectangle(0, 277, 88, 41),
+            5,
+            10.0,
+            new Vector2(44, 20),
+            false, true, false);
+
+        public static Animation BarvinoidMouth = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(0, 768, 67, 70),
+            9,
+            10.0,
+            new Vector2(31, 30));
+
+        public static Animation EvilEye = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(640, 192, 64, 64),
+            5,
+            10.0,
+            new Vector2(32, 32));
+
+        public static Animation Burrow0 = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(640, 320, 64, 64),
+            5,
+            10.0,
+            new Vector2(32, 32));
+
+        public static Animation Burrow1 = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(640, 320, 64, 64),
+            5,
+            10.0,
+            new Vector2(32, 32));
+
+        public static Animation BombSpawn = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(448, 64, 64, 64),
+            8,
+            10.0,
+            new Vector2(32, 32));
+
+        public static Animation BombEyesGlow = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(640, 128, 64, 64),
+            6,
+            20.0,
+            new Vector2(32, 32),
+            false, false, true);
+
+        public static Animation Batlet = new Animation(
+            SmileyTexture.Animations,
+            new Rectangle(640, 384, 82, 35),
+            4,
+            16.0,
+            new Vector2(32, 32),
+            false, false, true);
     }
 }

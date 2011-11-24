@@ -7,13 +7,6 @@ using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.Framework.Drawing
 {
-    public enum LoopMode
-    {
-        None,
-        Loop,
-        PingPong
-    }
-
     public class Animation : GameObject
     {
         #region Private Variables
@@ -34,13 +27,15 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="hotSpot"></param>
         /// <param name="reverse"></param>
         /// <param name="loop"></param>
-        public Animation(SmileyTexture texture, Rectangle rect, int numFrames, double fps, Vector2? hotSpot = null, bool reverse = false, LoopMode loop = LoopMode.Loop)
+        /// <param name="pingPong"></param>
+        public Animation(SmileyTexture texture, Rectangle rect, int numFrames, double fps, Vector2? hotSpot = null, bool reverse = false, bool loop = false, bool pingPong = false)
         {
             _tileSet = new TileSet(texture, numFrames, rect, hotSpot);
             NumFrames = numFrames;
             FPS = fps;
             Reverse = reverse;
-            LoopMode = loop;
+            Loop = loop;
+            PingPong = pingPong;
         }
 
         #endregion
@@ -77,10 +72,19 @@ namespace Smiley.Lib.Framework.Drawing
         /// <summary>
         /// Whether or not to loop the animation.
         /// </summary>
-        public LoopMode LoopMode
+        public bool Loop
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Whether or not the animation ping pongs.
+        /// </summary>
+        public bool PingPong
+        {
+            get;
+            set;
         }
 
         /// <summary>
