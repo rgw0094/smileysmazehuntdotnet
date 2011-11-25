@@ -10,7 +10,7 @@
   * Loading levels
   * Port environment class
   * Choose config mechanism (XML????? 3rd party?!??!!?)
-  * Convert font info to code
+  * Port the fonts
 
 = Accomplished =
 
