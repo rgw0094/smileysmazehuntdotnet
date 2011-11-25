@@ -8,11 +8,8 @@
 
 = Rob's to-do list =
   * Animation Class
-  * SoundManager
   * Choose config mechanism (XML????? 3rd party?!??!!?)
-  * Convert all sounds/music to mp3
   * Convert font info to code
-  * Convert sound info to code
 
 = Accomplished =
 
@@ -29,3 +26,6 @@
 ||RGW||11/23/11||Converted texture info to code||
 ||RGW||11/23/11||Converted sprite info to code||
 ||RGW||11/23/11||Converted animation info to code||
+||RGW||11/25/11||Converted sound/music files to mp3s||
+||RGW||11/25/11||Converted sound/music info to code||
+||RGW||11/25/11||Ported SoundManager||
