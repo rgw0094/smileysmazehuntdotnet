@@ -7,7 +7,8 @@
   * Input GameText into source code
 
 = Rob's to-do list =
-  * Animation Class
+  * Loading levels
+  * Port environment class
   * Choose config mechanism (XML????? 3rd party?!??!!?)
   * Convert font info to code
 
@@ -30,3 +31,4 @@
 ||RGW||11/25/11||Converted sound/music files to mp3s||
 ||RGW||11/25/11||Converted sound/music info to code||
 ||RGW||11/25/11||Ported SoundManager||
+||RGW||11/25/11||Implemented Animation class||
