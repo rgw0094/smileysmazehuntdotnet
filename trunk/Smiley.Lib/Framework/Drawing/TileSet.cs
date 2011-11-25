@@ -46,7 +46,7 @@ namespace Smiley.Lib.Framework.Drawing
         /// <summary>
         /// Gets the number of tiles in the TileSet.
         /// </summary>
-        public int NumTiles
+        public int Count
         {
             get { return _numTiles; }
         }

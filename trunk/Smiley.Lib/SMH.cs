@@ -49,7 +49,6 @@ namespace Smiley.Lib
         public static SmileyData Data { get; private set; }
         public static Graphics2DWrapper Graphics { get; private set; }
         public static SoundManager Sound { get; private set; }
-        public static SMH Game { get; private set; }
 
         /// <summary>
         /// Shows the main menu.
