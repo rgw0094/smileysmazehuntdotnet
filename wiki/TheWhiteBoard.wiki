@@ -16,6 +16,7 @@
 ||*Initials*||*Date*||*What was done*||
 ||ETI||11/20/11||Enemy data inputted into source||
 ||RGW||11/20/11||Ported SaveManager||
+||RGW||11/20/11||Ported BitStream||
 ||RGW||11/21/11||Implemented Sprite class||
 ||RGW||11/22/11||Ported Button||
 ||RGW||11/22/11||Ported ControlActionGroup||
