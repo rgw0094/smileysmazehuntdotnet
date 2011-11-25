@@ -16,6 +16,15 @@ namespace Smiley.Lib.Menu
     public abstract class BaseMenuScreen : GameObject
     {
         /// <summary>
+        /// Constructs a new BaseMenuScreen.
+        /// </summary>
+        /// <param name="mainMenu"></param>
+        public BaseMenuScreen(MainMenu mainMenu)
+        {
+            MainMenu = mainMenu;
+        }
+
+        /// <summary>
         /// Whether or not the mouse should be drawn for this screen.
         /// </summary>
         public abstract bool ShouldDrawMouse
@@ -35,6 +44,15 @@ namespace Smiley.Lib.Menu
         /// The current state.
         /// </summary>
         protected MenuState State
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the MainMenu.
+        /// </summary>
+        protected MainMenu MainMenu
         {
             get;
             private set;

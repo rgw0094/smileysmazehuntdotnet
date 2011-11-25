@@ -7,6 +7,11 @@ namespace Smiley.Lib.Menu
 {
     public class OptionsScreen : BaseMenuScreen
     {
+        public OptionsScreen(MainMenu mainMenu)
+            : base(mainMenu)
+        {
+        }
+
         public override bool ShouldDrawMouse
         {
             get { return true; }

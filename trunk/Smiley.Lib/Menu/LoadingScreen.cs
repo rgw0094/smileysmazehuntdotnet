@@ -7,6 +7,11 @@ namespace Smiley.Lib.Menu
 {
     public class LoadingScreen : BaseMenuScreen
     {
+        public LoadingScreen(MainMenu mainMenu)
+            : base(mainMenu)
+        {
+        }
+
         public override bool ShouldDrawMouse
         {
             get { return true; }
