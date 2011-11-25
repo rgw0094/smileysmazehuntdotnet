@@ -7,6 +7,7 @@
   * Animation Class
   * SoundManager
   * Choose config mechanism (XML????? 3rd party?!??!!?)
+  * Convert all sounds/music to mp3
   * Convert font info to code
   * Convert sound info to code
 
