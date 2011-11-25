@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
 using Microsoft.Xna.Framework;
+using Smiley.Lib.Data;
 
 namespace Smiley.Lib.Framework.Drawing
 {
@@ -11,7 +12,9 @@ namespace Smiley.Lib.Framework.Drawing
     {
         #region Private Variables
 
-        private TileSet _tileSet;
+        private AnimationInfo _info;
+        private float _lastFrameChange;
+        private int _activeFrame;
 
         #endregion
 
@@ -20,22 +23,12 @@ namespace Smiley.Lib.Framework.Drawing
         /// <summary>
         /// Constructs a new Animation.
         /// </summary>
-        /// <param name="texture"></param>
-        /// <param name="rect"></param>
-        /// <param name="numFrames"></param>
-        /// <param name="fps"></param>
-        /// <param name="hotSpot"></param>
-        /// <param name="reverse"></param>
-        /// <param name="loop"></param>
-        /// <param name="pingPong"></param>
-        public Animation(SmileyTexture texture, Rectangle rect, int numFrames, double fps, Vector2? hotSpot = null, bool reverse = false, bool loop = false, bool pingPong = false)
+        /// <param name="info">The info defining the animation. See <see cref="Animations"/> for predefined AnimationInfos</param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public Animation(AnimationInfo info, float x, float y)
         {
-            _tileSet = new TileSet(texture, numFrames, rect, hotSpot);
-            NumFrames = numFrames;
-            FPS = fps;
-            Reverse = reverse;
-            Loop = loop;
-            PingPong = pingPong;
+            _info = info;
         }
 
         #endregion
@@ -43,45 +36,18 @@ namespace Smiley.Lib.Framework.Drawing
         #region Properties
 
         /// <summary>
-        /// The number of frames in the animation.
+        /// Gets or sets the current x position.
         /// </summary>
-        public int NumFrames
+        public float X
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
-        /// FPS to play the animation.
+        /// Gets or sets the current y position.
         /// </summary>
-        public double FPS
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Whether or not to play the animation in reverse.
-        /// </summary>
-        public bool Reverse
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Whether or not to loop the animation.
-        /// </summary>
-        public bool Loop
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Whether or not the animation ping pongs.
-        /// </summary>
-        public bool PingPong
+        public float Y
         {
             get;
             set;
@@ -102,19 +68,27 @@ namespace Smiley.Lib.Framework.Drawing
 
         public void Play()
         {
+            IsPlaying = true;
+            _lastFrameChange = SMH.Now;
         }
 
         public void Stop()
         {
-
+            IsPlaying = false;
         }
 
         public override void Update(float dt)
         {
+            if (IsPlaying && SMH.TimePassed(_lastFrameChange, 1f / _info.FPS))
+            {
+                _activeFrame = _activeFrame == _info.TileSet.Count - 1 ? 0 : _activeFrame + 1;
+                _lastFrameChange = SMH.Now;
+            }
         }
 
         public override void Draw()
         {
+            SMH.Graphics.DrawSprite(_info.TileSet[_activeFrame], X, Y);
         }
 
         #endregion
