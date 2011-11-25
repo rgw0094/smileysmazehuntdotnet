@@ -13,6 +13,7 @@ using Smiley.Lib.Services;
 using Smiley.Lib.Menu;
 using Smiley.Lib.Framework;
 using Smiley.Lib.Framework.Drawing;
+using Smiley.Lib.Enums;
 
 namespace Smiley.Lib
 {
@@ -21,6 +22,7 @@ namespace Smiley.Lib
         #region Private Variables
 
         private GraphicsDeviceManager _graphicsDeviceManager;
+        private static MainMenu _mainMenu;
 
         #endregion
 
@@ -46,7 +48,17 @@ namespace Smiley.Lib
         public static InputManager Input { get; private set; }
         public static SmileyData Data { get; private set; }
         public static Graphics2DWrapper Graphics { get; private set; }
-        public static MainMenu MainMenu { get; private set; }
+        public static SoundManager Sound { get; private set; }
+        public static SMH Game { get; private set; }
+
+        /// <summary>
+        /// Shows the main menu.
+        /// </summary>
+        public static void ShowMenu()
+        {
+            _mainMenu = new MainMenu();
+            SMH.Sound.PlayMusic(Music.Menu);
+        }
 
         /// <summary>
         /// Returns the current time in seconds.
@@ -74,10 +86,10 @@ namespace Smiley.Lib
 
         protected override void LoadContent()
         {
+            Sound = new SoundManager(Content);
             Graphics = new Graphics2DWrapper(_graphicsDeviceManager);            
             Data = new SmileyData(Content);
             Input = new InputManager();
-            MainMenu = new MainMenu();
         }
 
         protected override void UnloadContent()
@@ -87,21 +99,39 @@ namespace Smiley.Lib
             Content.Unload();
         }
 
+        protected override void BeginRun()
+        {
+            ShowMenu();
+
+            base.BeginRun();
+        }
+
         protected override void Update(GameTime gameTime)
         {
             Now = (float)gameTime.TotalGameTime.Ticks / 10000000f;
             float dt = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
 
-            MainMenu.Update(dt);
             Input.Update(dt);
+            if (_mainMenu != null)
+            {
+                _mainMenu.Update(dt);
+            }
+            else
+            {
+            }
 
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             Graphics.BeginFrame();
-            MainMenu.Draw();
+            if (_mainMenu != null)
+            {
+                _mainMenu.Draw();
+            }
+            else
+            {
+            }
             Graphics.EndFrame();
         }
 

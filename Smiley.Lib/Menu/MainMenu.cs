@@ -38,7 +38,7 @@ namespace Smiley.Lib.Menu
         public void ShowScreen<TScreen>()
             where TScreen : BaseMenuScreen
         {
-            ShowScreen((BaseMenuScreen)typeof(TScreen).GetConstructor(Type.EmptyTypes).Invoke(null));
+            ShowScreen((BaseMenuScreen)typeof(TScreen).GetConstructor(new Type[] { typeof(MainMenu) }).Invoke(new object[] { this }));
         }
 
         /// <summary>

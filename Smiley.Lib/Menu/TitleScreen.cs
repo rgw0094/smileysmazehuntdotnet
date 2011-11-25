@@ -31,7 +31,8 @@ namespace Smiley.Lib.Menu
         /// <summary>
         /// Constructs a new title screen.
         /// </summary>
-        public TitleScreen()
+        public TitleScreen(MainMenu mainMenu)
+             : base(mainMenu)
         {
             EnterState(MenuState.InScreen);
 
@@ -127,10 +128,10 @@ namespace Smiley.Lib.Menu
                 switch (_clickedButton)
                 {
                     case TitleScreenButton.Play:
-                        SMH.MainMenu.ShowScreen<LoadingScreen>();
+                        MainMenu.ShowScreen<LoadingScreen>();
                         break;
                     case TitleScreenButton.Options:
-                        SMH.MainMenu.ShowScreen<OptionsScreen>();
+                        MainMenu.ShowScreen<OptionsScreen>();
                         break;
                     case TitleScreenButton.Exit:
                         //return true;//TODO:

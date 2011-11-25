@@ -6,45 +6,48 @@ using Smiley.Lib.Framework;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using Smiley.Lib.Enums;
+using Microsoft.Xna.Framework.Content;
 
 namespace Smiley.Lib.Services
 {
+    /// <summary>
+    /// Manages the playing of all sounds and music.
+    /// </summary>
     public class SoundManager
     {
+        private const float SwitchSoundDelay = 0.5f;
+
         #region Private Variables
 
-        private Music _currentMusic;
-        private Music _previousMusic;
-        private TimeSpan _previousMusicPosition;
+        private SoundEffectInstance _currentMusic;
+        private SoundEffectInstance _previousMusic;
+        private Dictionary<Sound, SoundEffectInstance> _loopedSounds = new Dictionary<Sound, SoundEffectInstance>();
+        private Dictionary<Sound, float> _lastPlayedTimes = new Dictionary<Sound, float>();
+        private ContentManager _contentManager;
+        private float _lastSwitchTime;
         private int _soundVolumne;
         private int _musicVolume;
 
         #endregion
 
-        #region SoundManager
+        #region Constructor
 
         /// <summary>
-        /// 
+        /// Constructs a new SoundManager.
         /// </summary>
-        public SoundManager()
+        public SoundManager(ContentManager contentManager)
         {
-            //Music volume starts at what it was when app was closed last
-            //setMusicVolume(smh->hge->Ini_GetInt("Options", "musicVolume", 100));
-            //setSoundVolume(smh->hge->Ini_GetInt("Options", "soundVolume", 100));
+            _contentManager = contentManager;
 
-            //abilityChannelActive = false;
-            //environmentChannelActive = false;
-            //iceChannelActive = false;
+            //Music volume starts at what it was when app was closed last
+            //TODO: load from config
+            MusicVolume = 100;
+            SoundVolume = 100;
         }
 
         #endregion
 
         #region Properties
-
-        public string CurrentSongName
-        {
-            get { return _currentMusic.GetDescription(); }
-        }
 
         /// <summary>
         /// Gets or sets the current sound volume from 0 to 100.
@@ -54,9 +57,11 @@ namespace Smiley.Lib.Services
             get { return _soundVolumne; }
             set
             {
-                _soundVolumne = Math.Min(100, Math.Max(0, value));
-                //smh->hge->System_SetState(HGE_FXVOLUME, soundVolume);
-                //smh->hge->Ini_SetInt("Options", "soundVolume", soundVolume);
+                if (_soundVolumne != value)
+                {
+                    _soundVolumne = Math.Min(100, Math.Max(0, value));
+                    //TODO: update in config;
+                }
             }
         }
 
@@ -68,9 +73,15 @@ namespace Smiley.Lib.Services
             get { return _musicVolume; }
             set
             {
-                _musicVolume = Math.Min(100, Math.Max(0, value));
-                //        smh->hge->Channel_SetVolume(musicChannel, musicVolume);
-                //smh->hge->Ini_SetInt("Options", "musicVolume", musicVolume);
+                if (_musicVolume != value)
+                {
+                    _musicVolume = Math.Min(100, Math.Max(0, value));
+                    if (_currentMusic != null)
+                    {
+                        _currentMusic.Volume = value;
+                    }
+                    //TODO: update in config;
+                }
             }
         }
 
@@ -78,75 +89,53 @@ namespace Smiley.Lib.Services
 
         #region Public Methods
 
-        public void ResetLoopingChannels()
-        {
-            //stopAbilityChannel();
-            //stopIceChannel();
-            //stopEnvironmentChannel();
-        }
-
-        /**
-         * Changes the music channel to play the specified song.
-         */
+        /// <summary>
+        /// Changes the music channel to play the specified song.
+        /// </summary>
+        /// <param name="music"></param>
         public void PlayMusic(Music music)
         {
+            if (_previousMusic != null)
+                _previousMusic.Dispose();
+
+            if (_currentMusic != null)
+                _currentMusic.Pause();
 
             _previousMusic = _currentMusic;
-            _previousMusicPosition = MediaPlayer.PlayPosition;
-            _currentMusic = music;
-
-            //smh->hge->Channel_Stop(musicChannel);
-            //smh->hge->Music_SetPos(smh->resources->GetMusic(music),0,0);
-            //musicChannel = smh->hge->Music_Play(smh->resources->GetMusic(music),true,musicVolume);
-
+            _currentMusic = _contentManager.Load<SoundEffect>(music.GetDescription()).CreateInstance();
+            _currentMusic.IsLooped = true;
+            _currentMusic.Volume = (float)MusicVolume / 100f;
+            _currentMusic.Play();
         }
 
+        /// <summary>
+        /// Plays the music for the given level.
+        /// </summary>
+        /// <param name="level"></param>
         public void PlayLevelMusic(Level level)
         {
             if (level == Level.FOUNTAIN_AREA)
-            {
                 PlayMusic(Music.Town);
-            }
             else if (level == Level.OLDE_TOWNE)
-            {
                 PlayMusic(Music.OldeTown);
-            }
             else if (level == Level.SMOLDER_HOLLOW)
-            {
                 PlayMusic(Music.SmolderHollow);
-            }
             else if (level == Level.FOREST_OF_FUNGORIA)
-            {
                 PlayMusic(Music.Forest);
-            }
             else if (level == Level.SESSARIA_SNOWPLAINS)
-            {
                 PlayMusic(Music.Ice);
-            }
             else if (level == Level.TUTS_TOMB)
-            {
                 PlayMusic(Music.KingTut);
-            }
             else if (level == Level.WORLD_OF_DESPAIR)
-            {
                 PlayMusic(Music.Despair);
-            }
             else if (level == Level.SERPENTINE_PATH)
-            {
                 PlayMusic(Music.SerpentinePath);
-            }
             else if (level == Level.CASTLE_OF_EVIL)
-            {
                 PlayMusic(Music.CastleOfEvil);
-            }
             else if (level == Level.CONSERVATORY)
-            {
                 PlayMusic(Music.Conservatory);
-            }
             else if (level == Level.DEBUG_AREA)
-            {
                 StopMusic();
-            }
         }
 
         /// <summary>
@@ -154,7 +143,9 @@ namespace Smiley.Lib.Services
         /// </summary>
         public void StopMusic()
         {
-            MediaPlayer.Stop();
+            _currentMusic.Stop();
+            _currentMusic.Dispose();
+            _currentMusic = null;
         }
 
         /// <summary>
@@ -162,18 +153,20 @@ namespace Smiley.Lib.Services
         /// </summary>
         public void FadeOutMusic()
         {
-            //smh->hge->Channel_SlideTo(musicChannel,3.0f,0,-101,-1.0f);
+            //TODO:
+            throw new NotImplementedException();
         }
 
         /// <summary>
         /// Returns to the last song played at the position where it stopped.
         /// </summary>
-        public void playPreviousMusic()
+        public void ResumePreviousMusic()
         {
-            //smh->hge->Channel_Stop(musicChannel);
-            //musicChannel = smh->hge->Music_Play(smh->resources->GetMusic(previousMusic.c_str()),true,musicVolume);
-            //smh->hge->Channel_SetPos(musicChannel, previousMusicPosition);
-            //currentMusic = previousMusic;
+            if (_previousMusic == null) throw new Exception("ResumePreviousMusic called when there is no previous song");
+
+            StopMusic();
+            _currentMusic = _previousMusic;
+            _currentMusic.Resume();
         }
 
         /// <summary>
@@ -187,97 +180,98 @@ namespace Smiley.Lib.Services
         /// <param name="alwaysPlaySound"></param>
         public void PlaySwitchSound(int gridX, int gridY, bool alwaysPlaySound)
         {
-            //if (smh->timePassedSince(lastSwitchSoundTime) > SWITCH_SOUND_DELAY) {
-            //        bool inRange = abs(gridX - smh->player->gridX) <= 8 && abs(gridY - smh->player->gridY) <= 6;
-            //        if (alwaysPlaySound || inRange) {
-            //                lastSwitchSoundTime = smh->getGameTime();
-            //                playSound("snd_switch");
-            //        }
-            //}
+            if (SMH.TimePassed(_lastSwitchTime, SwitchSoundDelay))
+            {
+                //TODO:
+                bool inRange = true;// abs(gridX - smh->player->gridX) <= 8 && abs(gridY - smh->player->gridY) <= 6;
+                if (alwaysPlaySound || inRange)
+                {
+                    _lastSwitchTime= SMH.Now;
+                    PlaySound(Sound.Switch);
+                }
+            }
         }
 
-        public void PlayEnvironmentEffect(Sound sound, bool loop)
+        /// <summary>
+        /// Stops all currently playing sounds;
+        /// </summary>
+        public void StopAllLoopedSounds()
         {
-            //if (environmentChannelActive) return;
-            //if (smh->player->getHealth() <= 0.0) return;
-
-            //environmentChannel = smh->hge->Effect_PlayEx(smh->resources->GetEffect(effect),100,0,1.0f,loop);
-            //environmentChannelActive = true;
+            foreach (KeyValuePair<Sound, SoundEffectInstance> kvp in _loopedSounds)
+            {
+                kvp.Value.Stop();
+                kvp.Value.Dispose();
+            }
+            _loopedSounds.Clear();
         }
 
-        public void StopEnvironmentChannel()
+        /// <summary>
+        /// Starts looping the given sound. The sound will continue to loop until StopLoopingSound
+        /// is called. The same sound cannot be looped more than once.
+        /// </summary>
+        /// <param name="sound"></param>
+        public void StartLoopingSound(Sound sound)
         {
-            //smh->hge->Channel_Stop(environmentChannel);
-            //environmentChannelActive = false;
+            if (_loopedSounds.ContainsKey(sound))
+                throw new Exception(sound.ToString() + " is already looping");
+
+            SoundEffectInstance instance = _contentManager.Load<SoundEffect>(sound.GetDescription()).CreateInstance();
+            instance.IsLooped = true;
+            instance.Volume = SoundVolume;
+            instance.Play();
+
+            _loopedSounds[sound] = instance;
         }
 
-        public void PlayAbilityEffect(Sound sound, bool loop)
+        /// <summary>
+        /// Stops looping a sound.
+        /// </summary>
+        /// <param name="sound"></param>
+        public void StopLoopingSound(Sound sound)
         {
-            //if (abilityChannelActive) return;
-            //if (smh->player->getHealth() <= 0.0) return;
+            SoundEffectInstance instance = null;
+            if (!_loopedSounds.TryGetValue(sound, out instance))
+            {
+                throw new Exception(sound.ToString() + " is not looping");
+            }
 
-            //abilityChannel = smh->hge->Effect_PlayEx(smh->resources->GetEffect(effect),100,0,1.0f,loop);
-            //abilityChannelActive = true;
+            instance.Stop();
+            instance.Dispose();
+            _loopedSounds.Remove(sound);
         }
 
-        public void StopAbilityChannel()
-        {
-            //smh->hge->Channel_Stop(abilityChannel);
-            //abilityChannelActive = false;
-        }
-
-        public void PlayIceEffect(Sound sound, bool loop)
-        {
-            //if (iceChannelActive) return;
-            //if (smh->player->getHealth() <= 0.0) return;
-
-            //iceChannel = smh->hge->Effect_PlayEx(smh->resources->GetEffect(effect),100,0,1.0f,loop);
-            //iceChannelActive = true;
-        }
-
-        public void StopIceChannel()
-        {
-            //smh->hge->Channel_Stop(iceChannel);
-            //iceChannelActive = false;
-        }
-
+        /// <summary>
+        /// Plays a sound effect.
+        /// </summary>
+        /// <param name="sound"></param>
         public void PlaySound(Sound sound)
         {
             PlaySound(sound, 0);
         }
 
+        /// <summary>
+        /// Plays a sound unless the same sound was already played in the last specified amount of time.
+        /// </summary>
+        /// <param name="sound"></param>
+        /// <param name="delay"></param>
         public void PlaySound(Sound sound, float delay)
         {
+            float lastPlayed;
+            bool playSound = true;
+            if (_lastPlayedTimes.TryGetValue(sound, out lastPlayed))
+            {
+                playSound = SMH.TimePassed(lastPlayed, delay);
+            }
+            else
+            {
+                _lastPlayedTimes[sound] = SMH.Now;
+            }
 
-            //bool play = false;
-
-            //if (delay == 0.0) {
-            //        play = true;
-            //} else {
-            //        bool soundFound = false;
-            //        //Search the last played list and find the last time that the sound was played to check if the delay has passed yet
-            //        for (std::list<Sound>::iterator i = lastPlayTimes.begin(); i != lastPlayTimes.end(); i++) {
-            //                if (strcmp(i->name.c_str(), sound) == 0) {
-            //                        soundFound = true;
-            //                        if (smh->timePassedSince(i->lastTimePlayed) >= delay) {
-            //                                play = true;
-            //                                i->lastTimePlayed = smh->getGameTime();
-            //                        }
-            //                }
-            //        }
-            //        //Handle the case where the sound hasn't been played yet
-            //        if (!soundFound) {
-            //                play = true;
-            //                Sound newSound;
-            //                newSound.name = sound;
-            //                newSound.lastTimePlayed = smh->getGameTime();
-            //                lastPlayTimes.push_back(newSound);
-            //        }
-            //}
-
-            //if (play) {
-            //        smh->hge->Effect_Play(smh->resources->GetEffect(sound));
-            //}
+            if (playSound)
+            {
+                SoundEffect sfx = _contentManager.Load<SoundEffect>(sound.GetDescription());
+                sfx.Play(SoundVolume, 0, 0);
+            }
         }
 
         #endregion
