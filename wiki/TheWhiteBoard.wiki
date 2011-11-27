@@ -33,3 +33,4 @@
 ||RGW||11/25/11||Implemented Animation class||
 ||RGW||11/26/11||Ported CollisionCircle||
 ||RGW||11/26/11||Ported loading maps||
+||RGW||11/26/11||Ported TitleScreen||
