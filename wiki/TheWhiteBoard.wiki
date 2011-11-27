@@ -7,7 +7,6 @@
   * Input GameText into source code
 
 = Rob's to-do list =
-  * Loading levels
   * Port environment class
   * Choose config mechanism (XML????? 3rd party?!??!!?)
   * Port the fonts
@@ -32,3 +31,5 @@
 ||RGW||11/25/11||Converted sound/music info to code||
 ||RGW||11/25/11||Ported SoundManager||
 ||RGW||11/25/11||Implemented Animation class||
+||RGW||11/26/11||Ported CollisionCircle||
+||RGW||11/26/11||Ported loading maps||
