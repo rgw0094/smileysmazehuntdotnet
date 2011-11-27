@@ -13,7 +13,7 @@ namespace Smiley.Lib.Menu
         ExitingScreen
     }
 
-    public abstract class BaseMenuScreen : GameObject
+    public abstract class BaseMenuScreen
     {
         /// <summary>
         /// Constructs a new BaseMenuScreen.
@@ -66,6 +66,17 @@ namespace Smiley.Lib.Menu
             get;
             private set;
         }
+
+        /// <summary>
+        /// Draws the screen.
+        /// </summary>
+        public abstract void Draw();
+
+        /// <summary>
+        /// Updates the screen.
+        /// </summary>
+        /// <param name="dt"></param>
+        public abstract void Update(float dt);
 
         protected void EnterState(MenuState newState)
         {

@@ -12,14 +12,14 @@ namespace Smiley.Lib.Data
     {
         public AnimationInfo(SmileyTexture texture, Rectangle rect, int numFrames, float fps, Vector2? hotSpot = null, bool reverse = false, bool loop = false, bool pingPong = false)
         {
-            TileSet = new TileSet(texture, numFrames, rect, hotSpot);
+            TileSet = new SpriteSet(texture, numFrames, rect, hotSpot);
             FPS = fps;
             Reverse = reverse;
             Loop = loop;
             PingPong = pingPong;
         }
 
-        public TileSet TileSet { get; private set; }
+        public SpriteSet TileSet { get; private set; }
         public float FPS { get; private set; }
         public bool Reverse { get; private set; }
         public bool Loop { get; private set; }
