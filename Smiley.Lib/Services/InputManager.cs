@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Smiley.Lib.Services
 {
-    public class InputManager : GameObject
+    public class InputManager
     {
         private const string ConfigFileName = "Smiley.INI";
         private const string InputSection = "Input";
@@ -70,7 +70,7 @@ namespace Smiley.Lib.Services
 
         #region Public Methods
 
-        public override void Update(float dt)
+        public void Update(float dt)
         {
 #if WINDOWS
             MouseState mouseState = Mouse.GetState();

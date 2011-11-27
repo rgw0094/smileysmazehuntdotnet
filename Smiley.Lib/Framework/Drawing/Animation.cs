@@ -8,7 +8,7 @@ using Smiley.Lib.Data;
 
 namespace Smiley.Lib.Framework.Drawing
 {
-    public class Animation : GameObject
+    public class Animation
     {
         #region Private Variables
 
@@ -77,7 +77,7 @@ namespace Smiley.Lib.Framework.Drawing
             IsPlaying = false;
         }
 
-        public override void Update(float dt)
+        public void Update(float dt)
         {
             if (IsPlaying && SMH.TimePassed(_lastFrameChange, 1f / _info.FPS))
             {
@@ -86,7 +86,7 @@ namespace Smiley.Lib.Framework.Drawing
             }
         }
 
-        public override void Draw()
+        public void Draw()
         {
             SMH.Graphics.DrawSprite(_info.TileSet[_activeFrame], X, Y);
         }

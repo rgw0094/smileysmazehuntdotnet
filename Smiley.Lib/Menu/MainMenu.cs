@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.Menu
 {
-    public class MainMenu : GameObject
+    public class MainMenu
     {
         #region Private Variables
 
@@ -60,7 +60,7 @@ namespace Smiley.Lib.Menu
 
         #region GameObject Overrides
 
-        public override void Update(float dt)
+        public void Update(float dt)
         {
             if (_currentScreen != null)
             {
@@ -68,7 +68,7 @@ namespace Smiley.Lib.Menu
             }
         }
 
-        public override void Draw()
+        public void Draw()
         {
             if (_currentScreen.ShouldDrawBackground)
             {

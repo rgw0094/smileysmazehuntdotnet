@@ -95,13 +95,14 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Animations.cs" />
+    <Compile Include="Data\Tiles.cs" />
     <Compile Include="Data\SmileyData.cs" />
     <Compile Include="Data\SaveFile.cs" />
     <Compile Include="Data\SmileyData.Enemies.cs" />
     <Compile Include="Enums\Music.cs" />
     <Compile Include="Enums\SmileyFont.cs" />
     <Compile Include="Data\Sprites.cs" />
-    <Compile Include="Data\TileSets.cs" />
+    <Compile Include="Data\SpriteSets.cs" />
     <Compile Include="Enums\Ability.cs" />
     <Compile Include="Enums\Boss.cs" />
     <Compile Include="Enums\CollisionTile.cs" />
@@ -118,17 +119,22 @@
     <Compile Include="Enums\SmileyTexture.cs" />
     <Compile Include="Enums\Sound.cs" />
     <Compile Include="Enums\Upgrade.cs" />
+    <Compile Include="Framework\CollisionCircle.cs" />
     <Compile Include="Framework\Drawing\Graphics2DWrapper.cs" />
     <Compile Include="Framework\Drawing\Animation.cs" />
-    <Compile Include="Framework\GameObject.cs" />
     <Compile Include="Framework\Drawing\Rect.cs" />
     <Compile Include="Framework\Drawing\Sprite.cs" />
-    <Compile Include="Framework\Drawing\TileSet.cs" />
+    <Compile Include="Framework\Drawing\SpriteSet.cs" />
     <Compile Include="Framework\ParticleSystem.cs" />
     <Compile Include="Framework\ParticleSystemManager.cs" />
     <Compile Include="Enums\WanderType.cs" />
     <Compile Include="Framework\UIControls\BaseControl.cs" />
     <Compile Include="Framework\UIControls\ControlActionGroup.cs" />
+    <Compile Include="GameObjects\Enemies\BaseEnemy.cs" />
+    <Compile Include="GameObjects\Environment\Environment.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\Player\Player.cs" />
+    <Compile Include="GameObjects\Player\Tongue.cs" />
     <Compile Include="Menu\BaseMenuScreen.cs" />
     <Compile Include="Menu\CinematicScreen.cs" />
     <Compile Include="Menu\ClosingCinematicScreen.cs" />
@@ -146,6 +152,7 @@
     <Compile Include="Framework\UIControls\Button.cs" />
     <Compile Include="Framework\BitStream.cs" />
     <Compile Include="Framework\Extensions.cs" />
+    <Compile Include="Util\SmileyUtil.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

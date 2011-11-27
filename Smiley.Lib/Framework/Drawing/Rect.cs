@@ -28,6 +28,16 @@ namespace Smiley.Lib.Framework.Drawing
             set;
         }
 
+        public float Right
+        {
+            get { return X + Width; }
+        }
+
+        public float Bottom
+        {
+            get { return Y + Height; }
+        }
+
         public float Width
         {
             get;
@@ -44,6 +54,12 @@ namespace Smiley.Lib.Framework.Drawing
         {
             return v.X >= X && v.X <= X + Width &&
                    v.Y >= Y && v.Y <= Y + Height;
+        }
+
+        public bool Intersects(Rect rect)
+        {
+            return Math.Abs(X + Right - rect.X - rect.Right) < (Right - X + rect.Right - rect.X) &&
+                   Math.Abs(Y + Bottom - rect.Y - rect.Bottom) < (Bottom - Y + rect.Bottom - rect.Y);
         }
     }
 }

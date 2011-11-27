@@ -14,6 +14,9 @@ using Smiley.Lib.Menu;
 using Smiley.Lib.Framework;
 using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.Enums;
+using Smiley.Lib.GameObjects.Environment;
+using Smiley.Lib.GameObjects;
+using Smiley.Lib.GameObjects.Player;
 
 namespace Smiley.Lib
 {
@@ -49,6 +52,9 @@ namespace Smiley.Lib
         public static SmileyData Data { get; private set; }
         public static Graphics2DWrapper Graphics { get; private set; }
         public static SoundManager Sound { get; private set; }
+        public static SmileyEnvironment Environment { get; private set; }
+        public static Player Player { get; private set; }
+        public static SaveManager SaveManager { get; private set; }
 
         /// <summary>
         /// Shows the main menu.
@@ -60,13 +66,14 @@ namespace Smiley.Lib
         }
 
         /// <summary>
+        /// Gets the amount of time that has elapsed while not in menus.
+        /// </summary>
+        public static float GameTime { get; private set; }
+
+        /// <summary>
         /// Returns the current time in seconds.
         /// </summary>
-        public static float Now
-        {
-            get;
-            private set;
-        }
+        public static float Now { get; private set; }
 
         /// <summary>
         /// Returns whether or not the specified amount of time has passed since the start time.
@@ -79,6 +86,17 @@ namespace Smiley.Lib
             return Now - startTime >= amount;
         }
 
+        /// <summary>
+        /// Returns whether or not the specified amount of time has passed while not in a menu.
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static bool GameTimePassed(float startTime, float amount)
+        {
+            return GameTime - startTime >= amount;
+        }
+
         #endregion
 
         #region Game Overrides
@@ -89,6 +107,9 @@ namespace Smiley.Lib
             Graphics = new Graphics2DWrapper(_graphicsDeviceManager);            
             Data = new SmileyData(Content);
             Input = new InputManager();
+            Environment = new SmileyEnvironment();
+            Player = new Player();
+            SaveManager = new SaveManager();
         }
 
         protected override void UnloadContent()
@@ -102,6 +123,8 @@ namespace Smiley.Lib
         {
             ShowMenu();
 
+            Environment.LoadLevel(Level.FOUNTAIN_AREA, Level.FOUNTAIN_AREA, true);
+
             base.BeginRun();
         }
 
@@ -109,6 +132,10 @@ namespace Smiley.Lib
         {
             Now = (float)gameTime.TotalGameTime.Ticks / 10000000f;
             float dt = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
+            if (true /* not in menu */)
+            {
+                GameTime += dt;
+            }
 
             Input.Update(dt);
             if (_mainMenu != null)

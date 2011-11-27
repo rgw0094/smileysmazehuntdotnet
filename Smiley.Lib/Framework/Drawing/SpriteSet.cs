@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.Framework.Drawing
 {
-    public class TileSet
+    public class SpriteSet
     {
         #region Private Variables
 
@@ -29,7 +29,7 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="numTiles"></param>
         /// <param name="rect"></param>
         /// <param name="hotSpot"></param>
-        public TileSet(SmileyTexture texture, int numTiles, Rectangle rect, Vector2? hotSpot = null)
+        public SpriteSet(SmileyTexture texture, int numTiles, Rectangle rect, Vector2? hotSpot = null)
         {
             //Defer creating the tile sprites until they are accessed, because we need the texture height/width
             //to compute the sprites and they might not be loaded yet!

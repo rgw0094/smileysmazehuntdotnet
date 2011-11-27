@@ -21,5 +21,13 @@ namespace Smiley.Lib.Menu
         {
             get { return true; }
         }
+
+        public override void Draw()
+        {
+        }
+
+        public override void Update(float dt)
+        {
+        }
     }
 }

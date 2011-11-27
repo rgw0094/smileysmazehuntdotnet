@@ -148,6 +148,16 @@ namespace Smiley.Lib.Data
         }
 
         /// <summary>
+        /// Toggles whether or not a tile has been changed for the currently loaded level.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void ChangeTile(int x, int y)
+        {
+            ChangeTile(Level, x, y);
+        }
+
+        /// <summary>
         /// Toggles whether or not a tile has been changed for a certain level.
         /// </summary>
         /// <param name="level"></param>
@@ -178,9 +188,9 @@ namespace Smiley.Lib.Data
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public bool IsTileChanged(Level level, int x, int y)
+        public bool IsTileChanged(int x, int y)
         {
-            return _changes.Exists(c => c.Level == level && c.X == x && c.Y == y);
+            return _changes.Exists(c => c.Level == Level && c.X == x && c.Y == y);
         }
 
         /// <summary>
