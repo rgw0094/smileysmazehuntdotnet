@@ -12,7 +12,6 @@ namespace Smiley.Lib.Framework.Drawing
     {
         #region Private Variables
 
-        private AnimationInfo _info;
         private float _lastFrameChange;
         private int _activeFrame;
 
@@ -23,35 +22,45 @@ namespace Smiley.Lib.Framework.Drawing
         /// <summary>
         /// Constructs a new Animation.
         /// </summary>
-        /// <param name="info">The info defining the animation. See <see cref="Animations"/> for predefined AnimationInfos</param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public Animation(AnimationInfo info, float x, float y)
+        /// <param name="texture"></param>
+        /// <param name="rect"></param>
+        /// <param name="numFrames"></param>
+        /// <param name="fps"></param>
+        /// <param name="hotSpot"></param>
+        /// <param name="reverse"></param>
+        /// <param name="loop"></param>
+        /// <param name="pingPong"></param>
+        public Animation(SmileyTexture texture, Rectangle rect, int numFrames, float fps, Vector2? hotSpot = null, bool reverse = false, bool loop = false, bool pingPong = false)
+            : this(new SpriteSet(texture, numFrames, rect, hotSpot), fps, reverse, loop, pingPong)
         {
-            _info = info;
+        }
+
+        /// <summary>
+        /// Constructs a new Animation.
+        /// </summary>
+        /// <param name="sprites"></param>
+        /// <param name="fps"></param>
+        /// <param name="reverse"></param>
+        /// <param name="loop"></param>
+        /// <param name="pingPong"></param>
+        public Animation(SpriteSet sprites, float fps, bool reverse = false, bool loop = false, bool pingPong = false)
+        {
+            Sprites = sprites;
+            FPS = fps;
+            Reverse = reverse;
+            Loop = loop;
+            PingPong = pingPong;
         }
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        /// Gets or sets the current x position.
-        /// </summary>
-        public float X
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the current y position.
-        /// </summary>
-        public float Y
-        {
-            get;
-            set;
-        }
+        public SpriteSet Sprites { get; private set; }
+        public float FPS { get; private set; }
+        public bool Reverse { get; private set; }
+        public bool Loop { get; private set; }
+        public bool PingPong { get; private set; }
 
         /// <summary>
         /// Returns whether or not the animation is currently playing.
@@ -66,6 +75,15 @@ namespace Smiley.Lib.Framework.Drawing
 
         #region Public Methods
 
+        /// <summary>
+        /// Creates a new Animation with the same properties as the current instance.
+        /// </summary>
+        /// <returns></returns>
+        public Animation Clone()
+        {
+            return new Animation(Sprites, FPS, Reverse, Loop, PingPong);
+        }
+
         public void Play()
         {
             IsPlaying = true;
@@ -79,16 +97,22 @@ namespace Smiley.Lib.Framework.Drawing
 
         public void Update(float dt)
         {
-            if (IsPlaying && SMH.TimePassed(_lastFrameChange, 1f / _info.FPS))
+            if (IsPlaying && SMH.TimePassed(_lastFrameChange, 1f / FPS))
             {
-                _activeFrame = _activeFrame == _info.TileSet.Count - 1 ? 0 : _activeFrame + 1;
+                _activeFrame = _activeFrame == Sprites.Count - 1 ? 0 : _activeFrame + 1;
                 _lastFrameChange = SMH.Now;
             }
         }
 
-        public void Draw()
+        public void Draw(float x, float y)
         {
-            SMH.Graphics.DrawSprite(_info.TileSet[_activeFrame], X, Y);
+            Draw(x, y, 1f);
+        }
+
+        public void Draw(float x, float y, float alpha)
+        {
+            //TODO:
+            SMH.Graphics.DrawSprite(Sprites[_activeFrame], x, y);
         }
 
         #endregion

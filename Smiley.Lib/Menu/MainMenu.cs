@@ -6,6 +6,7 @@ using Smiley.Lib.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Smiley.Lib.Data;
 using Microsoft.Xna.Framework;
+using Smiley.Lib.Enums;
 
 namespace Smiley.Lib.Menu
 {
@@ -50,7 +51,7 @@ namespace Smiley.Lib.Menu
             _currentScreen = screen;
         }
 
-        public void OpenLoadScreen(int file, bool fromLoadingScreen)
+        public void OpenLoadScreen(SaveSlot saveSlot, bool fromLoadingScreen)
         {
             //TODO:
             //ShowScreen(new LoadingScreen(file, fromLoadingScreen));
@@ -73,10 +74,7 @@ namespace Smiley.Lib.Menu
             if (_currentScreen.ShouldDrawBackground)
             {
                 SMH.Graphics.DrawSprite(Sprites.MenuBackground, 0.0f, 0.0f);
-
-                //smh->resources->GetFont("controls")->SetScale(0.9);
-                SMH.Graphics.DrawString(SmileyFont.Controls, "www.smileysmazehunt.com", 760f, 740f);
-                //smh->resources->GetFont("controls")->SetScale(1.0);
+                SMH.Graphics.DrawString(SmileyFont.Controls, "www.smileysmazehunt.com", 1010f, 740f, TextAlignment.Right, Color.Black,  0.9f);
             }
 
             _currentScreen.Draw();

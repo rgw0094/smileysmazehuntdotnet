@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Smiley.Lib.Framework.UIControls;
 using Smiley.Lib.Data;
+using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.Menu
 {
@@ -37,9 +38,9 @@ namespace Smiley.Lib.Menu
             EnterState(MenuState.InScreen);
 
             //The buttons start off the screen, the control action group will move them up
-            _buttons[TitleScreenButton.Exit] = new Button(67, 785, "Exit");
-            _buttons[TitleScreenButton.Options] = new Button(387, 785, "Options");
-            _buttons[TitleScreenButton.Play] = new Button(707, 785, "Play");
+            _buttons[TitleScreenButton.Exit] = new Button(67f, 785f, "Exit");
+            _buttons[TitleScreenButton.Options] = new Button(387f, 785f, "Options");
+            _buttons[TitleScreenButton.Play] = new Button(707f, 785f, "Play");
 
             _smileyTitleX = 1024f / 2f;
             _smileyTitleY = 118;
@@ -128,13 +129,13 @@ namespace Smiley.Lib.Menu
                 switch (_clickedButton)
                 {
                     case TitleScreenButton.Play:
-                        MainMenu.ShowScreen<LoadingScreen>();
+                        MainMenu.ShowScreen<SelectFileScreen>();
                         break;
                     case TitleScreenButton.Options:
                         MainMenu.ShowScreen<OptionsScreen>();
                         break;
                     case TitleScreenButton.Exit:
-                        //return true;//TODO:
+                        SMH.Game.Exit();
                         break;
                 }
             }

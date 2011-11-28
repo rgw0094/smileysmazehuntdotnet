@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.Data;
+using Smiley.Lib.Enums;
 
 namespace Smiley.Lib.Framework.Drawing
 {
@@ -64,28 +65,57 @@ namespace Smiley.Lib.Framework.Drawing
         }
 
         /// <summary>
-        /// Draws a string starting at a point.
+        /// Draws a string.
         /// </summary>
         /// <param name="font"></param>
         /// <param name="text"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void DrawString(SmileyFont font, string text, float x, float y)
+        /// <param name="alignment"></param>
+        public void DrawString(SmileyFont font, string text, float x, float y, TextAlignment alignment)
         {
-            _spriteBatch.DrawString(SMH.Data.GetFont(font), text, new Vector2(x, y), Color.Black);
+            DrawString(font, text, x, y, alignment, Color.Black, 1f);
         }
 
         /// <summary>
-        /// Draws a string centered at a point.
+        /// Draws a string.
         /// </summary>
         /// <param name="font"></param>
         /// <param name="text"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void DrawStringCentered(SmileyFont font, string text, float x, float y)
+        /// <param name="alignment"></param>
+        /// <param name="color"></param>
+        public void DrawString(SmileyFont font, string text, float x, float y, TextAlignment alignment, Color color)
         {
-            Vector2 v = SMH.Data.GetFont(font).MeasureString(text);
-            DrawString(font, text, x - v.X / 2f, y - v.Y / 2f);
+            DrawString(font, text, x, y, alignment, color, 1f);
+        }
+
+        /// <summary>
+        /// Draws a string.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="text"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="alignment"></param>
+        /// <param name="color"></param>
+        /// <param name="scale"></param>
+        public void DrawString(SmileyFont font, string text, float x, float y, TextAlignment alignment, Color color, float scale)
+        {
+            Vector2 drawVector = new Vector2(x, y);
+            if (alignment == TextAlignment.Center)
+            {
+                Vector2 v = SMH.Data.GetFont(font).MeasureString(text);
+                drawVector = new Vector2(x - v.X / 2f, y);
+            }
+            else if (alignment == TextAlignment.Right)
+            {
+                Vector2 v = SMH.Data.GetFont(font).MeasureString(text);
+                drawVector = new Vector2(x - v.X, y);
+            }
+
+            _spriteBatch.DrawString(SMH.Data.GetFont(font), text, drawVector, color, 0, new Vector2(0, 0), scale, SpriteEffects.None, 0);
         }
 
         /// <summary>
@@ -147,6 +177,16 @@ namespace Smiley.Lib.Framework.Drawing
 
                 _spriteBatch.Draw(texture, drawRect, sprite.Rect, Color.White);
             }
+        }
+
+        public void DrawRect(Rect rect, Color color)
+        {
+            Texture2D texture = SMH.Data.GetTexture(SmileyTexture.UserInterface);
+
+            _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, 1), color);//top
+            _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, 1, (int)rect.Height), color);//left
+            _spriteBatch.Draw(texture, new Rectangle((int)rect.X + (int)rect.Width, (int)rect.Y, 1, (int)rect.Height), color);//right
+            _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y + (int)rect.Height, (int)rect.Width, 1), color);//bottom
         }
 
         #endregion

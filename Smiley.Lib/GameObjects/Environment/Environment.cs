@@ -14,12 +14,38 @@ namespace Smiley.Lib.GameObjects.Environment
 {
     public class SmileyEnvironment
     {
-        public const float SwitchDelay = 0.15f;
-        public const float TongueSwitchDelay = 0.40f;
+        
 
         #region Private Variables
 
         private List<Timer> _timers = new List<Timer>();
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new SmileyEnvironment.
+        /// </summary>
+        public SmileyEnvironment()
+        {
+            Animations.SaveShrine.Play();
+            Animations.Water.Play();
+            Animations.GreenWater.Play();
+            Animations.Lava.Play();
+
+            //smh->log("Creating Environment.SpecialTileManager");
+            //specialTileManager = new SpecialTileManager();
+            //smh->log("Creating Environment.EvilWallManager");
+            //evilWallManager = new EvilWallManager();
+            //smh->log("Creating Environment.TapestryManager");
+            //tapestryManager = new TapestryManager();
+            //smh->log("Creating Environment.SmileletManager");
+            //smileletManager = new SmileletManager();
+
+            //collisionBox = new hgeRect();
+            //collisionCircle = new CollisionCircle();
+        }
 
         #endregion
 
@@ -33,6 +59,16 @@ namespace Smiley.Lib.GameObjects.Environment
             get;
             private set;
         }
+
+        /// <summary>
+        /// Number of pixels the player is off alignment with the grid.
+        /// </summary>
+        public float XOffset { get; private set; }
+
+        /// <summary>
+        /// Number of pixels the player is off alignment with the grid.
+        /// </summary>
+        public float YOffset { get; private set; }
 
         #endregion
 
@@ -108,9 +144,9 @@ namespace Smiley.Lib.GameObjects.Environment
 
                 //Setup items
                 if (SMH.SaveManager.CurrentSave.IsTileChanged(tile.X, tile.Y) &&
-                    tile.Item != ItemTile.MANA_ITEM && tile.Item != ItemTile.HEALTH_ITEM)
+                    (ItemTile)tile.Item != ItemTile.MANA_ITEM && (ItemTile)tile.Item != ItemTile.HEALTH_ITEM)
                 {
-                    tile.Item = ItemTile.NONE;
+                    tile.Item = (int)ItemTile.NONE;
                 }
                 else if ((int)tile.Item >= 16 && (int)tile.Item < 32)
                 {
@@ -118,7 +154,8 @@ namespace Smiley.Lib.GameObjects.Environment
                 }
 
                 //Setup enemies
-                if (tile.Enemy == 255)
+                int enemy = tile.Enemy + 1;//enemy codes are fucked in the editor
+                if (enemy == 255)
                 {
                     //255 is fenwar encounter
                     if (!SMH.SaveManager.CurrentSave.IsTileChanged(tile.X, tile.Y))
@@ -126,15 +163,15 @@ namespace Smiley.Lib.GameObjects.Environment
                         //smh->fenwarManager->addFenwarEncounter(col, row, ids[col][row]);
                     }
                 }
-                else if (tile.Enemy >= 240)
+                else if (enemy >= 240)
                 {
                     //240-254 are bosses
-                    if (!SMH.SaveManager.CurrentSave.HasKilledBoss[(Boss)tile.Enemy])
+                    if (!SMH.SaveManager.CurrentSave.HasKilledBoss[(Boss)enemy])
                     {
                         //smh->bossManager->spawnBoss(enemy, variable[col][row], col, row);
                     }
                 }
-                else if (tile.Enemy > 0 && tile.Enemy < SMH.Data.Enemies.Count)
+                else if (enemy > 0 && tile.Enemy < SMH.Data.Enemies.Count)
                 {
                     //1-127 are enemies
                     //if (tile.ID == ENEMYGROUP_ENEMY)
@@ -148,7 +185,7 @@ namespace Smiley.Lib.GameObjects.Environment
                     //    smh->enemyManager->addEnemy(enemy - 1, col, row, .2, .2, variable[col][row], false);
                     //}
                 }
-                else if (tile.Enemy >= 128 && tile.Enemy < 240)
+                else if (enemy >= 128 && enemy < 240)
                 {
                     //if (enemy != 128 + MONOCLE_MAN_NPC_ID || smh->saveManager->adviceManEncounterCompleted)
                     //{
@@ -204,19 +241,16 @@ namespace Smiley.Lib.GameObjects.Environment
 
             //Place the player. If after the first pass there was no zone entrance for where the player came from,
             //scan the area again and put the player in the first start square.
-            int playerX = -1;
-            int playerY = -1;
             for (int i = 0; i < 2; i++)
             {
-                Tile startTile = Tiles.SingleOrDefault(tile => tile.Collision == CollisionTile.PLAYER_START && ((Level)tile.ID == previousLevel) || i == 1);
+                Tile startTile = Tiles.FirstOrDefault(tile => tile.Collision == CollisionTile.PLAYER_START && ((Level)tile.ID == previousLevel) || i == 1);
                 if (startTile != null)
                 {
-                    playerX = startTile.X;
-                    playerY = startTile.Y;
+                    SMH.Player.Tile = startTile;
+                    break;
                 }
             }
 
-            //SMH.Player.moveTo(playerX, playerY);
             //if (smh->saveManager->currentArea == FOUNTAIN_AREA && !smh->saveManager->adviceManEncounterCompleted)
             //{
             //    adviceMan = new AdviceMan(SMH.Player.gridX, SMH.Player.gridY + 1);
@@ -226,6 +260,11 @@ namespace Smiley.Lib.GameObjects.Environment
             Update(0);
             //smh->enemyManager->update(0.0);
             //smh->areaChanger->displayNewAreaName();
+
+            if (playMusic)
+            {
+                SMH.Sound.PlayLevelMusic(level);
+            }
         }
 
         public void Reset()
@@ -254,19 +293,6 @@ namespace Smiley.Lib.GameObjects.Environment
             //    adviceMan = NULL;
             //}
 
-            ////Clear old level data
-            //for (int i = 0; i < 256; i++) {
-            //    for (int j = 0; j < 256; j++) {
-            //        terrain[i][j] = 0;
-            //        collision[i][j] = 0;
-            //        ids[i][j] = -1;
-            //        item[i][j] = 0;
-            //        activated[i][j] = -100.0;
-            //        variable[i][j] = 0;
-            //        enemyLayer[i][j] = -1;
-            //    }
-            //}
-
             //for (std::list<Timer>::iterator i = timerList.begin(); i != timerList.end(); i++) {
             //    i = timerList.erase(i);
             //}
@@ -276,37 +302,24 @@ namespace Smiley.Lib.GameObjects.Environment
 
         public void Update(float dt)
         {
-            //Update animations and shit
-            //smh->resources->GetAnimation("water")->Update(dt);
-            //smh->resources->GetAnimation("greenWater")->Update(dt);
-            //smh->resources->GetAnimation("lava")->Update(dt);
-            //smh->resources->GetAnimation("spring")->Update(dt);
-            //smh->resources->GetAnimation("superSpring")->Update(dt);
-            //smh->resources->GetAnimation("silverSwitch")->Update(dt);
-            //smh->resources->GetAnimation("brownSwitch")->Update(dt);
-            //smh->resources->GetAnimation("blueSwitch")->Update(dt);
-            //smh->resources->GetAnimation("greenSwitch")->Update(dt);
-            //smh->resources->GetAnimation("yellowSwitch")->Update(dt);
-            //smh->resources->GetAnimation("whiteSwitch")->Update(dt);
-            //smh->resources->GetAnimation("bunnySwitch")->Update(dt);
-            //smh->resources->GetAnimation("shrinkTunnelSwitch")->Update(dt);
-            //smh->resources->GetAnimation("mirrorSwitch")->Update(dt);
-            //silverCylinder->Update(dt);
-            //brownCylinder->Update(dt);
-            //blueCylinder->Update(dt);
-            //greenCylinder->Update(dt);
-            //yellowCylinder->Update(dt);
-            //whiteCylinder->Update(dt);
-            //silverCylinderRev->Update(dt);
-            //brownCylinderRev->Update(dt);
-            //blueCylinderRev->Update(dt);
-            //greenCylinderRev->Update(dt);
-            //yellowCylinderRev->Update(dt);
-            //whiteCylinderRev->Update(dt);
-
-            ////Determine the grid offset to figure out which tiles to draw
-            //xGridOffset = SMH.Player.gridX - screenWidth/2;
-            //yGridOffset = SMH.Player.gridY - screenHeight/2;
+            //Update animations
+            Animations.SaveShrine.Update(dt);
+            Animations.Water.Update(dt);
+            Animations.GreenWater.Update(dt);
+            Animations.Lava.Update(dt);
+            Animations.SilverSwitch.Update(dt);
+            Animations.BrownSwitch.Update(dt);
+            Animations.BlueSwitch.Update(dt);
+            Animations.GreenSwitch.Update(dt);
+            Animations.WhiteSwitch.Update(dt);
+            Animations.SilverCylinder.Update(dt);
+            Animations.BrownCylinder.Update(dt);
+            Animations.BlueCylinder.Update(dt);
+            Animations.GreenCylinder.Update(dt);
+            Animations.WhiteCylinder.Update(dt);
+            Animations.BunnySwitch.Update(dt);
+            Animations.ShrinkTunnelSwitch.Update(dt);
+            Animations.MirrorSwitch.Update(dt);
 
             ////Determine the tile offset for smooth movement
             //xOffset = SMH.Player.x - float(SMH.Player.gridX) * float(64.0);
@@ -341,161 +354,22 @@ namespace Smiley.Lib.GameObjects.Environment
 
         public void Draw()
         {
-            //        drawPits(dt);
+            DrawPits();
 
-            ////Loop through each tile to draw shit
-            //for (int j = -1; j <= screenHeight + 1; j++) {
-            //    for (int i = -1; i <= screenWidth + 1; i++) {
+            //Loop through each tile to draw shit
+            for (int j = SMH.Player.Tile.Y - 7; j < SMH.Player.Tile.Y + 7; j++)
+            {
+                for (int i = SMH.Player.Tile.X - 10; i < SMH.Player.Tile.X + 10; i++)
+                {
+                    float drawX = SMH.GetScreenX(i * 64 - XOffset);
+                    float drawY = SMH.GetScreenY(j * 64 - YOffset);
 
-            //        drawX = i * 64 - xOffset;
-            //        drawY = j * 64 - yOffset;
-
-            //        if (isInBounds(i+xGridOffset, j+yGridOffset)) {	
-
-            //            int theTerrain = terrain[i+xGridOffset][j+yGridOffset];
-            //            int theCollision = collision[i+xGridOffset][j+yGridOffset];
-            //            int theItem = item[i+xGridOffset][j+yGridOffset];
-            //            float timeSinceSquareActivated = smh->timePassedSince(activated[i+xGridOffset][j+yGridOffset]);
-
-            //            //Terrain
-            //            if (theCollision != PIT && theCollision != FAKE_PIT && theCollision != NO_WALK_PIT) {
-            //                if (theTerrain > 0 && theTerrain < 256) {
-            //                    smh->resources->GetAnimation("mainLayer")->SetFrame(theTerrain);
-            //                    smh->resources->GetAnimation("mainLayer")->Render(drawX,drawY);
-            //                } else {
-            //                    smh->resources->GetSprite("blackSquare")->Render(drawX, drawY);
-            //                }
-            //            }
-
-            //            //Collision
-            //            if (shouldEnvironmentDrawCollision(theCollision))
-            //            {					
-            //                //Water animation
-            //                if (theCollision == SHALLOW_WATER) {
-            //                    smh->resources->GetAnimation("water")->SetColor(ARGB(125,255,255,255));
-            //                    smh->resources->GetAnimation("water")->Render(drawX,drawY);
-            //                } else if (theCollision == DEEP_WATER || theCollision == NO_WALK_WATER) {
-            //                    smh->resources->GetAnimation("water")->SetColor(ARGB(255,255,255,255));
-            //                    smh->resources->GetAnimation("water")->Render(drawX,drawY);
-            //                } else if (theCollision == WALK_LAVA || theCollision == NO_WALK_LAVA) {
-            //                    smh->resources->GetAnimation("lava")->Render(drawX,drawY);
-            //                } else if (theCollision == GREEN_WATER) {
-            //                    smh->resources->GetAnimation("greenWater")->SetColor(ARGB(255,255,255,255));
-            //                    smh->resources->GetAnimation("greenWater")->Render(drawX,drawY);
-            //                } else if (theCollision == SHALLOW_GREEN_WATER) {
-            //                    smh->resources->GetAnimation("greenWater")->SetColor(ARGB(125,255,255,255));
-            //                    smh->resources->GetAnimation("greenWater")->Render(drawX,drawY);
-            //                } else if (theCollision == SPRING_PAD && smh->getGameTime() - 0.5f < activated[i+xGridOffset][j+yGridOffset]) {
-            //                    smh->resources->GetAnimation("spring")->Render(drawX,drawY);
-            //                } else if (theCollision == SUPER_SPRING && smh->getGameTime() - 0.5f < activated[i+xGridOffset][j+yGridOffset]) {
-            //                    smh->resources->GetAnimation("superSpring")->Render(drawX, drawY);
-
-            //                //Switch animations
-            //                } else if ((theCollision == SILVER_SWITCH_LEFT || theCollision == SILVER_SWITCH_RIGHT) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    smh->resources->GetAnimation("silverSwitch")->Render(drawX,drawY);
-            //                } else if ((theCollision == BROWN_SWITCH_LEFT || theCollision == BROWN_SWITCH_RIGHT) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    smh->resources->GetAnimation("brownSwitch")->Render(drawX,drawY);
-            //                } else if ((theCollision == BLUE_SWITCH_LEFT || theCollision == BLUE_SWITCH_RIGHT) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    smh->resources->GetAnimation("blueSwitch")->Render(drawX,drawY);
-            //                } else if ((theCollision == GREEN_SWITCH_LEFT || theCollision == GREEN_SWITCH_RIGHT) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    smh->resources->GetAnimation("greenSwitch")->Render(drawX,drawY);
-            //                } else if ((theCollision == YELLOW_SWITCH_LEFT || theCollision == YELLOW_SWITCH_RIGHT) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    smh->resources->GetAnimation("yellowSwitch")->Render(drawX,drawY);
-            //                } else if ((theCollision == WHITE_SWITCH_LEFT || theCollision == WHITE_SWITCH_RIGHT) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    smh->resources->GetAnimation("whiteSwitch")->Render(drawX,drawY);
-
-            //                //Special switches
-            //                } else if (theCollision == SPIN_ARROW_SWITCH && timeSinceSquareActivated < 0.45) {
-            //                    smh->resources->GetAnimation("bunnySwitch")->Render(drawX, drawY);
-            //                } else if (theCollision == MIRROR_SWITCH && timeSinceSquareActivated < 0.45) {
-            //                    smh->resources->GetAnimation("mirrorSwitch")->Render(drawX, drawY);
-            //                } else if (theCollision == SHRINK_TUNNEL_SWITCH && timeSinceSquareActivated < 0.45) {
-            //                    smh->resources->GetAnimation("shrinkTunnelSwitch")->Render(drawX, drawY);
-
-            //                //Cylinder animations
-            //                } else if ((theCollision == SILVER_CYLINDER_DOWN) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    silverCylinder->Render(drawX,drawY);
-            //                } else if ((theCollision == SILVER_CYLINDER_UP) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    silverCylinderRev->Render(drawX,drawY);
-            //                } else if ((theCollision == BROWN_CYLINDER_DOWN) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    brownCylinder->Render(drawX,drawY);
-            //                } else if ((theCollision == BROWN_CYLINDER_UP) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    brownCylinderRev->Render(drawX,drawY);
-            //                } else if ((theCollision == BLUE_CYLINDER_DOWN) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    blueCylinder->Render(drawX,drawY);
-            //                } else if ((theCollision == BLUE_CYLINDER_UP) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    blueCylinderRev->Render(drawX,drawY);
-            //                } else if ((theCollision == GREEN_CYLINDER_DOWN) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    greenCylinder->Render(drawX,drawY);
-            //                } else if ((theCollision == GREEN_CYLINDER_UP) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    greenCylinderRev->Render(drawX,drawY);
-            //                } else if ((theCollision == YELLOW_CYLINDER_DOWN) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    yellowCylinder->Render(drawX,drawY);
-            //                } else if ((theCollision == YELLOW_CYLINDER_UP) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    yellowCylinderRev->Render(drawX,drawY);
-            //                } else if ((theCollision == WHITE_CYLINDER_DOWN) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    whiteCylinder->Render(drawX,drawY);
-            //                } else if ((theCollision == WHITE_CYLINDER_UP) && timeSinceSquareActivated < SWITCH_DELAY) {
-            //                    whiteCylinderRev->Render(drawX,drawY);
-
-            //                //Save thing
-            //                } else if (theCollision == SAVE_SHRINE) {
-            //                    smh->resources->GetAnimation("savePoint")->Update(dt);
-            //                    smh->resources->GetAnimation("savePoint")->Render(drawX, drawY);
-
-            //                //Don't draw the EVIL WALL position and restart tiles
-            //                } else if (theCollision == EVIL_WALL_POSITION || theCollision == EVIL_WALL_RESTART) {
-
-            //                    //Don't draw anything
-
-            //                //Non-animated collision tiles
-            //                } else {
-
-            //                    //Set to current tile
-            //                    smh->resources->GetAnimation("walkLayer")->SetFrame(theCollision);
-
-            //                    //Set color values
-            //                    if (theCollision >= UP_ARROW && theCollision <= LEFT_ARROW) {
-            //                        if (ids[i+xGridOffset][j+yGridOffset] == -1 || ids[i+xGridOffset][j+yGridOffset] == 990) {
-            //                            //render normal, red arrow
-            //                            smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(255,255,0,255));							
-            //                        } else { 
-            //                            //it's a rotating arrow, make it green
-            //                            smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(255,0,255,255));					
-            //                        }
-            //                    } else if (theCollision == SHALLOW_WATER) {
-            //                        smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(125,255,255,255));
-            //                    } else if (theCollision == SLIME) {
-            //                        smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(200,255,255,255));
-            //                    }
-
-            //                    //Draw it and set the color back to normal
-            //                    smh->resources->GetAnimation("walkLayer")->Render(drawX,drawY);
-            //                    smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(255,255,255,255));
-
-            //                }
-            //            }
-
-            //            //Items
-            //            if (theItem != NONE && ids[i+xGridOffset][j+yGridOffset] != DRAW_AFTER_SMILEY) {
-            //                if (theItem == ENEMYGROUP_BLOCKGRAPHIC) {
-            //                    //If this is an enemy block, draw it with the enemy group's
-            //                    //block alpha
-            //                    itemLayer[theItem]->SetColor(ARGB(
-            //                        smh->enemyGroupManager->groups[variable[i+xGridOffset][j+yGridOffset]].blockAlpha, 255, 255, 255));
-            //                    itemLayer[theItem]->Render(drawX,drawY);
-            //                    itemLayer[theItem]->SetColor(ARGB(255,255,255,255));
-            //                } else {
-            //                    itemLayer[theItem]->Render(drawX,drawY);
-            //                }
-            //            }
-
-            //        } else {
-            //            //Out of bounds
-            //            smh->resources->GetSprite("blackSquare")->Render(drawX, drawY);
-            //        }
-            //    }
-            //}
+                    if (IsInBounds(i, j))
+                        Tiles[i, j].Draw(drawX, drawY);
+                    else
+                        SMH.Graphics.DrawSprite(Sprites.BlackSquare, drawX, drawY);
+                }
+            }
 
             ////Draw fountain before smiley if he is below it
             //if (fountain && !fountain->isAboveSmiley()) {
@@ -507,33 +381,6 @@ namespace Smiley.Lib.GameObjects.Environment
             //    i->particle->MoveTo(smh->getScreenX(i->x), smh->getScreenY(i->y), true);
             //    i->particle->Update(dt);
             //    i->particle->Render();
-            //}
-
-            ////Debug mode stuff
-            //if (smh->isDebugOn()) {
-
-            //    //Column lines
-            //    for (int i = 0; i <= screenWidth; i++) {
-            //        smh->hge->Gfx_RenderLine(i*64.0 - xOffset,0,i*64.0 - xOffset,768.0);
-            //    }
-            //    //Row lines
-            //    for (int i = 0; i <= screenHeight; i++) {
-            //        smh->hge->Gfx_RenderLine(0,i*64.0 - yOffset,1024.0,i*64.0 - yOffset);
-            //    }
-            //    //Draw Terrain collision boxes
-            //    for (int i = SMH.Player.gridX - 2; i <= SMH.Player.gridX + 2; i++) {
-            //        for (int j = SMH.Player.gridY - 2; j <= SMH.Player.gridY + 2; j++) {
-            //            if (isInBounds(i,j)) {
-            //                //Set collision box depending on collision type
-            //                if (hasSillyPad(i,j)) {
-            //                    collisionBox->SetRadius(i*64+32,j*64+32,24);
-            //                } else {
-            //                    setTerrainCollisionBox(collisionBox, collision[i][j], i, j);
-            //                }
-            //                if (!SMH.Player.canPass(collision[i][j]) || hasSillyPad(i,j)) smh->drawCollisionBox(collisionBox, Colors::GREEN);
-            //            }
-            //        }
-            //    }
             //}
 
             ////Draw other shit
@@ -693,7 +540,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         Rect tileBox = GetTerrainCollisionBox(Tiles[gridX, gridY].Collision, gridX, gridY);
 
                         //Check collision with any switches
-                        if (SMH.GameTimePassed(Tiles[gridX, gridY].ActivatedTime, SmileyEnvironment.SwitchDelay) && tileBox.Intersects(box))
+                        if (SMH.GameTimePassed(Tiles[gridX, gridY].ActivatedTime, Constants.SwitchDelay) && tileBox.Intersects(box))
                         {
                             if (ToggleSwitchAt(gridX, gridY, playSoundFarAway, playTimerSound))
                                 return true;
@@ -725,7 +572,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         Rect box = GetTerrainCollisionBox(Tiles[gridX, gridY].Collision, gridX, gridY);
 
                         //Check collision with any switches
-                        if (SMH.GameTimePassed(Tiles[gridX, gridY].ActivatedTime, SmileyEnvironment.TongueSwitchDelay) && tongue.Intersects(box))
+                        if (SMH.GameTimePassed(Tiles[gridX, gridY].ActivatedTime, Constants.TongueSwitchDelay) && tongue.Intersects(box))
                         {
                             if (ToggleSwitchAt(gridX, gridY, true, true))
                             {
@@ -771,8 +618,8 @@ namespace Smiley.Lib.GameObjects.Environment
         /// <returns></returns>
         public ItemTile RemoveItem(int x, int y)
         {
-            ItemTile retVal = Tiles[x, y].Item;
-            Tiles[x, y].Item = ItemTile.NONE;
+            ItemTile retVal = (ItemTile)Tiles[x, y].Item;
+            Tiles[x, y].Item = (int)ItemTile.NONE;
             SMH.SaveManager.CurrentSave.ChangeTile(x, y);
             return retVal;
         }
@@ -1606,7 +1453,7 @@ namespace Smiley.Lib.GameObjects.Environment
             }
         }
 
-        private void DrawPits(float dt)
+        private void DrawPits()
         {
             //bool draw;
             //int drawX, drawY, gridX, gridY;
@@ -1670,33 +1517,6 @@ namespace Smiley.Lib.GameObjects.Environment
             //    }
             //}
         }
-
-        /// <summary>
-        /// Returns whether or not the environment should draw the collision sprite for the
-        /// given collision type.
-        /// </summary>
-        /// <param name="collision"></param>
-        /// <returns></returns>
-        public bool ShouldEnvironmentDrawCollision(CollisionTile collision)
-        {
-            return collision != CollisionTile.WALKABLE &&
-                   collision != CollisionTile.UNWALKABLE &&
-                   collision != CollisionTile.ENEMY_NO_WALK &&
-                   collision != CollisionTile.PLAYER_START &&
-                   collision != CollisionTile.DIZZY_MUSHROOM_1 &&
-                   collision != CollisionTile.DIZZY_MUSHROOM_2 &&
-                   collision != CollisionTile.PLAYER_END &&
-                   collision != CollisionTile.PIT &&
-                   collision != CollisionTile.UNWALKABLE_PROJECTILE &&
-                   collision != CollisionTile.FAKE_PIT &&
-                   collision != CollisionTile.FLAME &&
-                   collision != CollisionTile.NO_WALK_PIT &&
-                   collision != CollisionTile.FIRE_DESTROY &&
-                   collision != CollisionTile.FAKE_COLLISION &&
-                   collision != CollisionTile.FOUNTAIN &&
-                   !SmileyUtil.IsWarp(collision);
-        }
-
 
         #endregion
 

@@ -16,10 +16,8 @@ namespace Smiley.Lib.Enums
         Enemies,
         [Description("Graphics\\npcs")]
         NPCs,
-        [Description("Graphics\\itemlayer1")]
-        ItemLayer1,
-        [Description("Graphics\\itemlayer2")]
-        ItemLayer2,
+        [Description("Graphics\\itemlayer")]
+        ItemLayer,
         [Description("Graphics\\loading")]
         Loading,
         [Description("Graphics\\mainlayer")]
