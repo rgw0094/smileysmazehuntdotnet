@@ -25,12 +25,14 @@ namespace Smiley.Lib.Data
         public SaveFile(string fileName)
         {
             Name = fileName;
+            Reset();
         }
 
         #endregion
 
         #region Public Properties
 
+        public bool IsEmpty { get; set; }
         public string Name { get; private set; }
         public TimeSpan TimePlayed { get; set; }
         public int NumTongueLicks { get; set; }
@@ -97,6 +99,7 @@ namespace Smiley.Lib.Data
 
         public void Reset()
         {
+            _changes = new List<Change>();
             Level = Enums.Level.FOUNTAIN_AREA;
             PlayerMana = 50.0;
             TimeFileLoaded = DateTime.Now.TimeOfDay;
@@ -107,6 +110,7 @@ namespace Smiley.Lib.Data
             NumUpgrades = new Dictionary<Upgrade, int>();
             HasVisitedLevel = new Dictionary<Level, bool>();
             HasKilledBoss = new Dictionary<Boss, bool>();
+            Explored = new Dictionary<Level, bool[,]>();
 
             foreach (Level level in Enum.GetValues(typeof(Level)))
             {

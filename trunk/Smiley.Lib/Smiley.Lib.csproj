@@ -95,7 +95,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Animations.cs" />
-    <Compile Include="Data\Tiles.cs" />
+    <Compile Include="GameObjects\Environment\Tile.cs" />
     <Compile Include="Data\SmileyData.cs" />
     <Compile Include="Data\SaveFile.cs" />
     <Compile Include="Data\SmileyData.Enemies.cs" />
@@ -118,6 +118,7 @@
     <Compile Include="Enums\SaveSlot.cs" />
     <Compile Include="Enums\SmileyTexture.cs" />
     <Compile Include="Enums\Sound.cs" />
+    <Compile Include="Enums\TextAlignment.cs" />
     <Compile Include="Enums\Upgrade.cs" />
     <Compile Include="Framework\CollisionCircle.cs" />
     <Compile Include="Framework\Drawing\Graphics2DWrapper.cs" />
@@ -132,6 +133,8 @@
     <Compile Include="Framework\UIControls\ControlActionGroup.cs" />
     <Compile Include="GameObjects\Enemies\BaseEnemy.cs" />
     <Compile Include="GameObjects\Environment\Environment.cs" />
+    <Compile Include="GameObjects\Environment\Fountain.cs" />
+    <Compile Include="GameObjects\Environment\Tiles.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Player\Player.cs" />
     <Compile Include="GameObjects\Player\Tongue.cs" />
@@ -153,6 +156,8 @@
     <Compile Include="Framework\BitStream.cs" />
     <Compile Include="Framework\Extensions.cs" />
     <Compile Include="Util\SmileyUtil.cs" />
+    <Compile Include="Windows\BaseWindow.cs" />
+    <Compile Include="Windows\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

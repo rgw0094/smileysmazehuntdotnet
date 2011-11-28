@@ -18,12 +18,12 @@ namespace Smiley.Lib.Data
 
         public static SpriteSet MainLayer = new SpriteSet(
             SmileyTexture.MainLayer,
-            264,
+            256,
             new Rectangle(0, 0, 64, 64));
 
         public static SpriteSet WalkLayer = new SpriteSet(
             SmileyTexture.WalkLayer,
-            264,
+            256,
             new Rectangle(0, 0, 64, 64));
 
         public static SpriteSet Abilities = new SpriteSet(
@@ -31,6 +31,11 @@ namespace Smiley.Lib.Data
             16,
             new Rectangle(192, 0, 64, 64),
             new Vector2(32, 32));
+
+        public static SpriteSet ItemLayer = new SpriteSet(
+            SmileyTexture.ItemLayer,
+            512,
+            new Rectangle(0, 0, 64, 64));
 
         public static SpriteSet Player = new SpriteSet(
             SmileyTexture.General,

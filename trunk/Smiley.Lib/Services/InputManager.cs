@@ -20,6 +20,7 @@ namespace Smiley.Lib.Services
         #region Private Variables
 
         private Dictionary<Input, InputState> _inputs = new Dictionary<Input, InputState>();
+        private bool _wasMouseDown;
 
         #endregion
 
@@ -56,37 +57,12 @@ namespace Smiley.Lib.Services
             private set;
         }
 
-        /// <summary>
-        /// Gets whether or not the left mouse button is currently down. This will always be false
-        /// if we are running in an environment with no mouse.
-        /// </summary>
-        public bool IsMouseDown
-        {
-            get;
-            private set;
-        }
-
         #endregion
 
         #region Public Methods
 
         public void Update(float dt)
-        {
-#if WINDOWS
-            MouseState mouseState = Mouse.GetState();
-            Cursor = new Vector2(mouseState.X, mouseState.Y);
-            IsCursorInWindow = SMH.Graphics.IsPointInWindow(Cursor);
-            IsMouseDown = mouseState.LeftButton == ButtonState.Pressed;
-
-            if (IsMouseDown)
-            {
-            }
-#endif
-
-#if XBOX
-            IsCursorInWindow = true;
-#endif
-            
+        {            
             //Update the input state for this frame.
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboardState = Keyboard.GetState();
@@ -128,6 +104,25 @@ namespace Smiley.Lib.Services
 #endif
                 }
             }
+
+#if WINDOWS
+            MouseState mouseState = Mouse.GetState();
+            Cursor = new Vector2(mouseState.X, mouseState.Y);
+            IsCursorInWindow = SMH.Graphics.IsPointInWindow(Cursor);
+
+            //Let clicking the mouse also count as the confirm/attack input
+            bool isMouseDown = mouseState.LeftButton == ButtonState.Pressed;
+            if (!_wasMouseDown && isMouseDown)
+            {
+                _inputs[Input.Attack].WasDownLastFrame = false;
+                _inputs[Input.Attack].IsDown = true;
+            }
+            _wasMouseDown = isMouseDown;
+#endif
+
+#if XBOX
+            IsCursorInWindow = true;
+#endif
         }
 
         /// <summary>

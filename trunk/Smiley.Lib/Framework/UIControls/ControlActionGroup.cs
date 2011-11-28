@@ -69,7 +69,7 @@ namespace Smiley.Lib.Framework.UIControls
                             info.Finished = true;
                             info.Control.X = info.StartX + _xDist;
                             info.Control.Y = info.StartY + _yDist;
-                            if (controlCount == _controls.Count)
+                            if (controlCount == _controls.Count - 1)
                             {
                                 //If the last control is finished, then return true because the action is finished.
                                 return true;

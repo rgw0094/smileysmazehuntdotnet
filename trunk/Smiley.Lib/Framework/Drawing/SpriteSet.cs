@@ -81,7 +81,7 @@ namespace Smiley.Lib.Framework.Drawing
 
             for (int i = 0; i < _numTiles; i++)
             {
-                _tiles[i] = new Sprite(_texture, new Rectangle(x, y, _rect.Width, _rect.Height), _hotSpot.GetValueOrDefault());
+                _tiles.Add(new Sprite(_texture, new Rectangle(x, y, _rect.Width, _rect.Height), _hotSpot.GetValueOrDefault()));
                 x += _rect.Width;
                 if (x >= texture.Width)
                 {

@@ -40,6 +40,7 @@ namespace Smiley.Lib
             _graphicsDeviceManager.PreferredBackBufferWidth = 1024;
             _graphicsDeviceManager.PreferredBackBufferHeight = 768;
 
+            Game = this;
             Content.RootDirectory = "Smiley.Content";
             Window.Title = "Smiley's Maze Hunt";
         }
@@ -50,6 +51,7 @@ namespace Smiley.Lib
 
         public static InputManager Input { get; private set; }
         public static SmileyData Data { get; private set; }
+        public static Game Game { get; private set; }
         public static Graphics2DWrapper Graphics { get; private set; }
         public static SoundManager Sound { get; private set; }
         public static SmileyEnvironment Environment { get; private set; }
@@ -63,6 +65,12 @@ namespace Smiley.Lib
         {
             _mainMenu = new MainMenu();
             SMH.Sound.PlayMusic(Music.Menu);
+        }
+
+        public static void StartGame()
+        {
+            _mainMenu = null;
+            Environment.LoadLevel(SMH.SaveManager.CurrentSave.Level, SMH.SaveManager.CurrentSave.Level, true);
         }
 
         /// <summary>
@@ -97,6 +105,26 @@ namespace Smiley.Lib
             return GameTime - startTime >= amount;
         }
 
+        /// <summary>
+        /// Returns the onscreen x coordinate for a global x coordinate.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static float GetScreenX(float x)
+        {
+            return x - SMH.Player.X + 512;
+        }
+
+        /// <summary>
+        /// Returns the onscreen y coordinate for a global y coordinate.
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static float GetScreenY(float y)
+        {
+            return y - SMH.Player.Y + 384;
+        }
+
         #endregion
 
         #region Game Overrides
@@ -122,9 +150,6 @@ namespace Smiley.Lib
         protected override void BeginRun()
         {
             ShowMenu();
-
-            Environment.LoadLevel(Level.FOUNTAIN_AREA, Level.FOUNTAIN_AREA, true);
-
             base.BeginRun();
         }
 
@@ -144,6 +169,7 @@ namespace Smiley.Lib
             }
             else
             {
+                Environment.Update(dt);
             }
 
         }
@@ -157,6 +183,7 @@ namespace Smiley.Lib
             }
             else
             {
+                Environment.Draw();
             }
             Graphics.EndFrame();
         }

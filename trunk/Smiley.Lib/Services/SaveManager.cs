@@ -23,10 +23,10 @@ namespace Smiley.Lib.Services
         /// </summary>
         public SaveManager()
         {
-            Saves = new List<SaveFile>();
+            Saves = new Dictionary<SaveSlot, SaveFile>();
             foreach (SaveSlot save in Enum.GetValues(typeof(SaveSlot)))
             {
-                Saves.Add(LoadFile(save.GetDescription()));
+                Saves[save] = LoadFile(save.GetDescription());
             }
         }
 
@@ -37,7 +37,7 @@ namespace Smiley.Lib.Services
         /// <summary>
         /// Gets the list of available save files.
         /// </summary>
-        public List<SaveFile> Saves
+        public Dictionary<SaveSlot, SaveFile> Saves
         {
             get;
             private set;
@@ -49,7 +49,7 @@ namespace Smiley.Lib.Services
         public SaveFile CurrentSave
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -219,7 +219,10 @@ namespace Smiley.Lib.Services
             SaveFile file = new SaveFile(fileName);
 
             if (!File.Exists(fileName))
+            {
+                file.IsEmpty = true;
                 return file;
+            }
 
             //Select the specified save file
             using (BitStream input = new BitStream())

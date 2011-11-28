@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Smiley.Lib.Util;
 using Smiley.Lib.Data;
+using Smiley.Lib.GameObjects.Environment;
 
 namespace Smiley.Lib.GameObjects
 {
@@ -55,11 +56,16 @@ namespace Smiley.Lib.GameObjects
         }
 
         /// <summary>
-        /// Gets the tile the object is currently on.
+        /// Gets or sets the tile the object is currently on.
         /// </summary>
         public Tile Tile
         {
             get { return SMH.Environment.Tiles[SmileyUtil.GetGridX(X), SmileyUtil.GetGridY(Y)]; }
+            set
+            {
+                X = value.X * 64f;
+                Y = value.Y * 64f;
+            }
         }
         
         /// <summary>

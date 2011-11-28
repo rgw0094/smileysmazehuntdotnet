@@ -52,8 +52,8 @@ namespace Smiley.Lib.Framework.Drawing
 
         public bool Contains(Vector2 v)
         {
-            return v.X >= X && v.X <= X + Width &&
-                   v.Y >= Y && v.Y <= Y + Height;
+            return v.X >= X && v.X <= Right &&
+                   v.Y >= Y && v.Y <= Bottom;
         }
 
         public bool Intersects(Rect rect)

@@ -270,7 +270,7 @@ namespace Smiley.Lib.Services
             if (playSound)
             {
                 SoundEffect sfx = _contentManager.Load<SoundEffect>(sound.GetDescription());
-                sfx.Play(SoundVolume, 0, 0);
+                sfx.Play((float)SoundVolume / 100f, 0, 0);
             }
         }
 

@@ -7,6 +7,12 @@ namespace Smiley.Lib.Menu
 {
     public class LoadingScreen : BaseMenuScreen
     {
+        private float _timeEnteredScreen;
+        private int _fileNumber;
+        private bool _startedLoadYet;
+        private bool _fromLoadScreen;
+        private bool _isNewGame;
+
         public LoadingScreen(MainMenu mainMenu)
             : base(mainMenu)
         {

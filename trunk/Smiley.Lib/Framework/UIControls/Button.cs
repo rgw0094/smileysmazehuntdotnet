@@ -47,11 +47,11 @@ namespace Smiley.Lib.Framework.UIControls
         /// <returns></returns>
         public bool IsClicked()
         {
-            if (_isHighlighted && (SMH.Input.IsMouseDown || SMH.Input.IsPressed(Input.Attack)))
+            if (_isHighlighted && (SMH.Input.IsPressed(Input.Attack)))
             {
                 if (!_soundPlayedThisFrame)
                 {
-                    //smh->soundManager->playSound("snd_ButtonClick");//TODO:
+                    SMH.Sound.PlaySound(Sound.ButtonClick);
                     _soundPlayedThisFrame = true;
                 }
                 return true;
@@ -69,11 +69,12 @@ namespace Smiley.Lib.Framework.UIControls
             else
                 SMH.Graphics.DrawSprite(Sprites.ButtonBackground, X, Y);
 
-            SMH.Graphics.DrawStringCentered(SmileyFont.Button, Text, X + _collisionRect.Width / 2f, Y + _collisionRect.Height / 2f);
+            SMH.Graphics.DrawString(SmileyFont.Button, Text, X + _collisionRect.Width / 2f, Y + _collisionRect.Height / 2f, TextAlignment.Center);
         }
 
         public override void Update(float dt)
         {
+            _collisionRect = new Rect(X, Y, 250, 75);
             _isHighlighted = _collisionRect.Contains(SMH.Input.Cursor);
             _soundPlayedThisFrame = false;
         }

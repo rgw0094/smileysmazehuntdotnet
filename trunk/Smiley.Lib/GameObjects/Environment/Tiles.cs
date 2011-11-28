@@ -3,27 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
-using System.Collections;
 using System.IO;
+using System.Collections;
 
-namespace Smiley.Lib.Data
+namespace Smiley.Lib.GameObjects.Environment
 {
-    /// <summary>
-    /// A single tile in a smiley level.
-    /// </summary>
-    public class Tile
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int ID { get; set; }
-        public int Variable { get; set; }
-        public int Terrain { get; set; }
-        public CollisionTile Collision { get; set; }
-        public ItemTile Item { get; set; }
-        public int Enemy { get; set; }
-        public float ActivatedTime { get; set; }
-    }
-
     /// <summary>
     /// A set of tiles making up a smiley level.
     /// </summary>
@@ -127,34 +111,39 @@ namespace Smiley.Lib.Data
 
         private void Load(string fileName)
         {
-            FileStream file = File.Open(fileName, FileMode.Open);
-
-            file.Position += 3; //skip id range
-
-            //Read area width
-            Width = ReadCharacters(file, 3);
-            file.Position++; //skip space
-
-            //Read area height
-            Height = ReadCharacters(file, 3);
-            file.Position += 2; //skip newline
-
-            _tiles = new Tile[Width, Height];
-            for (int x = 0; x < Width; x++)
+            using (FileStream file = File.Open(fileName, FileMode.Open))
             {
-                for (int y = 0; y < Height; y++)
-                {
-                    _tiles[x, y] = new Tile();
-                }
-            }
+                file.Position += 3; //skip id range
 
-            //Load Layers
-            ReadLayer(file, (x, y, i) => _tiles[x, y].ID = i);
-            ReadLayer(file, (x, y, i) => _tiles[x, y].Variable = i);
-            ReadLayer(file, (x, y, i) => _tiles[x, y].Terrain = i);
-            ReadLayer(file, (x, y, i) => _tiles[x, y].Collision = (CollisionTile)i);
-            ReadLayer(file, (x, y, i) => _tiles[x, y].Item = (ItemTile)i);
-            ReadLayer(file, (x, y, i) => _tiles[x, y].Enemy = i - 1);
+                //Read area width
+                Width = ReadCharacters(file, 3);
+                file.Position++; //skip space
+
+                //Read area height
+                Height = ReadCharacters(file, 3);
+                file.Position += 2; //skip newline
+
+                _tiles = new Tile[Width, Height];
+                for (int x = 0; x < Width; x++)
+                {
+                    for (int y = 0; y < Height; y++)
+                    {
+                        _tiles[x, y] = new Tile
+                        {
+                            X = x,
+                            Y = y
+                        };
+                    }
+                }
+
+                //Load Layers
+                ReadLayer(file, (x, y, i) => _tiles[x, y].ID = i);
+                ReadLayer(file, (x, y, i) => _tiles[x, y].Variable = i);
+                ReadLayer(file, (x, y, i) => _tiles[x, y].Terrain = i);
+                ReadLayer(file, (x, y, i) => _tiles[x, y].Collision = (CollisionTile)i);
+                ReadLayer(file, (x, y, i) => _tiles[x, y].Item = i);
+                ReadLayer(file, (x, y, i) => _tiles[x, y].Enemy = i - 1);
+            }
         }
 
         private int ReadCharacters(FileStream file, int numChars)

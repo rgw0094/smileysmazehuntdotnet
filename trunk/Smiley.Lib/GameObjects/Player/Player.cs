@@ -63,6 +63,10 @@ namespace Smiley.Lib.GameObjects.Player
             return true;
         }
 
+        public void Heal(float amount)
+        {
+        }
+
         #endregion
     }
 }

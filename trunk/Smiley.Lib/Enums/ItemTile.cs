@@ -7,7 +7,6 @@ namespace Smiley.Lib.Enums
 {
     public enum ItemTile
     {
-        NUM_ITEMS = 9,
         NONE = 0,
         RED_KEY = 1,
         YELLOW_KEY = 2,
@@ -17,6 +16,7 @@ namespace Smiley.Lib.Enums
         MEDIUM_GEM = 6,
         LARGE_GEM = 7,
         HEALTH_ITEM = 9,
-        MANA_ITEM = 8
+        MANA_ITEM = 8,
+        EnemyGroupBlockGraphic = 143
     }
 }

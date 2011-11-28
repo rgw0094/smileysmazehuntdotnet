@@ -38,6 +38,11 @@ namespace Smiley.Lib.Data
         public static Sprite TutMapBorder = new Sprite(SmileyTexture.WorldMapBorders, new Rectangle(130, 368, 107, 82), new Vector2(53, 41));
         public static Sprite WorldMapBackgroundTile = new Sprite(SmileyTexture.WorldMap, new Rectangle(175, 352, 128, 128), new Vector2(53, 41));
 
+        //Options Screen
+        public static Sprite OptionsBackground = new Sprite(SmileyTexture.UserInterface, new Rectangle(0, 0, 660, 492));
+        public static Sprite SliderBar = new Sprite(SmileyTexture.UserInterface, new Rectangle(660, 0, 93, 21));
+        public static Sprite OptionsPatch = new Sprite(SmileyTexture.UserInterface, new Rectangle(30, 30, 286, 246));
+
         //TextBox
         public static Sprite TextBox = new Sprite(SmileyTexture.General, new Rectangle(0, 256, 400, 250), new Vector2(0, 0));
         public static Sprite ArrowIcon = new Sprite(SmileyTexture.General, new Rectangle(128, 142, 32, 20), new Vector2(0, 0));
@@ -85,12 +90,12 @@ namespace Smiley.Lib.Data
         public static Sprite ControlsBox = new Sprite(SmileyTexture.UserInterface, new Rectangle(248, 769, 130, 30));
         public static Sprite SelectedControlsBox = new Sprite(SmileyTexture.UserInterface, new Rectangle(248, 799, 130, 30));
         public static Sprite DifficultyPromptBackground = new Sprite(SmileyTexture.UserInterface, new Rectangle(661, 809, 325, 150));
-        public static Sprite LeftArrow = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 810, 32, 32));
-        public static Sprite RightArrow = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 844, 32, 32));
-        public static Sprite OKButton = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 878, 32, 32));
-        public static Sprite LeftArrowHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 912, 32, 32));
-        public static Sprite RightArrowHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 946, 32, 32));
-        public static Sprite OKButtonHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 980, 32, 32));
+        public static Sprite LeftArrow = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 810, 32, 32), new Vector2(16, 16));
+        public static Sprite RightArrow = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 844, 32, 32), new Vector2(16, 16));
+        public static Sprite OKButton = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 878, 32, 32), new Vector2(16, 16));
+        public static Sprite LeftArrowHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 912, 32, 32), new Vector2(16, 16));
+        public static Sprite RightArrowHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 946, 32, 32), new Vector2(16, 16));
+        public static Sprite OKButtonHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 980, 32, 32), new Vector2(16, 16));
         public static Sprite SmileyWithoutHat = new Sprite(SmileyTexture.UserInterface, new Rectangle(3, 590, 53, 42));
         public static Sprite SmileysHat = new Sprite(SmileyTexture.UserInterface, new Rectangle(71, 594, 51, 34));
 
