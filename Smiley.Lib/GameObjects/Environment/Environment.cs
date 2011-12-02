@@ -14,8 +14,6 @@ namespace Smiley.Lib.GameObjects.Environment
 {
     public class SmileyEnvironment
     {
-        
-
         #region Private Variables
 
         private List<Timer> _timers = new List<Timer>();

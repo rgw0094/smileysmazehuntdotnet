@@ -28,6 +28,10 @@ Smiley.Content\Graphics\WorldMapBorders.xnb
 Smiley.Content\Graphics\EndingCinematic.xnb
 Smiley.Content\Fonts\Button.xnb
 Smiley.Content\Fonts\Controls.xnb
+Smiley.Content\Fonts\Inventory.xnb
+Smiley.Content\Fonts\Curlz.xnb
+Smiley.Content\Fonts\Description.xnb
+Smiley.Content\Graphics\itemlayer.xnb
 Smiley.Content\Music\CastleOfEvil.xnb
 Smiley.Content\Music\Conservatory.xnb
 Smiley.Content\Music\Credits.xnb
@@ -135,10 +139,6 @@ Smiley.Content\Sounds\tongue.xnb
 Smiley.Content\Sounds\treeletRoar.xnb
 Smiley.Content\Sounds\TutCoffinOpen.xnb
 Smiley.Content\Sounds\Warp.xnb
-Smiley.Content\Fonts\Inventory.xnb
-Smiley.Content\Fonts\Curlz.xnb
-Smiley.Content\Fonts\Description.xnb
-Smiley.Content\Graphics\itemlayer.xnb
 Smiley.Content\Levels\castle.smh
 Smiley.Content\Levels\conserve.smh
 Smiley.Content\Levels\debug.smh
