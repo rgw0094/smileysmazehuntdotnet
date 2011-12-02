@@ -204,6 +204,4 @@ namespace Smiley.Lib.GameObjects.Environment
 
         #endregion
     }
-
-
 }
