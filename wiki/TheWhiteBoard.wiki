@@ -38,3 +38,5 @@
 ||RGW||12/4/11||Ported Fountain||
 ||RGW||12/4/11||Ported Tongue||
 ||RGW||12/4/11||Ported GUI||
+||RGW||12/6/11||Ported DebugConsole||
+||RGW||12/6/11||Ported Player||
