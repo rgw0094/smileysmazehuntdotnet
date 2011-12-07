@@ -56,6 +56,21 @@ namespace Smiley.Lib.Util
             return (int)Math.Sqrt(((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
         }
 
+        public static Gem GetGem(ItemTile item)
+        {
+            switch (item)
+            {
+                case ItemTile.SMALL_GEM:
+                    return Gem.Small;
+                case ItemTile.MEDIUM_GEM:
+                    return Gem.Medium;
+                case ItemTile.LARGE_GEM:
+                    return Gem.Large;
+                default:
+                    throw new Exception("ItemTile is not a gem!");
+            }
+        }
+
         public static bool IsCylinderSwitch(CollisionTile collision)
         {
             return IsCylinderSwitchLeft(collision) || IsCylinderSwitchRight(collision);

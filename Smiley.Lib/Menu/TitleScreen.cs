@@ -75,7 +75,7 @@ namespace Smiley.Lib.Menu
             }
 
             //Draw title
-            SMH.Graphics.DrawSpriteScaled(Sprites.SmileyTitle, _smileyTitleX, _smileyTitleY, _smileyTitleSize);
+            SMH.Graphics.DrawSprite(Sprites.SmileyTitle, _smileyTitleX, _smileyTitleY, Color.White, 0f, _smileyTitleSize);
         }
 
         public override void Update(float dt)

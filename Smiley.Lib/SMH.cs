@@ -17,6 +17,9 @@ using Smiley.Lib.Enums;
 using Smiley.Lib.GameObjects.Environment;
 using Smiley.Lib.GameObjects;
 using Smiley.Lib.GameObjects.Player;
+using Smiley.Lib.Windows;
+using Smiley.Lib.GameObjects.Enemies;
+using Smiley.Lib.GameObjects.NPCs;
 
 namespace Smiley.Lib
 {
@@ -49,6 +52,10 @@ namespace Smiley.Lib
 
         #region Static Shit
 
+        public static GameState State { get; private set; }
+        public static int CurrentFrame { get; private set; }
+        public static DebugConsole Console { get; private set; }
+        public static Random Random { get; private set; }
         public static InputManager Input { get; private set; }
         public static SmileyData Data { get; private set; }
         public static Game Game { get; private set; }
@@ -56,19 +63,29 @@ namespace Smiley.Lib
         public static SoundManager Sound { get; private set; }
         public static SmileyEnvironment Environment { get; private set; }
         public static Player Player { get; private set; }
+        public static GUI GUI { get; private set; }
         public static SaveManager SaveManager { get; private set; }
+        public static WindowManager WindowManager { get; private set; }
+        public static EnemyManager EnemyManager { get; private set; }
+        public static NPCManager NPCManager { get; private set; }
+        public static ProjectileManager ProjectileManager { get; private set; }
 
         /// <summary>
         /// Shows the main menu.
         /// </summary>
         public static void ShowMenu()
         {
+            State = GameState.Menu;
             _mainMenu = new MainMenu();
             SMH.Sound.PlayMusic(Music.Menu);
         }
 
+        /// <summary>
+        /// Starts the game.
+        /// </summary>
         public static void StartGame()
         {
+            State = GameState.Game;
             _mainMenu = null;
             Environment.LoadLevel(SMH.SaveManager.CurrentSave.Level, SMH.SaveManager.CurrentSave.Level, true);
         }
@@ -131,13 +148,20 @@ namespace Smiley.Lib
 
         protected override void LoadContent()
         {
+            Console = new DebugConsole();
             Sound = new SoundManager(Content);
             Graphics = new Graphics2DWrapper(_graphicsDeviceManager);            
             Data = new SmileyData(Content);
             Input = new InputManager();
             Environment = new SmileyEnvironment();
             Player = new Player();
+            GUI = new GUI();
             SaveManager = new SaveManager();
+            WindowManager = new WindowManager();
+            EnemyManager = new EnemyManager();
+            NPCManager = new NPCManager();
+            ProjectileManager = new ProjectileManager();
+            Random = new Random();
         }
 
         protected override void UnloadContent()
@@ -155,23 +179,25 @@ namespace Smiley.Lib
 
         protected override void Update(GameTime gameTime)
         {
+            CurrentFrame++;
             Now = (float)gameTime.TotalGameTime.Ticks / 10000000f;
             float dt = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
-            if (true /* not in menu */)
-            {
-                GameTime += dt;
-            }
 
             Input.Update(dt);
-            if (_mainMenu != null)
+
+            if (State == GameState.Menu)
             {
                 _mainMenu.Update(dt);
             }
-            else
+            else if (State == GameState.Game)
             {
-                Environment.Update(dt);
-            }
+                GameTime += dt;
 
+                Console.Update(dt);
+                Environment.Update(dt);
+                Player.Update(dt);
+                GUI.Update(dt);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -184,6 +210,10 @@ namespace Smiley.Lib
             else
             {
                 Environment.Draw();
+                Player.Draw();
+                GUI.Draw();
+                Environment.DrawAfterSmiley();
+                Console.Draw();
             }
             Graphics.EndFrame();
         }

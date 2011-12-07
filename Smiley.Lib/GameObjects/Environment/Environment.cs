@@ -9,6 +9,7 @@ using Smiley.Lib.Framework;
 using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.GameObjects.Player;
 using Smiley.Lib.GameObjects.Enemies;
+using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.GameObjects.Environment
 {
@@ -17,6 +18,7 @@ namespace Smiley.Lib.GameObjects.Environment
         #region Private Variables
 
         private List<Timer> _timers = new List<Timer>();
+        private Fountain _fountain;
 
         #endregion
 
@@ -89,7 +91,7 @@ namespace Smiley.Lib.GameObjects.Environment
                 switch (tile.Collision)
                 {
                     case CollisionTile.FOUNTAIN:
-                        //fountain = new Fountain(col, row); TODO:
+                        _fountain = new Fountain(tile.X, tile.Y);
                         break;
 
                     case CollisionTile.RED_WARP:
@@ -244,7 +246,7 @@ namespace Smiley.Lib.GameObjects.Environment
                 Tile startTile = Tiles.FirstOrDefault(tile => tile.Collision == CollisionTile.PLAYER_START && ((Level)tile.ID == previousLevel) || i == 1);
                 if (startTile != null)
                 {
-                    SMH.Player.Tile = startTile;
+                    SMH.Player.MoveTo(startTile.X, startTile.Y);
                     break;
                 }
             }
@@ -281,10 +283,7 @@ namespace Smiley.Lib.GameObjects.Environment
             //smh->fenwarManager->reset();
             //removeAllParticles();
 
-            //if (fountain) {
-            //    delete fountain;
-            //    fountain = NULL;
-            //}
+            _fountain = null;
 
             //if (adviceMan) {
             //    delete adviceMan;
@@ -323,6 +322,7 @@ namespace Smiley.Lib.GameObjects.Environment
             //xOffset = SMH.Player.x - float(SMH.Player.gridX) * float(64.0);
             //yOffset = SMH.Player.y - float(SMH.Player.gridY) * float(64.0);
 
+
             ////Update each grid square
             //for (int i = 0; i < areaWidth; i++) {
             //    for (int j = 0; j < areaHeight; j++) {
@@ -346,8 +346,10 @@ namespace Smiley.Lib.GameObjects.Environment
             //evilWallManager->update(dt);
             //tapestryManager->update(dt);
             //smileletManager->update();
-            //updateSwitchTimers(dt);
-            //if (fountain) fountain->update(dt);
+            UpdateSwitchTimers(dt);
+
+            if (_fountain != null)
+                _fountain.Update(dt);
         }
 
         public void Draw()
@@ -357,22 +359,23 @@ namespace Smiley.Lib.GameObjects.Environment
             //Loop through each tile to draw shit
             for (int j = SMH.Player.Tile.Y - 7; j < SMH.Player.Tile.Y + 7; j++)
             {
+                int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64 - XOffset));
                 for (int i = SMH.Player.Tile.X - 10; i < SMH.Player.Tile.X + 10; i++)
                 {
-                    float drawX = SMH.GetScreenX(i * 64 - XOffset);
-                    float drawY = SMH.GetScreenY(j * 64 - YOffset);
+                    float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64 - XOffset));
 
                     if (IsInBounds(i, j))
-                        Tiles[i, j].Draw(drawX, drawY);
+                        Tiles[i, j].DrawBeforeSmiley(drawX, drawY);
                     else
                         SMH.Graphics.DrawSprite(Sprites.BlackSquare, drawX, drawY);
                 }
             }
 
-            ////Draw fountain before smiley if he is below it
-            //if (fountain && !fountain->isAboveSmiley()) {
-            //    fountain->draw(dt);
-            //}
+            //Draw fountain before smiley if he is below it
+            if (_fountain != null && !_fountain.IsAboveSmiley())
+            {
+                _fountain.Draw();
+            }
 
             ////Draw particles
             //for (std::list<ParticleStruct>::iterator i = particleList.begin(); i != particleList.end(); i++) {
@@ -395,7 +398,7 @@ namespace Smiley.Lib.GameObjects.Environment
         ///Smiley (indicated by ID 990) as well as shrink tunnels, explosions and other SHIT.
         ///</summary>
         ///<param name="dt"></param>
-        public void DrawAfterSmiley(float dt)
+        public void DrawAfterSmiley()
         {
             ////Loop through each tile to draw shit
             //for (int gridY = yGridOffset-1; gridY <= yGridOffset + screenHeight + 1; gridY++) {
@@ -474,7 +477,7 @@ namespace Smiley.Lib.GameObjects.Environment
         /// </summary>
         /// <param name="gridX"></param>
         /// <param name="gridY"></param>
-        public void EnvironmentUnlockDoor(int gridX, int gridY)
+        public void UnlockDoor(int gridX, int gridY)
         {
             bool doorOpened = false;
 
@@ -557,7 +560,7 @@ namespace Smiley.Lib.GameObjects.Environment
         /// </summary>
         /// <param name="tongue"></param>
         /// <returns></returns>
-        bool ToggleSwitches(Tongue tongue)
+        public bool ToggleSwitches(Tongue tongue)
         {
             //Loop through all the squares adjacent to Smiley
             for (int gridX = SMH.Player.Tile.X - 2; gridX <= SMH.Player.Tile.X + 2; gridX++)
@@ -691,64 +694,6 @@ namespace Smiley.Lib.GameObjects.Environment
         }
 
         /// <summary>
-        /// Returns whether or not there is deep water of any kind at grid (x,y)
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public bool IsDeepWaterAt(int x, int y)
-        {
-            return (Tiles[x, y].Collision == CollisionTile.DEEP_WATER || Tiles[x, y].Collision == CollisionTile.GREEN_WATER);
-        }
-
-        /// <summary>
-        /// Returns whether this is a good spot to "return" to after drowning or falling.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public bool IsReturnSpotAt(int x, int y)
-        {
-            CollisionTile c = Tiles[x, y].Collision;
-
-            return
-                c == CollisionTile.WALKABLE ||
-                c == CollisionTile.SHALLOW_WATER ||
-                c == CollisionTile.WALK_LAVA ||
-                c == CollisionTile.RED_WARP ||
-                c == CollisionTile.BLUE_WARP ||
-                c == CollisionTile.YELLOW_WARP ||
-                c == CollisionTile.GREEN_WARP ||
-                c == CollisionTile.SHALLOW_GREEN_WATER ||
-                c == CollisionTile.BOMB_PAD_UP ||
-                c == CollisionTile.BOMB_PAD_DOWN ||
-                c == CollisionTile.HOVER_PAD ||
-                c == CollisionTile.SUPER_SPRING ||
-                c == CollisionTile.SMILELET ||
-                c == CollisionTile.SMILELET_FLOWER_HAPPY ||
-                c == CollisionTile.FAKE_COLLISION ||
-                c == CollisionTile.PLAYER_START ||
-                (c >= CollisionTile.WHITE_CYLINDER_DOWN && c <= CollisionTile.SILVER_CYLINDER_DOWN) ||
-                (c >= CollisionTile.EVIL_WALL_POSITION && c <= CollisionTile.EVIL_WALL_RESTART);
-        }
-
-        /// <summary>
-        /// Returns whether or not there is shallow water of any kind at grid (x,y)
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public bool IsShallowWaterAt(int x, int y)
-        {
-            return (Tiles[x, y].Collision == CollisionTile.SHALLOW_WATER || Tiles[x, y].Collision == CollisionTile.SHALLOW_GREEN_WATER);
-        }
-
-        public bool IsArrowAt(int x, int y)
-        {
-            return Tiles[x, y].Collision >= CollisionTile.UP_ARROW && Tiles[x, y].Collision <= CollisionTile.LEFT_ARROW;
-        }
-
-        /// <summary>
         /// Returns whether or not the given grid square has a silly pad.
         /// </summary>
         /// <param name="gridX"></param>
@@ -756,7 +701,7 @@ namespace Smiley.Lib.GameObjects.Environment
         /// <returns></returns>
         public bool HasSillyPad(int gridX, int gridY)
         {
-            return true;//TODO:
+            return false;//TODO:
             //return specialTileManager->isSillyPadAt(gridX, gridY);
         }
 
@@ -859,11 +804,11 @@ namespace Smiley.Lib.GameObjects.Environment
         /// <param name="y">y-coord of the player</param>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public bool PlayerCollision(int x, int y, float dt)
+        public bool PlayerCollision(float x, float y, float dt)
         {
             //Determine the location of the collision box
-            int gridX = x / 64;
-            int gridY = y / 64;
+            int gridX = Convert.ToInt32(x / 64f);
+            int gridY = Convert.ToInt32(y / 64f);
 
             bool onIce = Tiles[SMH.Player.Tile.X, SMH.Player.Tile.Y].Collision == CollisionTile.ICE;
 
@@ -874,24 +819,24 @@ namespace Smiley.Lib.GameObjects.Environment
                 {
                     //Special logic for shrink tunnels
                     bool canPass;
-                    if (Tiles[i, y].Collision == CollisionTile.SHRINK_TUNNEL_HORIZONTAL)
+                    if (Tiles[i, j].Collision == CollisionTile.SHRINK_TUNNEL_HORIZONTAL)
                     {
                         canPass = SMH.Player.IsShrunk && j == SMH.Player.Tile.Y;
                     }
-                    else if (Tiles[i, y].Collision == CollisionTile.SHRINK_TUNNEL_VERTICAL)
+                    else if (Tiles[i, j].Collision == CollisionTile.SHRINK_TUNNEL_VERTICAL)
                     {
                         canPass = SMH.Player.IsShrunk && i == SMH.Player.Tile.X;
                     }
                     else
                     {
-                        canPass = SMH.Player.CanPass(Tiles[i, y].Collision);
+                        canPass = SMH.Player.CanPass(Tiles[i, j].Collision);
                     }
 
                     //Ignore squares off the map
                     if (IsInBounds(i, j) && !canPass)
                     {
                         //Note that this is different than normal circle/box collision!!!
-                        Rect rect = GetTerrainCollisionBox(Tiles[i, y].Collision, i, j);
+                        Rect rect = GetTerrainCollisionBox(Tiles[i, j].Collision, i, j);
 
                         //Test top and bottom of box
                         if (x > rect.X && x < rect.Right)
@@ -920,7 +865,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         //Top left corner
                         if (SmileyUtil.Distance(rect.X, rect.Y, x, y) < SMH.Player.Radius)
                         {
-                            if (SMH.Player.IsOnIce) return true;
+                            if (SMH.Player.IsIceSliding) return true;
                             angle = SmileyUtil.GetAngleBetween(rect.X, rect.Y, SMH.Player.X, SMH.Player.Y);
                             if (onlyDownPressed && SMH.Player.Facing == Direction.Down && x < rect.X && SMH.Player.CanPass(Tiles[i - 1, j].Collision) && !HasSillyPad(i - 1, j) && !onIce)
                             {
@@ -939,7 +884,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         //Top right corner
                         if (SmileyUtil.Distance(rect.Right, rect.Y, x, y) < SMH.Player.Radius)
                         {
-                            if (SMH.Player.IsOnIce) return true;
+                            if (SMH.Player.IsIceSliding) return true;
                             angle = SmileyUtil.GetAngleBetween(rect.Right, rect.Y, SMH.Player.X, SMH.Player.Y);
                             if (onlyDownPressed && SMH.Player.Facing == Direction.Down && x > rect.Right && SMH.Player.CanPass(Tiles[i + 1, j].Collision) && !HasSillyPad(i + 1, j) && !onIce)
                             {
@@ -958,7 +903,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         //Bottom right corner
                         if (SmileyUtil.Distance(rect.Right, rect.Bottom, x, y) < SMH.Player.Radius)
                         {
-                            if (SMH.Player.IsOnIce) return true;
+                            if (SMH.Player.IsIceSliding) return true;
                             angle = SmileyUtil.GetAngleBetween(rect.Right, rect.Bottom, SMH.Player.X, SMH.Player.Y);
                             if (onlyUpPressed && SMH.Player.Facing == Direction.Up && x > rect.Right && SMH.Player.CanPass(Tiles[i + 1, j].Collision) && !HasSillyPad(i + 1, j) && !onIce)
                             {
@@ -977,7 +922,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         //Bottom left corner
                         if (SmileyUtil.Distance(rect.X, rect.Bottom, x, y) < SMH.Player.Radius)
                         {
-                            if (SMH.Player.IsOnIce) return true;
+                            if (SMH.Player.IsIceSliding) return true;
                             angle = SmileyUtil.GetAngleBetween(rect.X, rect.Bottom, SMH.Player.X, SMH.Player.Y);
                             if (onlyUpPressed && SMH.Player.Facing == Direction.Up && x < rect.X && SMH.Player.CanPass(Tiles[i - 1, j].Collision) && !HasSillyPad(i - 1, j) && !onIce)
                             {
@@ -1453,39 +1398,36 @@ namespace Smiley.Lib.GameObjects.Environment
 
         private void DrawPits()
         {
+            //TODO:
             //bool draw;
             //int drawX, drawY, gridX, gridY;
 
-            ////Loop through each tile to draw the parallax layer
-            //for (int j = -1; j <= screenHeight + 1; j++) {
-            //    for (int i = -1; i <= screenWidth + 1; i++) {
-            //        draw = false;
+            //Loop through each tile to draw the parallax layer
+            for (int j = -1; j <= Tiles.Height + 1; j++)
+            {
+                for (int i = -1; i <= Tiles.Width + 1; i++)
+                {
+                    //draw = false;
 
-            //        drawX = int(i*64.0 - xOffset*.5); if (xGridOffset%2) drawX += 32;
-            //        drawY = int(j*64.0 - yOffset*.5); if (yGridOffset%2) drawY += 32;
-            //        gridX = Util::getGridX(i*64.0 + xGridOffset*64);
-            //        gridY = Util::getGridY(j*64.0 + yGridOffset*64);
+                    //drawX = int(i*64.0 - xOffset*.5); if (xGridOffset%2) drawX += 32;
+                    //drawY = int(j*64.0 - yOffset*.5); if (yGridOffset%2) drawY += 32;
+                    //gridX = SmileyUtil.GetGridX(i*64.0 + xGridOffset*64);
+                    //gridY = SmileyUtil.GetGridY(j*64.0 + yGridOffset*64);
 
-            //        //Only draw the pit graphic here if it is in bounds and near a pit to improve performance.
+                    ////Only draw the pit graphic here if it is in bounds and near a pit to improve performance.
 
-            //        for (int x = gridX-1; x <= gridX+1; x++) {
-            //            for (int y = gridY-1; y <= gridY+1; y++) {
-            //                if (!isInBounds(x,y)) break;
-            //                if (collision[x][y] == PIT || collision[x][y] == FAKE_PIT || collision[x][y] == NO_WALK_PIT) draw = true;
-            //            }
-            //        }
+                    //for (int x = gridX-1; x <= gridX+1; x++) {
+                    //    for (int y = gridY-1; y <= gridY+1; y++) {
+                    //        if (!isInBounds(x,y)) break;
+                    //        if (collision[x][y] == PIT || collision[x][y] == FAKE_PIT || collision[x][y] == NO_WALK_PIT) draw = true;
+                    //    }
+                    //}
 
-            //        if (draw && isInBounds(gridX, gridY)) {
-            //            smh->resources->GetSprite("parallaxPit")->Render(drawX, drawY);
-            //        }
-            //    }
-            //}
-
-            //int smileyScreenX = smh->getScreenX(SMH.Player.x);
-            //int smileyScreenY = smh->getScreenY(SMH.Player.y);
-
-            //int smileyGridX = Util::getGridX(smileyScreenX - xGridOffset*64 - xOffset);
-            //int smileyGridY = Util::getGridY(smileyScreenY - yGridOffset*64 - yOffset);
+                    //if (draw && isInBounds(gridX, gridY)) {
+                    //    smh->resources->GetSprite("parallaxPit")->Render(drawX, drawY);
+                    //}
+                }
+            }
         }
 
         /// <summary>
@@ -1494,26 +1436,24 @@ namespace Smiley.Lib.GameObjects.Environment
         /// <param name="dt"></param>
         private void DrawSwitchTimers(float dt)
         {
-            //for (std::list<Timer>::iterator i = timerList.begin(); i != timerList.end(); i++) {
-            //    smh->resources->GetFont("controls")->SetColor(ARGB(255,255,255,255));
-            //    smh->resources->GetFont("controls")->SetScale(1.0);
-            //    smh->resources->GetFont("controls")->printf(smh->getScreenX(i->x), smh->getScreenY(i->y),
-            //        HGETEXT_CENTER, "%d", int(i->duration - smh->timePassedSince(i->startTime)) + 1);
-            //        smh->resources->GetFont("controls")->SetColor(ARGB(255,0,0,0));
-            //}
+            foreach (Timer timer in _timers)
+            {
+                string text = (Convert.ToInt32(timer.Duration - (SMH.GameTime - timer.StartTime)) + 1).ToString();
+                SMH.Graphics.DrawString(SmileyFont.Controls, text, SMH.GetScreenX(timer.X), SMH.GetScreenY(timer.Y), TextAlignment.Center, Color.White);
+            }
         }
 
         private void UpdateSwitchTimers(float dt)
         {
-            //for (std::list<Timer>::iterator i = timerList.begin(); i != timerList.end(); i++) {
-            //    if (i->playTickSound && smh->timePassedSince(i->lastClockTickTime) > 1.0) {
-            //        i->lastClockTickTime = smh->getGameTime();
-            //        smh->soundManager->playSound("snd_ClockTick", 1.0);
-            //    }
-            //    if (smh->timePassedSince(i->startTime) > i->duration) {
-            //        i = timerList.erase(i);
-            //    }
-            //}
+            _timers.RemoveAll(timer =>
+                {
+                    if (timer.PlayTickSound && SMH.GameTimePassed(timer.LastClockTickTime, 1f))
+                    {
+                        timer.LastClockTickTime = SMH.GameTime;
+                        SMH.Sound.PlaySound(Sound.ClickTick);
+                    }
+                    return SMH.GameTimePassed(timer.StartTime, timer.Duration);
+                });
         }
 
         #endregion

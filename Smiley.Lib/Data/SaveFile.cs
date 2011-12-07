@@ -80,17 +80,17 @@ namespace Smiley.Lib.Data
         /// <summary>
         /// Returns the damage modifer for the save's upgrades and difficulties
         /// </summary>
-        public double DamageModifer
+        public float DamageModifer
         {
-            get { return (1.0 + NumUpgrades[Upgrade.Damage] * 0.2) * SMH.Data.GetDifficultyModifier(Difficulty); }
+            get { return (1f + (float)NumUpgrades[Upgrade.Damage] * 0.2f) * SMH.Data.GetDifficultyModifier(Difficulty); }
         }
 
         /// <summary>
         /// Returns the mana modifer for the save's upgrades and difficulties
         /// </summary>
-        public double ManaModifier
+        public float ManaModifier
         {
-            get { return 1.0 * (double)NumUpgrades[Upgrade.Mana] * 0.25; }
+            get { return 1f * (float)NumUpgrades[Upgrade.Mana] * 0.25f; }
         }
 
         #endregion

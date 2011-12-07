@@ -3,30 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
+using Microsoft.Xna.Framework;
+using Smiley.Lib.Data;
+using Smiley.Lib.Util;
 
 namespace Smiley.Lib.GameObjects.Player
 {
+    public class AbilitySlot
+    {
+        public Ability Ability { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Scale { get; set; }
+        public int Slot { get; set; }
+    }
+
+    public enum SpinDirection
+    {
+        None,
+        Left,
+        Right
+    }
+
     public class GUI
     {
+        private const float SmallScale = 0.6f;
+
+        #region Private Variables
+
+        private AbilitySlot[] _abilitySlots = new AbilitySlot[3];
+        private Vector2[] _points = new Vector2[3];
+
+        #endregion
+
         #region Constructors
 
+        /// <summary>
+        /// Constructs a new GUI.
+        /// </summary>
         public GUI()
         {
+            _points[0] = new Vector2(33, 115);
+            _points[1] = new Vector2(79, 57);
+            _points[2] = new Vector2(122, 115);
 
-            //abilityPoints[0].x = 33.0;
-            //abilityPoints[0].y = 115.0;
-            //abilityPoints[1].x = 79.0;
-            //abilityPoints[1].y = 57.0;
-            //abilityPoints[2].x = 122.0;
-            //abilityPoints[2].y = 115.0;
-
-            //resetAbilities();
-
-            //availableAbilities[0].scale = SMALL_SCALE;
-            //availableAbilities[1].scale = 1.0;
-            //availableAbilities[2].scale = SMALL_SCALE;
-
-            //smileyDamageDisplay = new SmileyDamageDisplay();
+            for (int i = 0; i < 3; i++)
+            {
+                _abilitySlots[i] = new AbilitySlot();
+                _abilitySlots[i].Ability = Ability.NO_ABILITY;
+                _abilitySlots[i].Slot = i;
+                _abilitySlots[i].X = _points[i].X;
+                _abilitySlots[i].Y = _points[i].Y;
+            }
         }
 
         #endregion
@@ -37,9 +65,9 @@ namespace Smiley.Lib.GameObjects.Player
         /// Returns the selected ability. The selected ability is the one in the middle.
         /// </summary>
         /// <returns></returns>
-        public Ability GetSelectedAbility()
+        public Ability SelectedAbility
         {
-            return GetAbilityInSlot(1);
+            get { return GetAbilityInSlot(1); }
         }
 
         /// <summary>
@@ -49,20 +77,22 @@ namespace Smiley.Lib.GameObjects.Player
         /// <returns></returns>
         public Ability GetAbilityInSlot(int slot)
         {
-            //for (int i = 0; i < 3; i++) {
-            //    if (availableAbilities[i].slot == slot) return availableAbilities[i].ability;
-            //}
+            for (int i = 0; i < 3; i++)
+            {
+                if (_abilitySlots[i].Slot == slot)
+                    return _abilitySlots[i].Ability;
+            }
             return Ability.NO_ABILITY;
         }
 
+        /// <summary>
+        /// Sets the ability in the specified slot.
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="slot"></param>
         public void SetAbilityInSlot(Ability ability, int slot)
         {
-            //for (int i = 0; i < 3; i++) {
-            //    if (availableAbilities[i].slot == slot) {
-            //        availableAbilities[i].ability = ability;
-            //        return;
-            //    }
-            //}
+            _abilitySlots.Single(s => s.Slot == slot).Ability = ability;
         }
 
         /// <summary>
@@ -72,10 +102,7 @@ namespace Smiley.Lib.GameObjects.Player
         /// <returns></returns>
         public bool IsAbilityAvailable(Ability ability)
         {
-            //for (int i = 0; i < 3; i++) {
-            //    if (availableAbilities[i].ability == ability) return true;
-            //}
-            return false;
+            return _abilitySlots.Any(slot => slot.Ability == ability);
         }
 
         /// <summary>
@@ -84,21 +111,7 @@ namespace Smiley.Lib.GameObjects.Player
         /// <returns></returns>
         public int NumAvailableAbilities()
         {
-            int n = 0;
-            //for (int i = 0; i < 3; i++) {
-            //    if (availableAbilities[i].ability != NO_ABILITY) n++;
-            //}
-            return n;
-        }
-
-        public void ResetAbilities()
-        {
-            //for (int i = 0; i < 3; i++) {
-            //    availableAbilities[i].ability = NO_ABILITY;
-            //    availableAbilities[i].slot = i;
-            //    availableAbilities[i].x = abilityPoints[i].x;
-            //    availableAbilities[i].y = abilityPoints[i].y;
-            //}
+            return _abilitySlots.Count(slot => slot.Ability != Ability.NO_ABILITY);
         }
 
         /// <summary>
@@ -107,31 +120,36 @@ namespace Smiley.Lib.GameObjects.Player
         /// <param name="ability"></param>
         public void ToggleAvailableAbility(Ability ability)
         {
-            ////If the ability is available, remove it
-            //for (int i = 0; i < 3; i++) {
-            //    if (availableAbilities[i].ability == ability) {
-            //        availableAbilities[i].ability = NO_ABILITY;
-            //        smh->soundManager->playSound("snd_AbilityDeSelect");
-            //        return;
-            //    }
-            //}
+            //If the ability is available, remove it
+            for (int i = 0; i < 3; i++)
+            {
+                if (_abilitySlots[i].Ability == ability)
+                {
+                    _abilitySlots[i].Ability = Ability.NO_ABILITY;
+                    SMH.Sound.PlaySound(Sound.AbilityDeSelect);
+                    return;
+                }
+            }
 
-            ////Otherwise, add it.
-            //if (availableAbilities[1].ability == NO_ABILITY) {
-            //    availableAbilities[1].ability = ability;
-            //    smh->soundManager->playSound("snd_AbilitySelect");
-            //    return;
-            //}
-            //if (availableAbilities[0].ability == NO_ABILITY) {
-            //    availableAbilities[0].ability = ability;
-            //    smh->soundManager->playSound("snd_AbilitySelect");
-            //    return;
-            //}
-            //if (availableAbilities[2].ability == NO_ABILITY) {
-            //    availableAbilities[2].ability = ability;
-            //    smh->soundManager->playSound("snd_AbilitySelect");
-            //    return;
-            //}
+            //Otherwise, add it.
+            if (_abilitySlots[1].Ability == Ability.NO_ABILITY)
+            {
+                _abilitySlots[1].Ability = ability;
+                SMH.Sound.PlaySound(Sound.AbilitySelect);
+                return;
+            }
+            if (_abilitySlots[0].Ability == Ability.NO_ABILITY)
+            {
+                _abilitySlots[0].Ability = ability;
+                SMH.Sound.PlaySound(Sound.AbilitySelect);
+                return;
+            }
+            if (_abilitySlots[2].Ability == Ability.NO_ABILITY)
+            {
+                _abilitySlots[2].Ability = ability;
+                SMH.Sound.PlaySound(Sound.AbilitySelect);
+                return;
+            }
 
             //If we got here then there is no room for the ability!
             SMH.Sound.PlaySound(Sound.Error);
@@ -139,170 +157,189 @@ namespace Smiley.Lib.GameObjects.Player
 
         public void Update(float dt)
         {
-            //int collisionAtPlayer = smh->environment->collision[smh->player->gridX][smh->player->gridY];
-            //int dir = -1;
+            CollisionTile collisionAtPlayer = SMH.Player.Tile.Collision;
+            SpinDirection dir = SpinDirection.None;
 
-            ////Input to change ability
-            //if (!smh->windowManager->isOpenWindow()) {
-            //    if (smh->input->keyPressed(INPUT_PREVIOUS_ABILITY)) {
-            //        dir = LEFT;
-            //    } else if  (smh->input->keyPressed(INPUT_NEXT_ABILITY)) {
-            //        dir = RIGHT;
-            //    }
-            //}
+            //Input to change ability
+            if (!SMH.WindowManager.IsAnyWindowOpen)
+            {
+                if (SMH.Input.IsPressed(Input.PreviousAbility))
+                    dir = SpinDirection.Left;
+                else if (SMH.Input.IsPressed(Input.NextAbility))
+                    dir = SpinDirection.Right;
+            }
 
-            //if (dir != -1) {
-            //    if (getSelectedAbility() == WATER_BOOTS && smh->player->isSmileyTouchingWater()) {
-            //        if (collisionAtPlayer != DEEP_WATER && collisionAtPlayer != GREEN_WATER) {
-            //            //player is on a land tile, but touching water; bump him over and change abilities
-            //            changeAbility(dir);
-            //            smh->player->graduallyMoveTo(smh->player->gridX * 64.0 + 32.0, smh->player->gridY * 64.0 + 32.0, 500.0);
-            //        } else {
-            //            //player actually on a water tile; cannot take off the sandals; play error message
-            //            smh->soundManager->playSound("snd_Error");
-            //        }
-            //    } else {
-            //        changeAbility(dir);
-            //    }
-            //}
+            if (dir != SpinDirection.None)
+            {
+                if (SelectedAbility == Ability.WATER_BOOTS && SMH.Player.IsSmileyTouchingWater())
+                {
+                    if (collisionAtPlayer != CollisionTile.DEEP_WATER && collisionAtPlayer != CollisionTile.GREEN_WATER)
+                    {
+                        //player is on a land tile, but touching water; bump him over and change abilities
+                        ChangeAbility(dir);
+                        SMH.Player.GraduallyMoveTo(SMH.Player.Tile.X * 64f + 32f, SMH.Player.Tile.Y * 64f + 32f, 500);
+                    }
+                    else
+                    {
+                        //player actually on a water tile; cannot take off the sandals; play error message
+                        SMH.Sound.PlaySound(Sound.Error);
+                    }
+                }
+                else
+                {
+                    ChangeAbility(dir);
+                }
+            }
 
-            //float angle, x, y, targetX, targetY;
-            //for (int i = 0; i < 3; i++) {
-            //    //Move towards target slot
-            //    x = availableAbilities[i].x;
-            //    y = availableAbilities[i].y;
-            //    targetX = abilityPoints[availableAbilities[i].slot].x;
-            //    targetY = abilityPoints[availableAbilities[i].slot].y;
-            //    angle = Util::getAngleBetween(x, y, targetX, targetY);
-            //    if (Util::distance(x, y, targetX, targetY) < 600.0 * dt) {
-            //        availableAbilities[i].x = targetX;
-            //        availableAbilities[i].y = targetY;
-            //    } else {
-            //        availableAbilities[i].x += 600.0 * cos(angle) * dt;
-            //        availableAbilities[i].y += 600.0 * sin(angle) * dt;
-            //    }
+            float angle, x, y, targetX, targetY;
+            for (int i = 0; i < 3; i++)
+            {
+                //Move towards target slot
+                x = _abilitySlots[i].X;
+                y = _abilitySlots[i].Y;
+                targetX = _points[_abilitySlots[i].Slot].Y;
+                targetY = _points[_abilitySlots[i].Slot].Y;
+                angle = SmileyUtil.GetAngleBetween(x, y, targetX, targetY);
+                if (SmileyUtil.Distance(x, y, targetX, targetY) < 600.0 * dt)
+                {
+                    _abilitySlots[i].X = targetX;
+                    _abilitySlots[i].Y = targetY;
+                }
+                else
+                {
+                    _abilitySlots[i].X += 600f * (float)Math.Cos(angle) * dt;
+                    _abilitySlots[i].Y += 600f * (float)Math.Sin(angle) * dt;
+                }
 
-            //    //Move towards correct size
-            //    if (availableAbilities[i].slot == 1 && availableAbilities[i].scale < 1.0) {
-            //        availableAbilities[i].scale += 3.0 * dt;
-            //        if (availableAbilities[i].scale > 1.0) {
-            //            availableAbilities[i].scale = 1.0;
-            //        }
-            //    } else if (availableAbilities[i].slot != 1 && availableAbilities[i].scale > SMALL_SCALE) {
-            //        availableAbilities[i].scale -= 3.0 * dt;
-            //        if (availableAbilities[i].scale < SMALL_SCALE) {
-            //            availableAbilities[i].scale = SMALL_SCALE;
-            //        }
-            //    }
-            //}
-            //smileyDamageDisplay->update();
+                //Move towards correct size
+                if (_abilitySlots[i].Slot == 1 && _abilitySlots[i].Scale < 1f)
+                {
+                    _abilitySlots[i].Scale += 3f * dt;
+                    if (_abilitySlots[i].Scale > 1f)
+                    {
+                        _abilitySlots[i].Scale = 1f;
+                    }
+                }
+                else if (_abilitySlots[i].Slot != 1 && _abilitySlots[i].Scale > SmallScale)
+                {
+                    _abilitySlots[i].Scale -= 3f * dt;
+                    if (_abilitySlots[i].Scale < SmallScale)
+                    {
+                        _abilitySlots[i].Scale = SmallScale;
+                    }
+                }
+            }
         }
 
-        public void Daw()
+        public void Draw()
         {
-            //int drawX, drawY;
+            int drawX, drawY;
 
-            ////Draw health
-            //for (int i = 1; i <= smh->player->getMaxHealth(); i++) {
-            //    drawX = (i <= 10) ? 120+i*35 : 120+(i-10)*35;
-            //    drawY = (i <= 10) ? 25 : 70;
-            //    if (smh->player->getHealth() >= i) {
-            //        smh->resources->GetSprite("fullHealth")->Render(drawX, drawY);
-            //    } else if (smh->player->getHealth() < i && smh->player->getHealth() >= i-.25) {
-            //        smh->resources->GetSprite("threeQuartersHealth")->Render(drawX, drawY);
-            //    } else if (smh->player->getHealth() < i-.25 && smh->player->getHealth() >= i -.5) {
-            //        smh->resources->GetSprite("halfHealth")->Render(drawX, drawY);
-            //    } else if (smh->player->getHealth() < i-.5 && smh->player->getHealth() >= i - .75) {
-            //        smh->resources->GetSprite("quarterHealth")->Render(drawX, drawY);
-            //    } else {
-            //        smh->resources->GetSprite("emptyHealth")->Render(drawX, drawY);
-            //    }
-            //}
+            //Draw health
+            for (int i = 1; i <= SMH.Player.MaxHealth; i++)
+            {
+                drawX = (i <= 10) ? 120 + i * 35 : 120 + (i - 10) * 35;
+                drawY = (i <= 10) ? 25 : 70;
+                if (SMH.Player.Health >= i)
+                    SMH.Graphics.DrawSprite(Sprites.FullHealth, drawX, drawY);
+                else if (SMH.Player.Health < i && SMH.Player.Health >= i - .25)
+                    SMH.Graphics.DrawSprite(Sprites.ThreeQuartersHealth, drawX, drawY);
+                else if (SMH.Player.Health < i - .25 && SMH.Player.Health >= i - .5)
+                    SMH.Graphics.DrawSprite(Sprites.HalfHealth, drawX, drawY);
+                else if (SMH.Player.Health < i - .5 && SMH.Player.Health >= i - .75)
+                    SMH.Graphics.DrawSprite(Sprites.QuarterHealth, drawX, drawY);
+                else
+                    SMH.Graphics.DrawSprite(Sprites.EmptyHealth, drawX, drawY);
+            }
 
-            ////Draw mana bar
-            //drawX = 155;
-            //drawY = smh->player->getMaxHealth() < 11 ? 65 : 110;
-            //float manaBarSizeMultiplier = (1.0 + .15 * smh->saveManager->numUpgrades[1]) * 0.96; //adjust the size multiplier so max mana bar is the same width as max hearts
+            //Draw mana bar
+            drawX = 155;
+            drawY = SMH.Player.MaxMana < 11 ? 65 : 110;
+            float manaBarSizeMultiplier = (1f + .15f * SMH.SaveManager.CurrentSave.NumUpgrades[Upgrade.Mana]) * 0.96f; //adjust the size multiplier so max mana bar is the same width as max hearts
 
-            //smh->resources->GetSprite("manabarBackgroundCenter")->SetTextureRect(675, 282, 115*manaBarSizeMultiplier-4, 22, true);
-            //smh->resources->GetSprite("manabarBackgroundCenter")->Render(drawX+4, drawY);
-            //smh->resources->GetSprite("manaBar")->SetTextureRect(661, 304, 115*(smh->player->getMana()/smh->player->getMaxMana())*manaBarSizeMultiplier, 15, true);
-            //smh->resources->GetSprite("manaBar")->Render(drawX+4,drawY+3);
+            SMH.Graphics.DrawCroppedSprite(Sprites.ManaBarBackgroundCenter, drawX + 4, drawY, new Rectangle(675, 282, Convert.ToInt32(115f * manaBarSizeMultiplier - 4f), 22));
+            SMH.Graphics.DrawCroppedSprite(Sprites.ManaBar, drawX + 4, drawY + 3, new Rectangle(661, 304, Convert.ToInt32(115f * (SMH.Player.Mana / SMH.Player.MaxMana) * manaBarSizeMultiplier), 15));
+            SMH.Graphics.DrawSprite(Sprites.ManaBarBackgroundLeftTip, drawX, drawY);
+            SMH.Graphics.DrawSprite(Sprites.ManaBarBackgroundRightTip, drawX + 115f * manaBarSizeMultiplier - 2f, drawY);
 
-            //smh->resources->GetSprite("manabarBackgroundLeftTip")->Render(drawX, drawY);
-            //smh->resources->GetSprite("manabarBackgroundRightTip")->Render(drawX + 115 * manaBarSizeMultiplier - 2, drawY);
+            //Draw abilities
+            SMH.Graphics.DrawSprite(Sprites.AbilityBackground, 5f, 12f);
+            foreach (AbilitySlot slot in _abilitySlots)
+            {
+                if (slot.Ability != Ability.NO_ABILITY)
+                {
+                    SMH.Graphics.DrawSprite(SpriteSets.Abilities[(int)slot.Ability], slot.X, slot.Y, Color.White, 0f, slot.Scale);
+                }
+            }
 
+            //Draw keys
+            int keyIndex = SmileyUtil.GetKeyIndex(SMH.SaveManager.CurrentSave.Level);
+            if (keyIndex != -1)
+            {
+                SMH.Graphics.DrawSprite(Sprites.KeyBackground, 748, 714);
 
-            ////Draw abilities
-            //smh->resources->GetSprite("abilityBackground")->Render(5.0, 12.0);
-            //for (int i = 0; i < 3; i++) {
-            //    if (availableAbilities[i].ability != NO_ABILITY) {
-            //        smh->resources->GetAnimation("abilities")->SetFrame(availableAbilities[i].ability);
-            //        smh->resources->GetAnimation("abilities")->RenderEx(availableAbilities[i].x, availableAbilities[i].y, 0.0, 
-            //            availableAbilities[i].scale, availableAbilities[i].scale);
-            //    }
-            //}
+                int keyXOffset = 763;
+                int keyYOffset = 724;
+                for (int i = 0; i < 4; i++)
+                {
+                    //Draw key icon
+                    SMH.Graphics.DrawSprite(SpriteSets.KeyIcons[i], keyXOffset + 60 * i, keyYOffset);
 
-            ////Draw damage display
-            //smileyDamageDisplay->draw();
+                    //Draw num keys
+                    SMH.Graphics.DrawString(SmileyFont.Number, SMH.SaveManager.CurrentSave.NumKeys[keyIndex, i].ToString(),
+                        keyXOffset + 60 * i + 45, keyYOffset + 5, TextAlignment.Left);
+                }
+            }
 
-            ////Draw keys
-            //if (Util::getKeyIndex(smh->saveManager->currentArea) != -1) 
-            //{
-            //    smh->drawSprite("keyBackground", 748.0, 714.0);
+            //Show whether or not Smiley is invincible
+            if (SMH.Player.IsInvincible)
+                SMH.Graphics.DrawString(SmileyFont.Curlz, "Invincibility On", 512, 3, TextAlignment.Center);
 
-            //    int keyXOffset = 763.0;
-            //    int keyYOffset = 724.0;
-            //    for (int i = 0; i < 4; i++) {
-
-            //        //Draw key icon
-            //        smh->resources->GetAnimation("keyIcons")->SetFrame(i);
-            //        smh->resources->GetAnimation("keyIcons")->Render(keyXOffset + 60.0*i, keyYOffset);
-
-            //        //Draw num keys
-            //        smh->resources->GetFont("numberFnt")->printf(keyXOffset + 60.0*i + 45.0, keyYOffset + 5.0, 
-            //            HGETEXT_LEFT, "%d", smh->saveManager->numKeys[Util::getKeyIndex(smh->saveManager->currentArea)][i]);
-            //    }	
-            //}
-
-            ////Show whether or not Smiley is invincible
-            //if (smh->player->invincible) {
-            //    smh->resources->GetFont("curlz")->printf(512.0, 3, HGETEXT_CENTER, "Invincibility On");
-            //}
+            //Smiley progress bar
+            Rectangle? r = SMH.Player.GetProgressBar();
+            if (r != null)
+            {
+                SMH.Graphics.DrawSprite(Sprites.BossHealthBar, r.Value, Color.White);
+            }
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Cycles through the available abilities, skipping ones which are PASSIVE
         /// </summary>
         /// <param name="direction"></param>
-        public void ChangeAbility(int direction)
+        private void ChangeAbility(SpinDirection direction)
         {
-            //smh->soundManager->playSound("snd_SwitchItem");
+            SMH.Sound.PlaySound(Sound.SwitchItem);
 
-            ////Stop old ability
+            //Stop old ability//TODO:
             //smh->player->fireBreathParticle->Stop(false);
             //smh->player->iceBreathParticle->Stop(false);
+            SMH.Player.DeShrink();
 
-            //if (smh->player->shrinkActive) {
-            //    smh->player->shrinkActive = false;
-            //    smh->soundManager->playSound("snd_DeShrink");
-            //}
+            int a = 0;
+            int b = 0;
 
-            //int a, b;
+            for (int i = 0; i < 3; i++)
+            {
+                if (direction == SpinDirection.Left)
+                {
+                    if (_abilitySlots[i].Slot == 0) a = i;
+                    if (_abilitySlots[i].Slot == 1) b = i;
+                }
+                else if (direction == SpinDirection.Right)
+                {
+                    if (_abilitySlots[i].Slot == 1) a = i;
+                    if (_abilitySlots[i].Slot == 2) b = i;
+                }
+            }
 
-            //for (int i = 0; i < 3; i++) {
-            //    if (direction == LEFT) {
-            //        if (availableAbilities[i].slot == 0) a = i;
-            //        if (availableAbilities[i].slot == 1) b = i;
-            //    } else if (direction == RIGHT) {
-            //        if (availableAbilities[i].slot == 1) a = i;
-            //        if (availableAbilities[i].slot == 2) b = i;
-            //    }
-            //}
-
-            //int temp = availableAbilities[a].slot;
-            //availableAbilities[a].slot = availableAbilities[b].slot;
-            //availableAbilities[b].slot = temp;
+            int temp = _abilitySlots[a].Slot;
+            _abilitySlots[a].Slot = _abilitySlots[b].Slot;
+            _abilitySlots[b].Slot = temp;
         }
 
         #endregion

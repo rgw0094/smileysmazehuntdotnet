@@ -95,6 +95,8 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Animations.cs" />
+    <Compile Include="Framework\DebugConsole.cs" />
+    <Compile Include="GameObjects\Enemies\EnemyManager.cs" />
     <Compile Include="GameObjects\Environment\Tile.cs" />
     <Compile Include="Data\SmileyData.cs" />
     <Compile Include="Data\SaveFile.cs" />
@@ -136,9 +138,11 @@
     <Compile Include="GameObjects\Environment\Fountain.cs" />
     <Compile Include="GameObjects\Environment\Tiles.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\NPCs\NPCManager.cs" />
     <Compile Include="GameObjects\Player\GUI.cs" />
     <Compile Include="GameObjects\Player\Player.cs" />
     <Compile Include="GameObjects\Player\Tongue.cs" />
+    <Compile Include="GameObjects\ProjectileManager.cs" />
     <Compile Include="Menu\BaseMenuScreen.cs" />
     <Compile Include="Menu\CinematicScreen.cs" />
     <Compile Include="Menu\ClosingCinematicScreen.cs" />
@@ -149,9 +153,9 @@
     <Compile Include="Menu\SelectFileScreen.cs" />
     <Compile Include="Menu\TitleScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\InputManager.cs" />
-    <Compile Include="Services\SaveManager.cs" />
-    <Compile Include="Services\SoundManager.cs" />
+    <Compile Include="Framework\InputManager.cs" />
+    <Compile Include="Framework\SaveManager.cs" />
+    <Compile Include="Framework\SoundManager.cs" />
     <Compile Include="SMH.cs" />
     <Compile Include="Framework\UIControls\Button.cs" />
     <Compile Include="Framework\BitStream.cs" />

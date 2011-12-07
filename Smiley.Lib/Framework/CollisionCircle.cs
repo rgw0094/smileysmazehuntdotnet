@@ -10,6 +10,17 @@ namespace Smiley.Lib.Framework
 {
     public class CollisionCircle
     {
+        public CollisionCircle()
+        {
+        }
+
+        public CollisionCircle(float x, float y, float radius)
+        {
+            X = x;
+            Y = y;
+            Radius = radius;
+        }
+
         /// <summary>
         /// X-coordinate of the center of the circle.
         /// </summary>

@@ -12,6 +12,7 @@ namespace Smiley.Lib.Framework.Drawing
     {
         #region Private Variables
 
+        private SpriteSet _sprites;
         private float _lastFrameChange;
         private int _activeFrame;
 
@@ -45,7 +46,7 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="pingPong"></param>
         public Animation(SpriteSet sprites, float fps, bool reverse = false, bool loop = false, bool pingPong = false)
         {
-            Sprites = sprites;
+            _sprites = sprites;
             FPS = fps;
             Reverse = reverse;
             Loop = loop;
@@ -56,11 +57,10 @@ namespace Smiley.Lib.Framework.Drawing
 
         #region Properties
 
-        public SpriteSet Sprites { get; private set; }
-        public float FPS { get; private set; }
-        public bool Reverse { get; private set; }
-        public bool Loop { get; private set; }
-        public bool PingPong { get; private set; }
+        public float FPS { get; set; }
+        public bool Reverse { get; set; }
+        public bool Loop { get; set; }
+        public bool PingPong { get; set; }
 
         /// <summary>
         /// Returns whether or not the animation is currently playing.
@@ -69,6 +69,38 @@ namespace Smiley.Lib.Framework.Drawing
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets the number of frames in the animation.
+        /// </summary>
+        public int NumFrames
+        {
+            get { return _sprites.Count; }
+        }
+
+        /// <summary>
+        /// Gets or sets the currently active frame.
+        /// </summary>
+        public int ActiveFrame
+        {
+            get { return _activeFrame; }
+            set
+            {
+                if (value > _sprites.Count - 1)
+                    throw new ArgumentException("Invalid frame number bro");
+
+                _activeFrame = value;
+                _lastFrameChange = SMH.GameTime;
+            }
+        }
+
+        /// <summary>
+        /// Gets the sprite for the current frame.
+        /// </summary>
+        public Sprite ActiveSprite
+        {
+            get { return _sprites[_activeFrame]; }
         }
 
         #endregion
@@ -81,38 +113,49 @@ namespace Smiley.Lib.Framework.Drawing
         /// <returns></returns>
         public Animation Clone()
         {
-            return new Animation(Sprites, FPS, Reverse, Loop, PingPong);
+            return new Animation(_sprites, FPS, Reverse, Loop, PingPong);
         }
 
+        /// <summary>
+        /// Starts playing the animation from its current frame.
+        /// </summary>
         public void Play()
         {
             IsPlaying = true;
-            _lastFrameChange = SMH.Now;
+            _lastFrameChange = SMH.GameTime;
         }
 
+        /// <summary>
+        /// Starts playing the animation from the given frame.
+        /// </summary>
+        /// <param name="startFrame"></param>
+        public void Play(int startFrame)
+        {
+            ActiveFrame = startFrame;
+            Play();
+        }
+
+        /// <summary>
+        /// Stops the animation.
+        /// </summary>
         public void Stop()
         {
             IsPlaying = false;
         }
 
+        /// <summary>
+        /// Updates the animation.
+        /// </summary>
+        /// <param name="dt"></param>
         public void Update(float dt)
         {
+            //TODO: loop, reverse, pingpong
+
             if (IsPlaying && SMH.TimePassed(_lastFrameChange, 1f / FPS))
             {
-                _activeFrame = _activeFrame == Sprites.Count - 1 ? 0 : _activeFrame + 1;
+                _activeFrame = _activeFrame == _sprites.Count - 1 ? 0 : _activeFrame + 1;
                 _lastFrameChange = SMH.Now;
             }
-        }
-
-        public void Draw(float x, float y)
-        {
-            Draw(x, y, 1f);
-        }
-
-        public void Draw(float x, float y, float alpha)
-        {
-            //TODO:
-            SMH.Graphics.DrawSprite(Sprites[_activeFrame], x, y);
         }
 
         #endregion
