@@ -40,3 +40,103 @@
 ||RGW||12/4/11||Ported GUI||
 ||RGW||12/6/11||Ported DebugConsole||
 ||RGW||12/6/11||Ported Player||
+
+= Port Progress =
+
+||*Class*||*Status*||
+||AdviceMan|| ||
+||AdviceWindow|| ||
+||AreaChanger|| ||
+||BaseEnemy|| ||
+||BitStream||Done||
+||BossManager|| ||
+||Button||Done||
+||CandyBoss|| ||
+||ChangeManager||Done||
+||CinematicScreen|| ||
+||ClosingCinematic|| ||
+||CollisionCircle||Done||
+||ConservatoryBoss|| ||
+||Console||Done||
+||ControlActionGroup||Done||
+||CreditsScreen|| ||
+||DeathEffectManager|| ||
+||DefaultEnemy|| ||
+||DesertBoss|| ||
+||DespairBoss|| ||
+||DifficultyPrompt||Done||
+||E_AdjacentShooter|| ||
+||E_BatletDist|| ||
+||E_BombGenerator|| ||
+||E_Botonoid|| ||
+||E_Buzzard|| ||
+||E_ChainClown|| ||
+||E_Charger|| ||
+||E_DiagoShooter|| ||
+||E_EvilEye|| ||
+||E_Fake|| ||
+||E_FenwarEyeSpider|| ||
+||E_Flailer|| ||
+||E_Floater|| ||
+||E_Ghost|| ||
+||E_Gumdrop|| ||
+||E_Hopper|| ||
+||E_Ranged|| ||
+||E_SadShooter|| ||
+||E_Spawner|| ||
+||E_Tentacle|| ||
+||E_Turret|| ||
+||EnemyGroupManager|| ||
+||Environment||80%||
+||ES_Chase|| ||
+||ES_RangedAttack|| ||
+||ES_Wander|| ||
+||EvilWall|| ||
+||EvilWallManager|| ||
+||ExplosionManager|| ||
+||FenwarBombs|| ||
+||FenwarBoss|| ||
+||FenwarBullets|| ||
+||FenwarManager|| ||
+||FenwarOrbs|| ||
+||FireBoss|| ||
+||FireBoss2|| ||
+||ForestBoss|| ||
+||Fountain||Done||
+||GameData||75% (Need GameText)||
+||GUI||Done||
+||Input||Done||
+||Inventory|| ||
+||LoadingScreen|| ||
+||LootManager|| ||
+||LovecraftBoss|| ||
+||MainMenu||Done||
+||Map|| ||
+||MeleeEnemy|| ||
+||MiniMenu|| ||
+||MushroomBoss|| ||
+||NPC|| ||
+||NPCManager|| ||
+||OptionsScreen|| ||
+||Player||Done||
+||PopupMessageManager|| ||
+||ProjectileManager|| ||
+||SaveManager||Done||
+||ScreenEffectsManager|| ||
+||SelectFileScreen||90%||
+||Shop|| ||
+||Slider|| ||
+||SMH||50%||
+||SmileletManager|| ||
+||SnowBoss|| ||
+||SoundManager||Done||
+||SpecialTileManager|| ||
+||TapestryManager|| ||
+||TextBox|| ||
+||TitleScreen||Done||
+||Tongue||Done||
+||TutBoss|| ||
+||WeaponParticle|| ||
+||WindowManager|| ||
+||WorldMap|| ||
+||Worm|| ||
