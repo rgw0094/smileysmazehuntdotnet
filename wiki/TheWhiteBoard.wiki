@@ -5,11 +5,11 @@
 
 = Erik's to-do list =
   * Input GameText into source code
+  * ParticleSystem SOLUTION
 
 = Rob's to-do list =
-  * Port environment class
   * Choose config mechanism (XML????? 3rd party?!??!!?)
-  * Port the fonts
+  * Font SOLUTION
 
 = Accomplished =
 
