@@ -6,48 +6,52 @@ using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.Data;
 using Smiley.Lib.Framework;
 using Smiley.Lib.Util;
+using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.GameObjects.Environment
 {
-    public class Fountain
+    public class Fountain : GameObject
     {
         public const float FountainHealRadius = 300f;
         private ParticleSystem _particle;
-        private float _x;
-        private float _y;
 
         public Fountain(int gridX, int gridY)
         {
-            _x = (float)gridX * 64f + 32f;
-            _y = (float)gridY * 64f + 32f;
+            X = (float)gridX * 64f + 32f;
+            Y = (float)gridY * 64f + 32f;
         }
 
         public bool IsAboveSmiley()
         {
-            return _y + 32f > SMH.Player.Y;
+            return Y + 32f > SMH.Player.Y;
         }
 
-        public void Draw()
+        public override void Draw()
         {
-            if (SmileyUtil.Distance(_x, _y, SMH.Player.X, SMH.Player.Y) > 1000f)
+            if (SmileyUtil.Distance(X, Y, SMH.Player.X, SMH.Player.Y) > 1000f)
                 return;
 
             //Bottom fountain part and pool
-            SMH.Graphics.DrawSprite(Sprites.FountainBottom, SMH.GetScreenX(_x), SMH.GetScreenY(_y));
-            Animations.FountainRipple.Draw(_x, _y - 72f);
+            SMH.Graphics.DrawSprite(Sprites.FountainBottom, ScreenX, ScreenY);
+            SMH.Graphics.DrawAnimation(Animations.FountainRipple, ScreenX, ScreenY - 72f);
 
             //Top fountain part and pool
-            SMH.Graphics.DrawSprite(Sprites.FountainTop, SMH.GetScreenX(_x), SMH.GetScreenY(_y - 115f));
+            SMH.Graphics.DrawSprite(Sprites.FountainTop, ScreenX, ScreenY - 115f);
+            SMH.Graphics.DrawAnimation(Animations.FountainRipple, ScreenX, ScreenY - 215f, Color.White, 0f, 0.35f, 0.4f);
+            
             //TODO:
+            //Fountain particle
+            //smh->resources->GetParticleSystem("fountain")->MoveTo(smh->getScreenX(x), smh->getScreenY(y - 220.0), true);
+            //smh->resources->GetParticleSystem("fountain")->Render();
         }
 
-        public void Update(float dt)
+        public override void Update(float dt)
         {
             Animations.FountainRipple.Update(dt);
-            _particle.Update(dt);
+            //_particle.Update(dt);TODO
 
             //Heal the player when they are close
-            if (SmileyUtil.Distance(_x, _y, SMH.Player.X, SMH.Player.Y) < Fountain.FountainHealRadius)
+            if (SmileyUtil.Distance(X, Y, SMH.Player.X, SMH.Player.Y) < Fountain.FountainHealRadius)
             {
                 SMH.Player.Heal(0.5f);
             }

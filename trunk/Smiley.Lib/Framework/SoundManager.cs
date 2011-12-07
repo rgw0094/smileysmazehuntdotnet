@@ -41,7 +41,7 @@ namespace Smiley.Lib.Services
 
             //Music volume starts at what it was when app was closed last
             //TODO: load from config
-            MusicVolume = 100;
+            MusicVolume = 0;// 100;
             SoundVolume = 100;
         }
 
@@ -105,7 +105,9 @@ namespace Smiley.Lib.Services
             _currentMusic = _contentManager.Load<SoundEffect>(music.GetDescription()).CreateInstance();
             _currentMusic.IsLooped = true;
             _currentMusic.Volume = (float)MusicVolume / 100f;
-            _currentMusic.Play();
+
+            if (MusicVolume > 0)
+                _currentMusic.Play();
         }
 
         /// <summary>
@@ -186,7 +188,7 @@ namespace Smiley.Lib.Services
                 bool inRange = true;// abs(gridX - smh->player->gridX) <= 8 && abs(gridY - smh->player->gridY) <= 6;
                 if (alwaysPlaySound || inRange)
                 {
-                    _lastSwitchTime= SMH.Now;
+                    _lastSwitchTime = SMH.Now;
                     PlaySound(Sound.Switch);
                 }
             }
@@ -213,11 +215,11 @@ namespace Smiley.Lib.Services
         public void StartLoopingSound(Sound sound)
         {
             if (_loopedSounds.ContainsKey(sound))
-                throw new Exception(sound.ToString() + " is already looping");
+                return;
 
             SoundEffectInstance instance = _contentManager.Load<SoundEffect>(sound.GetDescription()).CreateInstance();
             instance.IsLooped = true;
-            instance.Volume = SoundVolume;
+            instance.Volume = (float)SoundVolume / 100f;
             instance.Play();
 
             _loopedSounds[sound] = instance;
@@ -230,14 +232,12 @@ namespace Smiley.Lib.Services
         public void StopLoopingSound(Sound sound)
         {
             SoundEffectInstance instance = null;
-            if (!_loopedSounds.TryGetValue(sound, out instance))
+            if (_loopedSounds.TryGetValue(sound, out instance))
             {
-                throw new Exception(sound.ToString() + " is not looping");
+                instance.Stop();
+                instance.Dispose();
+                _loopedSounds.Remove(sound);
             }
-
-            instance.Stop();
-            instance.Dispose();
-            _loopedSounds.Remove(sound);
         }
 
         /// <summary>
@@ -246,6 +246,7 @@ namespace Smiley.Lib.Services
         /// <param name="sound"></param>
         public void PlaySound(Sound sound)
         {
+            _lastPlayedTimes[sound] = SMH.Now;
             PlaySound(sound, 0);
         }
 

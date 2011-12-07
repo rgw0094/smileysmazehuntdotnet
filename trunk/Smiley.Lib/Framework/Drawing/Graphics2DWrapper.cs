@@ -122,10 +122,11 @@ namespace Smiley.Lib.Framework.Drawing
         /// Draws a sprite.
         /// </summary>
         /// <param name="sprite"></param>
-        /// <param name="position"></param>
-        public void DrawSprite(Sprite sprite, Vector2 position)
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void DrawSprite(Sprite sprite, float x, float y)
         {
-            DrawSprite(sprite, position.X, position.Y);
+            DrawSprite(sprite, x, y, Color.White);
         }
 
         /// <summary>
@@ -134,59 +135,153 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="sprite"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void DrawSprite(Sprite sprite, float x, float y)
+        /// <param name="color"></param>
+        public void DrawSprite(Sprite sprite, float x, float y, Color color)
         {
             Vector2 drawPosition = drawPosition = new Vector2(x - sprite.HotSpot.X, y - sprite.HotSpot.Y);
-            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, sprite.Rect, Color.White);
+            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, sprite.Rect, color);
         }
 
         /// <summary>
-        /// Draws a sprite scaled vertically and horizontally.
+        /// Draws a sprite.
         /// </summary>
         /// <param name="sprite"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="scale"></param>
-        public void DrawSpriteScaled(Sprite sprite, float x, float y, float scale)
+        /// <param name="targetRect"></param>
+        /// <param name="color"></param>
+        public void DrawSprite(Sprite sprite, Rectangle targetRect, Color color)
         {
-            DrawSpriteScaled(sprite, x, y, scale, scale);
+            Texture2D texture = SMH.Data.GetTexture(sprite.Texture);
+            _spriteBatch.Draw(texture, targetRect, sprite.Rect, color);
         }
 
         /// <summary>
-        /// Draws a sprite scaled horizontally and/or vertically.
+        /// Draws a sprite.
         /// </summary>
         /// <param name="sprite"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        public void DrawSprite(Sprite sprite, float x, float y, Color color, float rotation, float scale)
+        {
+            Vector2 drawPosition = new Vector2(x - sprite.HotSpot.X, y - sprite.HotSpot.Y);
+            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, sprite.Rect, color, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
+
+        /// <summary>
+        /// Draws a sprite.
+        /// </summary>
+        /// <param name="sprite"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <param name="rotation"></param>
         /// <param name="xScale"></param>
         /// <param name="yScale"></param>
-        public void DrawSpriteScaled(Sprite sprite, float x, float y, float xScale, float yScale)
+        public void DrawSprite(Sprite sprite, float x, float y, Color color, float rotation, float xScale, float yScale)
         {
-            if (xScale == 1f && yScale == 1f)
+            Vector2 drawPosition = new Vector2(x - sprite.HotSpot.X, y - sprite.HotSpot.Y);
+            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, sprite.Rect, color, rotation, Vector2.Zero, new Vector2(xScale, yScale), SpriteEffects.None, 0f);
+        }
+
+        /// <summary>
+        /// Draws a cropped portion of a sprite.
+        /// </summary>
+        /// <param name="sprite"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="cropRect"></param>
+        public void DrawCroppedSprite(Sprite sprite, float x, float y, Rectangle cropRect)
+        {
+            Vector2 drawPosition = new Vector2(x - sprite.HotSpot.X, y - sprite.HotSpot.Y);
+            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, cropRect, Color.White);
+        }
+
+        /// <summary>
+        /// Draws an animation.
+        /// </summary>
+        /// <param name="animation"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void DrawAnimation(Animation animation, float x, float y)
+        {
+            DrawSprite(animation.ActiveSprite, x, y);
+        }
+
+        /// <summary>
+        /// Draws an animation.
+        /// </summary>
+        /// <param name="animation"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        public void DrawAnimation(Animation animation, float x, float y, Color color)
+        {
+            DrawSprite(animation.ActiveSprite, x, y, color);
+        }
+
+        /// <summary>
+        /// Draws an animation.
+        /// </summary>
+        /// <param name="animation"></param>
+        /// <param name="targetRect"></param>
+        /// <param name="color"></param>
+        public void DrawAnimation(Animation animation, Rectangle targetRect, Color color)
+        {
+            DrawSprite(animation.ActiveSprite, targetRect, color);
+        }
+
+        /// <summary>
+        /// Draws an animation.
+        /// </summary>
+        /// <param name="animation"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        public void DrawAnimation(Animation animation, float x, float y, Color color, float rotation, float scale)
+        {
+            DrawSprite(animation.ActiveSprite, x, y, color, rotation, scale);
+        }
+
+        /// <summary>
+        /// Draws an animation.
+        /// </summary>
+        /// <param name="animation"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <param name="rotation"></param>
+        /// <param name="xScale"></param>
+        /// <param name="yScale"></param>
+        public void DrawAnimation(Animation animation, float x, float y, Color color, float rotation, float xScale, float yScale)
+        {
+            DrawSprite(animation.ActiveSprite, x, y, color, rotation, xScale, yScale);
+        }
+
+        /// <summary>
+        /// Draws a rectangle.
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="color"></param>
+        public void DrawRect(Rect rect, Color color, bool fill)
+        {
+            //Just stretch a texture to draw shapes
+            Texture2D texture = SMH.Data.GetTexture(SmileyTexture.UserInterface);
+
+            if (fill)
             {
-                DrawSprite(sprite, x, y);
+                DrawSprite(Sprites.StretchableBlackSquare, new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height), color);
             }
             else
             {
-                Texture2D texture = SMH.Data.GetTexture(sprite.Texture);
-                Rectangle drawRect = new Rectangle(
-                    Convert.ToInt32(x - sprite.HotSpot.X * xScale),
-                    Convert.ToInt32(y - sprite.HotSpot.Y * yScale),
-                    Convert.ToInt32(sprite.Rect == null ? texture.Width * xScale : sprite.Rect.Value.Width * xScale),
-                    Convert.ToInt32(sprite.Rect == null ? texture.Height * yScale : sprite.Rect.Value.Height * yScale));
-
-                _spriteBatch.Draw(texture, drawRect, sprite.Rect, Color.White);
+                _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, 1), color);//top
+                _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, 1, (int)rect.Height), color);//left
+                _spriteBatch.Draw(texture, new Rectangle((int)rect.X + (int)rect.Width, (int)rect.Y, 1, (int)rect.Height), color);//right
+                _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y + (int)rect.Height, (int)rect.Width, 1), color);//bottom
             }
-        }
-
-        public void DrawRect(Rect rect, Color color)
-        {
-            Texture2D texture = SMH.Data.GetTexture(SmileyTexture.UserInterface);
-
-            _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, 1), color);//top
-            _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, 1, (int)rect.Height), color);//left
-            _spriteBatch.Draw(texture, new Rectangle((int)rect.X + (int)rect.Width, (int)rect.Y, 1, (int)rect.Height), color);//right
-            _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y + (int)rect.Height, (int)rect.Width, 1), color);//bottom
         }
 
         #endregion

@@ -21,6 +21,8 @@ namespace Smiley.Lib.Services
 
         private Dictionary<Input, InputState> _inputs = new Dictionary<Input, InputState>();
         private bool _wasMouseDown;
+        private Keys[] _keysDownLastFrame = new Keys[1];
+        private Keys[] _keysDown = new Keys[1];
 
         #endregion
 
@@ -62,10 +64,13 @@ namespace Smiley.Lib.Services
         #region Public Methods
 
         public void Update(float dt)
-        {            
+        {
             //Update the input state for this frame.
-            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboardState = Keyboard.GetState();
+            _keysDownLastFrame = _keysDown;
+            _keysDown = keyboardState.GetPressedKeys();
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+            
             foreach (InputState input in _inputs.Values)
             {
                 input.WasDownLastFrame = input.IsDown;
@@ -136,6 +141,16 @@ namespace Smiley.Lib.Services
         }
 
         /// <summary>
+        /// Gets whether or not an input is currently pressed.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool IsDown(Keys key)
+        {
+            return !_keysDownLastFrame.Contains(key) && _keysDown.Contains(key);
+        }
+
+        /// <summary>
         /// Gets whether or not an input was pressed this frame.
         /// </summary>
         /// <param name="input"></param>
@@ -143,6 +158,16 @@ namespace Smiley.Lib.Services
         public bool IsPressed(Input input)
         {
             return _inputs[input].IsDown && !_inputs[input].WasDownLastFrame;
+        }
+
+        /// <summary>
+        /// Gets whether or not the given keyboard key was pressed this frame.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool IsPressed(Keys key)
+        {
+            return !_keysDownLastFrame.Contains(key) && _keysDown.Contains(key);
         }
 
         /// <summary>

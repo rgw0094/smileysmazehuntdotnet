@@ -8,6 +8,7 @@ using System.IO;
 using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.Data;
 using Smiley.Lib.Util;
+using Microsoft.Xna.Framework;
 
 namespace Smiley.Lib.GameObjects.Environment
 {
@@ -48,6 +49,82 @@ namespace Smiley.Lib.GameObjects.Environment
             }
         }
 
+        /// <summary>
+        /// Returns whether or not there is deep water of any kind on the tile.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool HasDeepWater
+        {
+            get
+            {
+                return Collision == CollisionTile.DEEP_WATER ||
+                       Collision == CollisionTile.GREEN_WATER;
+            }
+        }
+
+        /// <summary>
+        /// Returns whether this is a good spot to "return" to after drowning or falling.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool IsReturnSpot
+        {
+            get
+            {
+                return
+                    Collision == CollisionTile.WALKABLE ||
+                    Collision == CollisionTile.SHALLOW_WATER ||
+                    Collision == CollisionTile.WALK_LAVA ||
+                    Collision == CollisionTile.RED_WARP ||
+                    Collision == CollisionTile.BLUE_WARP ||
+                    Collision == CollisionTile.YELLOW_WARP ||
+                    Collision == CollisionTile.GREEN_WARP ||
+                    Collision == CollisionTile.SHALLOW_GREEN_WATER ||
+                    Collision == CollisionTile.BOMB_PAD_UP ||
+                    Collision == CollisionTile.BOMB_PAD_DOWN ||
+                    Collision == CollisionTile.HOVER_PAD ||
+                    Collision == CollisionTile.SUPER_SPRING ||
+                    Collision == CollisionTile.SMILELET ||
+                    Collision == CollisionTile.SMILELET_FLOWER_HAPPY ||
+                    Collision == CollisionTile.FAKE_COLLISION ||
+                    Collision == CollisionTile.PLAYER_START ||
+                    (Collision >= CollisionTile.WHITE_CYLINDER_DOWN && Collision <= CollisionTile.SILVER_CYLINDER_DOWN) ||
+                    (Collision >= CollisionTile.EVIL_WALL_POSITION && Collision <= CollisionTile.EVIL_WALL_RESTART);
+            }
+        }
+
+        /// <summary>
+        /// Returns whether or not there is shallow water of any kind at grid on the tile.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool HasShallowWater
+        {
+            get
+            {
+                return Collision == CollisionTile.SHALLOW_WATER ||
+                       Collision == CollisionTile.SHALLOW_GREEN_WATER;
+            }
+        }
+
+        /// <summary>
+        /// Returns whether or not there is an arrow pad on the tile.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool HasArrowPad
+        {
+            get
+            {
+                return Collision >= CollisionTile.UP_ARROW && Collision <= CollisionTile.LEFT_ARROW;
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -64,9 +141,9 @@ namespace Smiley.Lib.GameObjects.Environment
         }
 
         /// <summary>
-        /// Draws the tile.
+        /// Draws tile stuff that needs to be drawn before smiley.
         /// </summary>
-        public void Draw(float x, float y)
+        public void DrawBeforeSmiley(float x, float y)
         {
             //Draw Terrain
             if (Collision != CollisionTile.PIT && Collision != CollisionTile.FAKE_PIT && Collision != CollisionTile.NO_WALK_PIT)
@@ -77,67 +154,43 @@ namespace Smiley.Lib.GameObjects.Environment
             //Draw Collision
             if (_animation != null)
             {
-                _animation.Draw(x, y);
-            }
-            else if (Collision == CollisionTile.NO_WALK_LAVA || Collision == CollisionTile.WALK_LAVA)
-            {
-                Animations.Lava.Draw(x, y);
-            }
-            else if (Collision == CollisionTile.SHALLOW_WATER)
-            {
-                Animations.Water.Draw(x, y, 125f);
-            }
-            else if (Collision == CollisionTile.DEEP_WATER || Collision == CollisionTile.NO_WALK_WATER)
-            {
-                Animations.Water.Draw(x, y);
-            }
-            else if (Collision == CollisionTile.GREEN_WATER)
-            {
-                Animations.GreenWater.Draw(x, y);
-            }
-            else if (Collision == CollisionTile.SHALLOW_GREEN_WATER)
-            {
-                Animations.GreenWater.Draw(x, y, 125f);
+                if (Collision == CollisionTile.SHALLOW_WATER || Collision == CollisionTile.SHALLOW_GREEN_WATER)
+                    SMH.Graphics.DrawAnimation(_animation, x, y, Color.FromNonPremultiplied(255, 255, 255, 125));
+                else
+                    SMH.Graphics.DrawAnimation(_animation, x, y);
             }
             else if (SmileyUtil.ShouldDrawCollision(Collision))
             {
-                //Set color values
+                Color color = Color.White;
                 if (Collision >= CollisionTile.UP_ARROW && Collision <= CollisionTile.LEFT_ARROW)
                 {
                     if (ID == -1 || ID == 990)
                     {
-                        //TODO: render normal, red arrow
-                        //smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(255, 255, 0, 255));
+                        //Render normal, red arrow
+                        color = Color.FromNonPremultiplied(255, 0, 255, 255);
                     }
                     else
                     {
-                        //TODO:it's a rotating arrow, make it green
-                        //smh->resources->GetAnimation("walkLayer")->SetColor(ARGB(255, 0, 255, 255));
+                        //It's a rotating arrow, make it green
+                        color = Color.FromNonPremultiplied(0, 255, 255, 255);
                     }
                 }
-                else
-                {
-                    SMH.Graphics.DrawSprite(SpriteSets.WalkLayer[(int)Collision], x, y);
-                }
+                SMH.Graphics.DrawSprite(SpriteSets.WalkLayer[(int)Collision], x, y, color);
             }
 
-            //Draw Tile
             //Items
-            if (Item != (int)ItemTile.NONE && ID != Constants.ID_DrawAfterSmiley)
+            if (Item == (int)ItemTile.EnemyGroupBlockGraphic)
             {
-                if (Item == (int)ItemTile.EnemyGroupBlockGraphic)
-                {
-                    //If this is an enemy block, draw it with the enemy group's block alpha
-                    //TODO:
-                    //itemLayer[theItem]->SetColor(ARGB(
-                    //    smh->enemyGroupManager->groups[variable[i + xGridOffset][j + yGridOffset]].blockAlpha, 255, 255, 255));
-                    //itemLayer[theItem]->Render(drawX, drawY);
-                    //itemLayer[theItem]->SetColor(ARGB(255, 255, 255, 255));
-                }
-                else
-                {
-                    SMH.Graphics.DrawSprite(SpriteSets.ItemLayer[Item], x, y);
-                }
+                //If this is an enemy block, draw it with the enemy group's block alpha
+                //TODO:
+                //itemLayer[theItem]->SetColor(ARGB(
+                //    smh->enemyGroupManager->groups[variable[i + xGridOffset][j + yGridOffset]].blockAlpha, 255, 255, 255));
+                //itemLayer[theItem]->Render(drawX, drawY);
+                //itemLayer[theItem]->SetColor(ARGB(255, 255, 255, 255));
+            }
+            else if (Item != (int)ItemTile.NONE && ID != Constants.ID_DrawAfterSmiley)
+            {
+                SMH.Graphics.DrawSprite(SpriteSets.ItemLayer[Item], x, y);
             }
         }
 
@@ -197,6 +250,16 @@ namespace Smiley.Lib.GameObjects.Environment
                     return Animations.WhiteCylinder;
                 case CollisionTile.SAVE_SHRINE:
                     return Animations.SaveShrine;
+                case CollisionTile.NO_WALK_LAVA:
+                case CollisionTile.WALK_LAVA:
+                    return Animations.Lava;
+                case CollisionTile.SHALLOW_WATER:
+                case CollisionTile.DEEP_WATER:
+                case CollisionTile.NO_WALK_WATER:
+                    return Animations.Water;
+                case CollisionTile.GREEN_WATER:
+                case CollisionTile.SHALLOW_GREEN_WATER:
+                    return Animations.GreenWater;
                 default:
                     return null;
             }

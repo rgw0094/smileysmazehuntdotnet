@@ -29,6 +29,22 @@ namespace Smiley.Lib.GameObjects
         }
 
         /// <summary>
+        /// Gets the object's X-coordinate relative to the top left of the screen.
+        /// </summary>
+        public float ScreenX
+        {
+            get { return SMH.GetScreenX(X); }
+        }
+
+        /// <summary>
+        /// Gets the object's Y-coordinate relative to the top left of the screen.
+        /// </summary>
+        public float ScreenY
+        {
+            get { return SMH.GetScreenY(Y); }
+        }
+
+        /// <summary>
         /// The speed that object can move.
         /// </summary>
         public float Speed
@@ -61,13 +77,8 @@ namespace Smiley.Lib.GameObjects
         public Tile Tile
         {
             get { return SMH.Environment.Tiles[SmileyUtil.GetGridX(X), SmileyUtil.GetGridY(Y)]; }
-            set
-            {
-                X = value.X * 64f;
-                Y = value.Y * 64f;
-            }
         }
-        
+
         /// <summary>
         /// Draws the object.
         /// </summary>

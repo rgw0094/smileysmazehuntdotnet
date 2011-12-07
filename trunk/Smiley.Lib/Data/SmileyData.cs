@@ -91,22 +91,22 @@ namespace Smiley.Lib.Data
             }
         }
 
-        public double GetDifficultyModifier(Difficulty difficulty)
+        public float GetDifficultyModifier(Difficulty difficulty)
         {
             switch (difficulty)
             {
                 case Difficulty.VeryEasy:
-                    return 1.5;
+                    return 1.5f;
                 case Difficulty.Easy:
-                    return 1.25;
+                    return 1.25f;
                 case Difficulty.Medium:
-                    return 1.0;
+                    return 1.0f;
                 case Difficulty.Hard:
-                    return 0.75;
+                    return 0.75f;
                 case Difficulty.VeryHard:
-                    return 0.5;
+                    return 0.5f;
                 default:
-                    return 1.0;
+                    return 1.0f;
             }
         }
 

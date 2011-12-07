@@ -14,11 +14,15 @@ namespace Smiley.Lib.Data
         Button,
         [Description("Fonts\\Controls")]
         Controls,
+        [Description("Fonts\\Console")]
+        Console,
         [Description("Fonts\\Inventory")]
         Inventory,
         [Description("Fonts\\Curlz")]
         Curlz,
         [Description("Fonts\\Description")]
-        Description
+        Description,
+        [Description("Fonts\\Number")]
+        Number
     }
 }

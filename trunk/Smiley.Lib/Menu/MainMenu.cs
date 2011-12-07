@@ -81,7 +81,7 @@ namespace Smiley.Lib.Menu
 
             if (SMH.Input.IsCursorInWindow && _currentScreen.ShouldDrawMouse)
             {
-                SMH.Graphics.DrawSprite(Sprites.MouseCursor, SMH.Input.Cursor);
+                SMH.Graphics.DrawSprite(Sprites.MouseCursor, SMH.Input.Cursor.X, SMH.Input.Cursor.Y);
             }
         }
 
