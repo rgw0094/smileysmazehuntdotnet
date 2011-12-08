@@ -210,6 +210,7 @@ namespace Smiley.Lib
                     EnemyManager.Update(DT);
                     LootManager.Update(DT);
                     ProjectileManager.Update(DT);
+                    NPCManager.Update(DT);
                 }
             }
         }
@@ -224,6 +225,7 @@ namespace Smiley.Lib
             else
             {
                 Environment.Draw();
+                NPCManager.Draw();
                 Player.Draw();
                 Environment.DrawAfterSmiley();
                 Player.DrawJesusBeam();

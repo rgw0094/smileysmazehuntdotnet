@@ -187,10 +187,10 @@ namespace Smiley.Lib.GameObjects.Environment
                 }
                 else if (enemy >= 128 && enemy < 240)
                 {
-                    //if (enemy != 128 + MONOCLE_MAN_NPC_ID || smh->saveManager->adviceManEncounterCompleted)
-                    //{
-                    //    smh->npcManager->addNPC(enemy - 128, ids[col][row], col, row);
-                    //}
+                    if (enemy != 128 +  Constants.MonocleManNPCId || SMH.SaveManager.CurrentSave.AdviceManEncounterCompleted)
+                    {
+                        SMH.NPCManager.AdddNPC(enemy - 128, tile.ID, tile.X, tile.Y);
+                    }
                 }
 
                 //Load changes
@@ -1101,7 +1101,7 @@ namespace Smiley.Lib.GameObjects.Environment
         /// <param name="box"></param>
         /// <param name="canPass"></param>
         /// <returns></returns>
-        public bool TestCollision(Rect box, Dictionary<CollisionTile, bool> canPass)
+        public bool TestCollision(Rect box, Func<CollisionTile, bool> canPass)
         {
             return TestCollision(box, canPass, false);
         }
@@ -1112,7 +1112,7 @@ namespace Smiley.Lib.GameObjects.Environment
         /// <param name="box"></param>
         /// <param name="canPass"></param>
         /// <returns></returns>
-        public bool TestCollision(Rect box, Dictionary<CollisionTile, bool> canPass, bool ignoreSillyPads)
+        public bool TestCollision(Rect box, Func<CollisionTile, bool> canPass, bool ignoreSillyPads)
         {
             //Determine the location of the collision box
             int gridX = Convert.ToInt32((box.X + box.Width / 2f) / 64f);
@@ -1124,7 +1124,7 @@ namespace Smiley.Lib.GameObjects.Environment
                 for (int j = gridY - 2; j <= gridY + 2; j++)
                 {
                     //Ignore squares off the map
-                    if (IsInBounds(i, j) && (!canPass[Tiles[i, j].Collision] || (!ignoreSillyPads && HasSillyPad(i, j))))
+                    if (IsInBounds(i, j) && (!canPass(Tiles[i, j].Collision) || (!ignoreSillyPads && HasSillyPad(i, j))))
                     {
                         //Test collision
                         Rect terrainBox = GetTerrainCollisionBox((!ignoreSillyPads && HasSillyPad(i, j))
