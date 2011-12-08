@@ -40,13 +40,14 @@
 ||RGW||12/4/11||Ported GUI||
 ||RGW||12/6/11||Ported DebugConsole||
 ||RGW||12/6/11||Ported Player||
+||RGW||12/7/11||Ported AreaChanger||
 
 = Port Progress =
 
 ||*Class*||*Status*||
 ||AdviceMan|| ||
 ||AdviceWindow|| ||
-||AreaChanger|| ||
+||AreaChanger||Done||
 ||BaseEnemy|| ||
 ||BitStream||Done||
 ||BossManager|| ||
