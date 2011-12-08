@@ -23,6 +23,8 @@ namespace Smiley.Lib.Data
         [Description("Fonts\\Description")]
         Description,
         [Description("Fonts\\Number")]
-        Number
+        Number,
+        [Description("Fonts\\NewArea")]
+        NewArea,
     }
 }

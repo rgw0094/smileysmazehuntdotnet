@@ -223,7 +223,7 @@ namespace Smiley.Lib.GameObjects.Player
             ////Do level exits
             if (Tile.Collision == CollisionTile.PLAYER_END)
             {
-                //TODO:smh->areaChanger->changeArea(0, 0, smh->environment->ids[gridX][gridY]);
+                SMH.AreaChanger.ChangeArea(0, 0, (Level)Tile.ID);
                 return;
             }
 
@@ -1081,7 +1081,7 @@ namespace Smiley.Lib.GameObjects.Player
                         destY++;
                     else if (Facing == Direction.Up || Facing == Direction.UpLeft || Facing == Direction.UpRight)
                         destY--;
-                    //TODO:smh->areaChanger->changeArea(destX, destY, smh->saveManager->currentArea);
+                    SMH.AreaChanger.ChangeArea(destX, destY, SMH.SaveManager.CurrentSave.Level);
                 }
                 else
                 {

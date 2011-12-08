@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.Data;
 
-namespace Smiley.Lib.Framework
+namespace Smiley.Lib.UI
 {
     /// <summary>
     /// Toggle-able debug console that lets you do lots of stuff that makes debugging not suck.
@@ -83,11 +83,10 @@ namespace Smiley.Lib.Framework
             //Teleport to warp zone
             if (SMH.Input.IsPressed(Keys.F1) && SMH.SaveManager.CurrentSave.Level != Level.DEBUG_AREA)
             {
-                //TODO:
-                //if (!smh->areaChanger->isChangingArea())
-                //{
-                //    smh->areaChanger->changeArea(-1, -1, DEBUG_AREA);
-                //}
+                if (!SMH.AreaChanger.IsChangingAreas)
+                {
+                    SMH.AreaChanger.ChangeArea(1, 1, Level.DEBUG_AREA);
+                }
             }
 
             if (SMH.Input.IsPressed(Keys.F2))
