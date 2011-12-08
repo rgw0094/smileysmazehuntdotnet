@@ -6,7 +6,7 @@ using Smiley.Lib.Enums;
 using System.IO;
 using Smiley.Lib.Framework;
 
-namespace Smiley.Lib.Data
+namespace Smiley.Lib.Framework
 {
     public class SaveFile
     {

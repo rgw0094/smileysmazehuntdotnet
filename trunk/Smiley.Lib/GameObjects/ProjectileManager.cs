@@ -23,5 +23,10 @@ namespace Smiley.Lib.GameObjects
             ProjectileType type, bool makesSmileyFlash, bool hasParabola, float parabolaLength, float parabolaDuration, float parabolaHeight)
         {
         }
+
+        public void Update(float dt)
+        {
+
+        }
     }
 }

@@ -59,6 +59,7 @@
       <Name>Curlz</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Fonts\Description.spritefont">
       <Name>Description</Name>
@@ -74,6 +75,12 @@
       <Name>Console</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="Fonts\NewArea.spritefont">
+      <Name>NewArea</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <None Include="Levels\castle.smh">
       <Name>castle</Name>

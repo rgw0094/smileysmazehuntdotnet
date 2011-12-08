@@ -258,8 +258,8 @@ namespace Smiley.Lib.GameObjects.Environment
 
             //Update to get shit set up
             Update(0);
-            //smh->enemyManager->update(0.0);
-            //smh->areaChanger->displayNewAreaName();
+            SMH.EnemyManager.Update(0);
+            SMH.AreaChanger.DisplayNewAreaName();
 
             if (playMusic)
             {

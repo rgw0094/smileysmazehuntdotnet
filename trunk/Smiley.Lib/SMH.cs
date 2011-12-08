@@ -10,16 +10,17 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Smiley.Lib.Data;
 using Smiley.Lib.Services;
-using Smiley.Lib.Menu;
+using Smiley.Lib.UI.Menu;
 using Smiley.Lib.Framework;
 using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.Enums;
 using Smiley.Lib.GameObjects.Environment;
 using Smiley.Lib.GameObjects;
 using Smiley.Lib.GameObjects.Player;
-using Smiley.Lib.Windows;
 using Smiley.Lib.GameObjects.Enemies;
 using Smiley.Lib.GameObjects.NPCs;
+using Smiley.Lib.UI;
+using Smiley.Lib.UI.Windows;
 
 namespace Smiley.Lib
 {
@@ -54,6 +55,7 @@ namespace Smiley.Lib
 
         public static GameState State { get; private set; }
         public static int CurrentFrame { get; private set; }
+        public static float DT { get; private set; }
         public static DebugConsole Console { get; private set; }
         public static Random Random { get; private set; }
         public static InputManager Input { get; private set; }
@@ -69,6 +71,8 @@ namespace Smiley.Lib
         public static EnemyManager EnemyManager { get; private set; }
         public static NPCManager NPCManager { get; private set; }
         public static ProjectileManager ProjectileManager { get; private set; }
+        public static LootManager LootManager { get; private set; }
+        public static AreaChanger AreaChanger { get; private set; }
 
         /// <summary>
         /// Shows the main menu.
@@ -161,6 +165,8 @@ namespace Smiley.Lib
             EnemyManager = new EnemyManager();
             NPCManager = new NPCManager();
             ProjectileManager = new ProjectileManager();
+            LootManager = new LootManager();
+            AreaChanger = new AreaChanger();
             Random = new Random();
         }
 
@@ -181,29 +187,37 @@ namespace Smiley.Lib
         {
             CurrentFrame++;
             Now = (float)gameTime.TotalGameTime.Ticks / 10000000f;
-            float dt = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
+            DT = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
 
-            Input.Update(dt);
+            Input.Update(DT);
 
             if (State == GameState.Menu)
             {
-                _mainMenu.Update(dt);
+                _mainMenu.Update(DT);
             }
             else if (State == GameState.Game)
             {
-                GameTime += dt;
+                Console.Update(DT);
+                AreaChanger.Update(DT);
+                GUI.Update(DT);
 
-                Console.Update(dt);
-                Environment.Update(dt);
-                Player.Update(dt);
-                GUI.Update(dt);
+                if (!WindowManager.IsAnyWindowOpen && !AreaChanger.IsChangingAreas)
+                {
+                    GameTime += DT;
+
+                    Player.Update(DT);
+                    Environment.Update(DT);
+                    EnemyManager.Update(DT);
+                    LootManager.Update(DT);
+                    ProjectileManager.Update(DT);
+                }
             }
         }
 
         protected override void Draw(GameTime gameTime)
         {
             Graphics.BeginFrame();
-            if (_mainMenu != null)
+            if (State == GameState.Menu)
             {
                 _mainMenu.Draw();
             }
@@ -211,8 +225,10 @@ namespace Smiley.Lib
             {
                 Environment.Draw();
                 Player.Draw();
-                GUI.Draw();
                 Environment.DrawAfterSmiley();
+                Player.DrawJesusBeam();
+                AreaChanger.Draw(DT);
+                GUI.Draw();
                 Console.Draw();
             }
             Graphics.EndFrame();

@@ -165,8 +165,7 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="scale"></param>
         public void DrawSprite(Sprite sprite, float x, float y, Color color, float rotation, float scale)
         {
-            Vector2 drawPosition = new Vector2(x - sprite.HotSpot.X, y - sprite.HotSpot.Y);
-            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, sprite.Rect, color, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), new Vector2(x, y), sprite.Rect, color, rotation, sprite.HotSpot, scale, SpriteEffects.None, 0f);
         }
 
         /// <summary>
@@ -181,8 +180,7 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="yScale"></param>
         public void DrawSprite(Sprite sprite, float x, float y, Color color, float rotation, float xScale, float yScale)
         {
-            Vector2 drawPosition = new Vector2(x - sprite.HotSpot.X, y - sprite.HotSpot.Y);
-            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), drawPosition, sprite.Rect, color, rotation, Vector2.Zero, new Vector2(xScale, yScale), SpriteEffects.None, 0f);
+            _spriteBatch.Draw(SMH.Data.GetTexture(sprite.Texture), new Vector2(x, y), sprite.Rect, color, rotation, sprite.HotSpot, new Vector2(xScale, yScale), SpriteEffects.None, 0f);
         }
 
         /// <summary>
@@ -268,19 +266,31 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="color"></param>
         public void DrawRect(Rect rect, Color color, bool fill)
         {
+            DrawRect(rect.X, rect.Y, rect.Width, rect.Height, color, fill);
+        }
+
+        /// <summary>
+        /// Draws a rectangle.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void DrawRect(float x, float y, float width, float height, Color color, bool fill)
+        {
             //Just stretch a texture to draw shapes
             Texture2D texture = SMH.Data.GetTexture(SmileyTexture.UserInterface);
 
             if (fill)
             {
-                DrawSprite(Sprites.StretchableBlackSquare, new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height), color);
+                DrawSprite(Sprites.StretchableBlackSquare, new Rectangle((int)x, (int)y, (int)width, (int)height), color);
             }
             else
             {
-                _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, 1), color);//top
-                _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y, 1, (int)rect.Height), color);//left
-                _spriteBatch.Draw(texture, new Rectangle((int)rect.X + (int)rect.Width, (int)rect.Y, 1, (int)rect.Height), color);//right
-                _spriteBatch.Draw(texture, new Rectangle((int)rect.X, (int)rect.Y + (int)rect.Height, (int)rect.Width, 1), color);//bottom
+                _spriteBatch.Draw(texture, new Rectangle((int)x, (int)y, (int)width, 1), color);//top
+                _spriteBatch.Draw(texture, new Rectangle((int)x, (int)y, 1, (int)height), color);//left
+                _spriteBatch.Draw(texture, new Rectangle((int)x + (int)width, (int)y, 1, (int)height), color);//right
+                _spriteBatch.Draw(texture, new Rectangle((int)x, (int)y + (int)height, (int)width, 1), color);//bottom
             }
         }
 

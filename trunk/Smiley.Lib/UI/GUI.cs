@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Smiley.Lib.Data;
 using Smiley.Lib.Util;
 
-namespace Smiley.Lib.GameObjects.Player
+namespace Smiley.Lib.UI
 {
     public class AbilitySlot
     {
