@@ -41,6 +41,7 @@
 ||RGW||12/6/11||Ported DebugConsole||
 ||RGW||12/6/11||Ported Player||
 ||RGW||12/7/11||Ported AreaChanger||
+||RGW||12/7/11||Ported NPCs||
 
 = Port Progress =
 
@@ -116,8 +117,8 @@
 ||MeleeEnemy|| ||
 ||MiniMenu|| ||
 ||MushroomBoss|| ||
-||NPC|| ||
-||NPCManager|| ||
+||NPC||Done||
+||NPCManager||Done||
 ||OptionsScreen|| ||
 ||Player||Done||
 ||PopupMessageManager|| ||
