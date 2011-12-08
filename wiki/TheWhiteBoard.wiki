@@ -2,6 +2,7 @@
 
 = General TODO =
   * New spring sound effect (old one can't be converted to mp3 for some reason)
+  * Fonts
 
 = Erik's to-do list =
   * Input GameText into source code
@@ -9,7 +10,6 @@
 
 = Rob's to-do list =
   * Choose config mechanism (XML????? 3rd party?!??!!?)
-  * Font SOLUTION
 
 = Accomplished =
 
