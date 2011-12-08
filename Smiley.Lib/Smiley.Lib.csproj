@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Animations.cs" />
+    <Compile Include="GameObjects\NPCs\NPC.cs" />
     <Compile Include="UI\DebugConsole.cs" />
     <Compile Include="GameObjects\Enemies\EnemyManager.cs" />
     <Compile Include="GameObjects\AreaChanger.cs" />

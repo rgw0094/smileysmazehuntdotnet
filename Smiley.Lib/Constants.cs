@@ -12,6 +12,12 @@ namespace Smiley.Lib
     /// </summary>
     public class Constants
     {
+        public const int MonocleManNPCId = 13;
+        public const int MonocleManTextID = 902;
+        public const int SpeirDykeTextId = 5;
+        public const int BillClintonTextID = 8;
+        public const int BillClintonTextID2 = 19;
+
         public const int SmallGemValue = 1;
         public const int MediumGemValue = 3;
         public const int LargeGemValue = 5;

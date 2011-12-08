@@ -87,7 +87,7 @@ namespace Smiley.Lib.GameObjects.Player
                 if (SMH.Environment.ToggleSwitches(this) ||
                     SMH.NPCManager.TalkToNPCs(this) ||
                     (!SMH.WindowManager.IsAnyWindowOpen && SMH.Environment.HitSaveShrine(this)) ||
-                    (!SMH.WindowManager.IsTextBoxOpen && SMH.Environment.HitSigns(this))) ;
+                    (!SMH.WindowManager.IsTextBoxOpen && SMH.Environment.HitSigns(this)))
                 {
                     _hasActivatedSomething = true;
                 }
