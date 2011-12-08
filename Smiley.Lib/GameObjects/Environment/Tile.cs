@@ -182,15 +182,34 @@ namespace Smiley.Lib.GameObjects.Environment
             if (Item == (int)ItemTile.EnemyGroupBlockGraphic)
             {
                 //If this is an enemy block, draw it with the enemy group's block alpha
-                //TODO:
-                //itemLayer[theItem]->SetColor(ARGB(
-                //    smh->enemyGroupManager->groups[variable[i + xGridOffset][j + yGridOffset]].blockAlpha, 255, 255, 255));
-                //itemLayer[theItem]->Render(drawX, drawY);
-                //itemLayer[theItem]->SetColor(ARGB(255, 255, 255, 255));
+                //TODO: SMH.Graphics.DrawSprite(SpriteSets.ItemLayer[Item], x, y, Color.FromNonPremultiplied(255, 255, 255, smh->enemyGroupManager->groups[variable[i + xGridOffset][j + yGridOffset]].blockAlpha));
             }
             else if (Item != (int)ItemTile.NONE && ID != Constants.ID_DrawAfterSmiley)
             {
                 SMH.Graphics.DrawSprite(SpriteSets.ItemLayer[Item], x, y);
+            }
+        }
+
+        /// <summary>
+        /// Draws tile stuff that needs to be drawn after smiley.
+        /// </summary>
+        public void DrawAfterSmiley(float x, float y)
+        {
+            //Marked as draw after smiley or the thing above smiley is marked as draw
+            //above smiley and smiley is behind it. that way you can't walk behind a tree
+            //and lick through it.
+            if (ID == Constants.ID_DrawAfterSmiley ||
+                    (SMH.Environment.Tiles[X, Y - 1].ID == Constants.ID_DrawAfterSmiley && SMH.Player.Tile.X == X && SMH.Player.Tile.Y < Y))
+            {
+                SMH.Graphics.DrawSprite(SpriteSets.ItemLayer[Item], x, y);
+            }
+
+            //Shrink tunnels unless smiley is directly underneath it and not shrunk
+            if ((Collision == CollisionTile.SHRINK_TUNNEL_HORIZONTAL ||
+                    Collision == CollisionTile.SHRINK_TUNNEL_VERTICAL) &&
+                    !(SMH.Player.Tile.Y == Y + 1 && !SMH.Player.IsShrunk))
+            {
+                SMH.Graphics.DrawSprite(SpriteSets.WalkLayer[(int)Collision], x, y);
             }
         }
 
