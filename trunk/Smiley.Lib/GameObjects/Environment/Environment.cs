@@ -83,6 +83,7 @@ namespace Smiley.Lib.GameObjects.Environment
         public void LoadLevel(Level level, Level previousLevel, bool playMusic)
         {
             Tiles = new Tiles(level);
+            SMH.SaveManager.CurrentSave.Level = level;
 
             //TODO:
             //Setup collision stuff
@@ -357,10 +358,10 @@ namespace Smiley.Lib.GameObjects.Environment
             DrawPits();
 
             //Loop through each tile to draw shit
-            for (int j = SMH.Player.Tile.Y - 7; j < SMH.Player.Tile.Y + 7; j++)
+            for (int j = SMH.Player.Tile.Y - 6; j < SMH.Player.Tile.Y + 7; j++)
             {
                 int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64 - XOffset));
-                for (int i = SMH.Player.Tile.X - 10; i < SMH.Player.Tile.X + 10; i++)
+                for (int i = SMH.Player.Tile.X - 9; i < SMH.Player.Tile.X + 9; i++)
                 {
                     float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64 - XOffset));
 
@@ -400,40 +401,24 @@ namespace Smiley.Lib.GameObjects.Environment
         ///<param name="dt"></param>
         public void DrawAfterSmiley()
         {
-            ////Loop through each tile to draw shit
-            //for (int gridY = yGridOffset-1; gridY <= yGridOffset + screenHeight + 1; gridY++) {
-            //    for (int gridX = xGridOffset-1; gridX <= xGridOffset + screenWidth + 1; gridX++) {
-            //        if (isInBounds(gridX, gridY)) {
+            for (int j = SMH.Player.Tile.Y - 6; j < SMH.Player.Tile.Y + 7; j++)
+            {
+                int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64 - XOffset));
+                for (int i = SMH.Player.Tile.X - 9; i < SMH.Player.Tile.X + 9; i++)
+                {
+                    float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64 - XOffset));
+                    if (IsInBounds(i, j))
+                    {
+                        Tiles[i, j].DrawAfterSmiley(drawX, drawY);
+                    }
+                }
+            }
 
-            //            drawX = smh->getScreenX(gridX * 64);
-            //            drawY = smh->getScreenY(gridY * 64);
-
-            //            //Marked as draw after smiley or the thing above Smiley is marked as draw
-            //            //above Smiley and Smiley is behind it. That way you can't walk behind a tree
-            //            //and lick through it.
-            //            if (ids[gridX][gridY] == DRAW_AFTER_SMILEY || 
-            //                    (ids[gridX][gridY-1] == DRAW_AFTER_SMILEY && 
-            //                    SMH.Player.gridX == gridX && 
-            //                    SMH.Player.gridY < gridY)) {
-            //                itemLayer[item[gridX][gridY]]->Render(drawX,drawY);
-            //            }
-
-            //            //Shrink tunnels unless Smiley is directly underneath it and not shrunk
-            //            if ((collision[gridX][gridY] == SHRINK_TUNNEL_HORIZONTAL || 
-            //                    collision[gridX][gridY] == SHRINK_TUNNEL_VERTICAL) &&
-            //                    !(SMH.Player.gridY == gridY+1 && !SMH.Player.isShrunk())) {
-            //                smh->resources->GetAnimation("walkLayer")->SetFrame(collision[gridX][gridY]);
-            //                smh->resources->GetAnimation("walkLayer")->Render(drawX, drawY);
-            //            }
-
-            //        }
-            //    }
-            //}
-
-            ////Draw fountain after smiley if he is above it
-            //if (fountain && fountain->isAboveSmiley()) {
-            //    fountain->draw(dt);
-            //}
+            //draw fountain after smiley if he is above it
+            if (_fountain != null && _fountain.IsAboveSmiley())
+            {
+                _fountain.Draw();
+            }
         }
 
         /// <summary>
