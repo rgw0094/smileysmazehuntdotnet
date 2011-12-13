@@ -40,6 +40,20 @@ namespace Smiley.Lib.Util
             return angle;
         }
 
+        public static float GetFlashingAlpha(float n)
+        {
+            float x = SMH.Now;
+            while (x > n) x -= n;
+            if (x < n / 2.0)
+            {
+                return 255f * (x / (n / 2f));
+            }
+            else
+            {
+                return 255f - 255f * ((x - n / 2f) / (n / 2f));
+            }
+        }
+
         /// <summary>
         /// Returns the distance between 2 points
         /// </summary>
@@ -209,7 +223,7 @@ namespace Smiley.Lib.Util
                    collision != CollisionTile.FIRE_DESTROY &&
                    collision != CollisionTile.FAKE_COLLISION &&
                    collision != CollisionTile.FOUNTAIN &&
-                   collision != CollisionTile.EVIL_WALL_POSITION && 
+                   collision != CollisionTile.EVIL_WALL_POSITION &&
                    collision != CollisionTile.EVIL_WALL_RESTART &&
                    !SmileyUtil.IsWarp(collision);
         }

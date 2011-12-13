@@ -50,8 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\Inventory.spritefont">
-      <Name>Inventory</Name>
+    <Compile Include="Fonts\AbilityTitle.spritefont">
+      <Name>AbilityTitle</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
@@ -61,8 +61,8 @@
       <Processor>FontDescriptionProcessor</Processor>
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Fonts\Description.spritefont">
-      <Name>Description</Name>
+    <Compile Include="Fonts\Segoe14.spritefont">
+      <Name>Segoe14</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>

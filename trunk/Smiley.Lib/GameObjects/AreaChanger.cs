@@ -112,7 +112,7 @@ namespace Smiley.Lib.GameObjects.Environment
             }
 
             //After entering a new zone, display the ZONE NAME for 2.5 seconds after entering
-            if (SMH.Now < _timeLevelLoaded + 2.5f && !SMH.WindowManager.IsAnyWindowOpen)
+            if (SMH.Now < _timeLevelLoaded + 2.5f && !SMH.WindowManager.IsWindowOpen)
             {
                 //After 1.5 seconds start fading out the zone name
                 if (SMH.Now> _timeLevelLoaded + 1.5f)

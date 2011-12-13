@@ -210,7 +210,7 @@ namespace Smiley.Lib.Services
                 _inputs[input] = new InputState { Device = InputDevice.Keyboard };
             }
 
-            _inputs[Input.Ability].Key = Keys.Space;
+            _inputs[Input.Ability].Key = Keys.LeftControl;
             _inputs[Input.Aim].Key = Keys.LeftAlt;
             _inputs[Input.Attack].Key = Keys.Space;
             _inputs[Input.Up].Key = Keys.Up;

@@ -110,6 +110,40 @@ namespace Smiley.Lib.Data
             }
         }
 
+        public string GetAbilityDescription(Ability ability)
+        {
+            switch (ability)
+            {
+                case Ability.CANE:
+                    return "Use for 3 seconds to communicate\ntelepathically with Bill \nClinton. \n\nMana Cost: 10";
+                case Ability.WATER_BOOTS:
+                    return "While equipped you gain the \npower of Jesus Christ. (That means\nyou can walk on water)";
+                case Ability.SPRINT_BOOTS:
+                    return "When activated you run \n75% faster.";
+                case Ability.FIRE_BREATH:
+                    return string.Format("Allows you to breath deadly \nfire breath.\n\nMana Cost: 15/second\nDamage: {0:N2} per second", SMH.Player.FireBreathDamage);
+                case Ability.ICE_BREATH: 
+                    return "Unleases an icy blast that can\nfreeze enemies.\n\nManaCost: 10";
+                case Ability.REFLECTION_SHIELD:
+                    return "Activate to deflect certain \nprojectiles.\n\n\nMana Cost: 35/second";
+                case Ability.HOVER: 
+                    return "Grants you the power to use \nhover pads.";
+                case Ability.LIGHTNING_ORB:
+                    return string.Format("Shoots orbs of lightning. \n\n\nMana Cost: 5\nDamage:{0:N0}", SMH.Player.LightningOrbDamage);
+                case Ability.SHRINK:
+                    return "When activated Smiley will shrink \nin size and be able to fit into\nsmaller spaces.";
+                case Ability.SILLY_PAD:
+                    return "Places a Silly Pad. They are so silly\nthat enemies can't even cross \nthem!\n\nMana Cost: 5";
+                case Ability.TUTS_MASK:
+                    return "Grants the wearer the power of\ninvisibility.\n\n\nMana Cost: 5/second";
+                case Ability.FRISBEE: 
+                    return "Throws a frisbee that can stun\nenemies.";
+                default:
+                    return string.Empty;
+
+            };
+        }
+
         #endregion
 
         #region GemsPerArea
@@ -176,7 +210,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.CANE] = new AbilityInfo
             {
                 Name = "Cane Of Clinton",
-                Description = "Use for 3 seconds to communicate telepathically with Bill Clinton. \n\nMana Cost: 10",
                 Type = AbilityType.Activated,
                 ManaCost = 10
             };
@@ -184,7 +217,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.WATER_BOOTS] = new AbilityInfo
             {
                 Name = "Jesus' Sandals",
-                Description = "While equipped you gain the power of Jesus Christ. (That means you can walk on water)",
                 Type = AbilityType.Hold,
                 ManaCost = 0
             };
@@ -193,7 +225,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.SPRINT_BOOTS] = new AbilityInfo
             {
                 Name = "Speed Boots",
-                Description = "When activated you run 75% faster.",
                 Type = AbilityType.Activated,
                 ManaCost = 0
             };
@@ -201,8 +232,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.FIRE_BREATH] = new AbilityInfo
             {
                 Name = "Fire Breath",
-                Description = string.Format("Allows you to breath deadly fire breath.\n\nMana Cost: 15/second\nDamage: {0} per second",
-                 0), //Util::intToString(smh->player->getFireBreathDamage()).c_str())
                 Type = AbilityType.Hold,
                 ManaCost = 15
             };
@@ -210,7 +239,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.ICE_BREATH] = new AbilityInfo
             {
                 Name = "Ice Breath",
-                Description = "Unleases an icy blast that can freeze enemies.\n\nManaCost: 10",
                 Type = AbilityType.Activated,
                 ManaCost = 20
             };
@@ -218,7 +246,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.REFLECTION_SHIELD] = new AbilityInfo
             {
                 Name = "Reflection Shield",
-                Description = "Activate to deflect certain projectiles.\n\n\nMana Cost: 35/second",
                 Type = AbilityType.Hold,
                 ManaCost = 35
             };
@@ -226,7 +253,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.HOVER] = new AbilityInfo
             {
                 Name = "Hover",
-                Description = "Grants you the power to use hover pads.",
                 Type = AbilityType.Hold,
                 ManaCost = 0
             };
@@ -234,8 +260,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.LIGHTNING_ORB] = new AbilityInfo
             {
                 Name = "Lightning Orbs",
-                Description = string.Format("Shoots orbs of lightning. \n\n\nMana Cost: 5\nDamage:{0}",
-                0), //Util::intToString(smh->player->getLightningOrbDamage()).c_str())
                 Type = AbilityType.Activated,
                 ManaCost = 5
             };
@@ -243,7 +267,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.SHRINK] = new AbilityInfo
             {
                 Name = "Shrink",
-                Description = "When activated Smiley will shrink in size and be able to fit into smaller spaces.",
                 Type = AbilityType.Activated,
                 ManaCost = 0
             };
@@ -251,7 +274,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.SILLY_PAD] = new AbilityInfo
             {
                 Name = "Silly Pad",
-                Description = "Places a Silly Pad. They are so silly that enemies can't even cross them!\n\nMana Cost: 5",
                 Type = AbilityType.Activated,
                 ManaCost = 5
             };
@@ -259,7 +281,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.TUTS_MASK] = new AbilityInfo
             {
                 Name = "Tut's Mask",
-                Description = "Grants the wearer the power of invisibility.\n\n\nMana Cost: 5/second",
                 Type = AbilityType.Hold,
                 ManaCost = 5
             };
@@ -267,7 +288,6 @@ namespace Smiley.Lib.Data
             abilities[Ability.FRISBEE] = new AbilityInfo
             {
                 Name = "Frisbee",
-                Description = "Throws a frisbee that can stun enemies.",
                 Type = AbilityType.Activated,
                 ManaCost = 0
             };
@@ -281,7 +301,6 @@ namespace Smiley.Lib.Data
     public class AbilityInfo
     {
         public string Name { get; set; }
-        public string Description { get; set; }
         public int ManaCost { get; set; }
         public AbilityType Type { get; set; }
     }
