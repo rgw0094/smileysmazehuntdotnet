@@ -42,6 +42,7 @@
 ||RGW||12/6/11||Ported Player||
 ||RGW||12/7/11||Ported AreaChanger||
 ||RGW||12/7/11||Ported NPCs||
+||RGW||12/12/11||Ported Inventory||
 
 = Port Progress =
 
@@ -108,7 +109,7 @@
 ||GameData||75% (Need GameText)||
 ||GUI||Done||
 ||Input||Done||
-||Inventory|| ||
+||Inventory||Done||
 ||LoadingScreen|| ||
 ||LootManager|| ||
 ||LovecraftBoss|| ||
