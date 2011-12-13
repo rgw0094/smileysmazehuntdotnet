@@ -54,6 +54,7 @@ namespace Smiley.Lib.UI
                 _abilitySlots[i].Slot = i;
                 _abilitySlots[i].X = _points[i].X;
                 _abilitySlots[i].Y = _points[i].Y;
+                _abilitySlots[i].Scale = (i == 1) ? 1f : SmallScale;
             }
         }
 
@@ -161,7 +162,7 @@ namespace Smiley.Lib.UI
             SpinDirection dir = SpinDirection.None;
 
             //Input to change ability
-            if (!SMH.WindowManager.IsAnyWindowOpen)
+            if (!SMH.WindowManager.IsWindowOpen)
             {
                 if (SMH.Input.IsPressed(Input.PreviousAbility))
                     dir = SpinDirection.Left;
@@ -197,7 +198,7 @@ namespace Smiley.Lib.UI
                 //Move towards target slot
                 x = _abilitySlots[i].X;
                 y = _abilitySlots[i].Y;
-                targetX = _points[_abilitySlots[i].Slot].Y;
+                targetX = _points[_abilitySlots[i].Slot].X;
                 targetY = _points[_abilitySlots[i].Slot].Y;
                 angle = SmileyUtil.GetAngleBetween(x, y, targetX, targetY);
                 if (SmileyUtil.Distance(x, y, targetX, targetY) < 600.0 * dt)

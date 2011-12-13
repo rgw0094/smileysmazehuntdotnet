@@ -60,16 +60,6 @@ namespace Smiley.Lib.GameObjects.Environment
             private set;
         }
 
-        /// <summary>
-        /// Number of pixels the player is off alignment with the grid.
-        /// </summary>
-        public float XOffset { get; private set; }
-
-        /// <summary>
-        /// Number of pixels the player is off alignment with the grid.
-        /// </summary>
-        public float YOffset { get; private set; }
-
         #endregion
 
         #region Public Methods
@@ -274,7 +264,7 @@ namespace Smiley.Lib.GameObjects.Environment
             //smh->enemyManager->reset();
             //smh->projectileManager->reset();
             //smh->lootManager->reset();
-            //smh->npcManager->reset();
+            SMH.NPCManager.Reset();
             //smh->enemyGroupManager->resetGroups();
             //SMH.Player.resetTongue();
             //tapestryManager->reset();
@@ -319,11 +309,6 @@ namespace Smiley.Lib.GameObjects.Environment
             Animations.ShrinkTunnelSwitch.Update(dt);
             Animations.MirrorSwitch.Update(dt);
 
-            ////Determine the tile offset for smooth movement
-            //xOffset = SMH.Player.x - float(SMH.Player.gridX) * float(64.0);
-            //yOffset = SMH.Player.y - float(SMH.Player.gridY) * float(64.0);
-
-
             ////Update each grid square
             //for (int i = 0; i < areaWidth; i++) {
             //    for (int j = 0; j < areaHeight; j++) {
@@ -360,10 +345,10 @@ namespace Smiley.Lib.GameObjects.Environment
             //Loop through each tile to draw shit
             for (int j = SMH.Player.Tile.Y - 6; j < SMH.Player.Tile.Y + 7; j++)
             {
-                int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64 - XOffset));
+                int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64));
                 for (int i = SMH.Player.Tile.X - 9; i < SMH.Player.Tile.X + 9; i++)
                 {
-                    float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64 - XOffset));
+                    float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64));
 
                     if (IsInBounds(i, j))
                         Tiles[i, j].DrawBeforeSmiley(drawX, drawY);
@@ -403,10 +388,10 @@ namespace Smiley.Lib.GameObjects.Environment
         {
             for (int j = SMH.Player.Tile.Y - 6; j < SMH.Player.Tile.Y + 7; j++)
             {
-                int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64 - XOffset));
+                int drawY = Convert.ToInt32(SMH.GetScreenY(j * 64));
                 for (int i = SMH.Player.Tile.X - 9; i < SMH.Player.Tile.X + 9; i++)
                 {
-                    float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64 - XOffset));
+                    float drawX = Convert.ToInt32(SMH.GetScreenX(i * 64));
                     if (IsInBounds(i, j))
                     {
                         Tiles[i, j].DrawAfterSmiley(drawX, drawY);

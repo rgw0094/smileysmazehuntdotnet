@@ -44,5 +44,10 @@ namespace Smiley.Lib.GameObjects.NPCs
         {
             return _npcs.Exists(otherNPC => otherNPC.ID != npc.ID && otherNPC.CollisionBox.Intersects(npc.CollisionBox));
         }
+
+        public void Reset()
+        {
+            _npcs.Clear();
+        }
     }
 }

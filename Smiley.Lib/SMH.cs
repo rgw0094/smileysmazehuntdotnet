@@ -198,10 +198,11 @@ namespace Smiley.Lib
             else if (State == GameState.Game)
             {
                 Console.Update(DT);
+                WindowManager.Update(DT);
                 AreaChanger.Update(DT);
                 GUI.Update(DT);
 
-                if (!WindowManager.IsAnyWindowOpen && !AreaChanger.IsChangingAreas)
+                if (!WindowManager.IsWindowOpen && !AreaChanger.IsChangingAreas)
                 {
                     GameTime += DT;
 
@@ -231,6 +232,7 @@ namespace Smiley.Lib
                 Player.DrawJesusBeam();
                 AreaChanger.Draw(DT);
                 GUI.Draw();
+                WindowManager.Draw();
                 Console.Draw();
             }
             Graphics.EndFrame();

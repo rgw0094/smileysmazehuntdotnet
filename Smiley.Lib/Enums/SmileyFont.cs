@@ -16,12 +16,12 @@ namespace Smiley.Lib.Data
         Controls,
         [Description("Fonts\\Console")]
         Console,
-        [Description("Fonts\\Inventory")]
-        Inventory,
+        [Description("Fonts\\AbilityTitle")]
+        AbilityTitle,
         [Description("Fonts\\Curlz")]
         Curlz,
-        [Description("Fonts\\Description")]
-        Description,
+        [Description("Fonts\\Segoe14")]
+        Segoe14,
         [Description("Fonts\\Number")]
         Number,
         [Description("Fonts\\NewArea")]

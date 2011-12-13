@@ -163,6 +163,14 @@
     <Compile Include="UI\Controls\Button.cs" />
     <Compile Include="Framework\BitStream.cs" />
     <Compile Include="Framework\Extensions.cs" />
+    <Compile Include="UI\Windows\AdviceWindow.cs" />
+    <Compile Include="UI\Windows\AreaMap.cs" />
+    <Compile Include="UI\Windows\Inventory.cs" />
+    <Compile Include="UI\Windows\MiniMenu.cs" />
+    <Compile Include="UI\Windows\OptionsWindow.cs" />
+    <Compile Include="UI\Windows\Shop.cs" />
+    <Compile Include="UI\Windows\TextBox.cs" />
+    <Compile Include="UI\Windows\WorldMap.cs" />
     <Compile Include="Util\SmileyUtil.cs" />
     <Compile Include="UI\Windows\BaseWindow.cs" />
     <Compile Include="UI\Windows\WindowManager.cs" />

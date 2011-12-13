@@ -180,8 +180,7 @@ namespace Smiley.Lib.Services
 
                 for (int i = 0; i < 3; i++)
                 {
-                    //TODO:
-                    //smh->player->gui->setAbilityInSlot(input.ReadBits(5), i);
+                    output.WriteBits((int)SMH.GUI.GetAbilityInSlot(i), 5);
                 }
 
                 foreach (Level level in Enum.GetValues(typeof(Level)))
@@ -296,8 +295,7 @@ namespace Smiley.Lib.Services
 
                 for (int i = 0; i < 3; i++)
                 {
-                    //TODO:
-                    //smh->player->gui->setAbilityInSlot(input.ReadBits(5), i);
+                    SMH.GUI.SetAbilityInSlot((Ability)input.ReadBits(5), i);
                 }
 
                 foreach (Level level in Enum.GetValues(typeof(Level)))
