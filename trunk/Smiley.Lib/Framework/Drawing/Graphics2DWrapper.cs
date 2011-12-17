@@ -104,15 +104,14 @@ namespace Smiley.Lib.Framework.Drawing
         public void DrawString(SmileyFont font, string text, float x, float y, TextAlignment alignment, Color color, float scale)
         {
             Vector2 drawVector = new Vector2(x, y);
-            if (alignment == TextAlignment.Center)
+            if (alignment != TextAlignment.Left)
             {
-                Vector2 v = SMH.Data.GetFont(font).MeasureString(text);
-                drawVector = new Vector2(x - v.X / 2f, y);
-            }
-            else if (alignment == TextAlignment.Right)
-            {
-                Vector2 v = SMH.Data.GetFont(font).MeasureString(text);
-                drawVector = new Vector2(x - v.X, y);
+                Vector2 v = SMH.Data.GetFont(font).MeasureString(text) * scale;
+
+                if (alignment == TextAlignment.Center)
+                    drawVector = new Vector2(x - v.X / 2f, y);
+                else if (alignment == TextAlignment.Right)
+                    drawVector = new Vector2(x - v.X, y);
             }
 
             _spriteBatch.DrawString(SMH.Data.GetFont(font), text, drawVector, color, 0, new Vector2(0, 0), scale, SpriteEffects.None, 0);
