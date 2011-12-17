@@ -70,7 +70,7 @@ namespace Smiley.Lib.Services
             _keysDownLastFrame = _keysDown;
             _keysDown = keyboardState.GetPressedKeys();
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
-            
+
             foreach (InputState input in _inputs.Values)
             {
                 input.WasDownLastFrame = input.IsDown;
@@ -117,9 +117,10 @@ namespace Smiley.Lib.Services
 
             //Let clicking the mouse also count as the confirm/attack input
             bool isMouseDown = mouseState.LeftButton == ButtonState.Pressed;
-            if (!_wasMouseDown && isMouseDown)
+            if (isMouseDown)
             {
-                _inputs[Input.Attack].WasDownLastFrame = false;
+                if (!_wasMouseDown)
+                    _inputs[Input.Attack].WasDownLastFrame = false;
                 _inputs[Input.Attack].IsDown = true;
             }
             _wasMouseDown = isMouseDown;
@@ -175,7 +176,8 @@ namespace Smiley.Lib.Services
         /// input method for the given input type.
         /// </summary>
         /// <param name="input"></param>
-        public void ListenForNewInput(Input input)
+        /// <returns>Whether or not a new input was accepted.</returns>
+        public bool ListenForNewInput(Input input)
         {
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             foreach (Buttons button in Enum.GetValues(typeof(Buttons)))
@@ -184,15 +186,38 @@ namespace Smiley.Lib.Services
                 {
                     _inputs[input].Button = button;
                     _inputs[input].Device = InputDevice.GamePad;
-                    return;
+                    return true;
                 }
             }
 
             KeyboardState state = Keyboard.GetState();
             foreach (Keys key in Enum.GetValues(typeof(Keys)))
             {
-                _inputs[input].Key = key;
-                _inputs[input].Device = InputDevice.Keyboard;
+                if (state.IsKeyDown(key))
+                {
+                    _inputs[input].Key = key;
+                    _inputs[input].Device = InputDevice.Keyboard;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gets a user friendly description for the key or button currently configured
+        /// for the given input.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string GetInputDescription(Input input)
+        {
+            if (_inputs[input].Device == InputDevice.Keyboard)
+            {
+                return _inputs[input].Key.ToString();
+            }
+            else //if (_inputs[input].Device == InputDevice.GamePad)
+            {
+                return _inputs[input].Button.ToString();
             }
         }
 
@@ -231,7 +256,6 @@ namespace Smiley.Lib.Services
         {
             public bool IsDown { get; set; }
             public bool WasDownLastFrame { get; set; }
-            public bool InEditMode { get; set; }
             public InputDevice Device { get; set; }
             public Keys Key { get; set; }
             public Buttons Button { get; set; }

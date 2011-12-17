@@ -25,7 +25,7 @@ namespace Smiley.Lib.Services
         private Dictionary<Sound, float> _lastPlayedTimes = new Dictionary<Sound, float>();
         private ContentManager _contentManager;
         private float _lastSwitchTime;
-        private int _soundVolumne;
+        private int _soundVolume;
         private int _musicVolume;
 
         #endregion
@@ -41,7 +41,7 @@ namespace Smiley.Lib.Services
 
             //Music volume starts at what it was when app was closed last
             //TODO: load from config
-            MusicVolume = 0;// 100;
+            MusicVolume = 100;
             SoundVolume = 100;
         }
 
@@ -54,12 +54,12 @@ namespace Smiley.Lib.Services
         /// </summary>
         public int SoundVolume
         {
-            get { return _soundVolumne; }
+            get { return _soundVolume; }
             set
             {
-                if (_soundVolumne != value)
+                if (_soundVolume != value)
                 {
-                    _soundVolumne = Math.Min(100, Math.Max(0, value));
+                    _soundVolume = Math.Min(100, Math.Max(0, value));
                     //TODO: update in config;
                 }
             }
@@ -78,7 +78,7 @@ namespace Smiley.Lib.Services
                     _musicVolume = Math.Min(100, Math.Max(0, value));
                     if (_currentMusic != null)
                     {
-                        _currentMusic.Volume = value;
+                        _currentMusic.Volume = (float)_musicVolume / 100f;
                     }
                     //TODO: update in config;
                 }

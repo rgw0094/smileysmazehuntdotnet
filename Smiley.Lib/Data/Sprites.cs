@@ -87,8 +87,8 @@ namespace Smiley.Lib.Data
         public static Sprite GameOverE2 = new Sprite(SmileyTexture.UserInterface, new Rectangle(897, 838, 46, 64), new Vector2(87, 29));
         public static Sprite GameOverR = new Sprite(SmileyTexture.UserInterface, new Rectangle(943, 839, 53, 59), new Vector2(53, 59));
         public static Sprite GameOverText = new Sprite(SmileyTexture.UserInterface, new Rectangle(0, 934, 340, 74), new Vector2(170, 37));
-        public static Sprite ControlsBox = new Sprite(SmileyTexture.UserInterface, new Rectangle(248, 769, 130, 30));
-        public static Sprite SelectedControlsBox = new Sprite(SmileyTexture.UserInterface, new Rectangle(248, 799, 130, 30));
+        public static Sprite ControlsBox = new Sprite(SmileyTexture.TitleScreen, new Rectangle(248, 769, 130, 30));
+        public static Sprite SelectedControlsBox = new Sprite(SmileyTexture.TitleScreen, new Rectangle(248, 799, 130, 30));
         public static Sprite DifficultyPromptBackground = new Sprite(SmileyTexture.UserInterface, new Rectangle(661, 809, 325, 150));
         public static Sprite LeftArrow = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 810, 32, 32), new Vector2(16, 16));
         public static Sprite RightArrow = new Sprite(SmileyTexture.UserInterface, new Rectangle(989, 844, 32, 32), new Vector2(16, 16));
