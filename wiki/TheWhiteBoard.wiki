@@ -43,6 +43,9 @@
 ||RGW||12/7/11||Ported AreaChanger||
 ||RGW||12/7/11||Ported NPCs||
 ||RGW||12/12/11||Ported Inventory||
+||RGW||12/16/11||Ported Slider||
+||RGW||12/16/11||Ported OptionsScreen||
+||RGW||12/16/11||Ported OptionsWindow||
 
 = Port Progress =
 
@@ -120,7 +123,8 @@
 ||MushroomBoss|| ||
 ||NPC||Done||
 ||NPCManager||Done||
-||OptionsScreen|| ||
+||OptionsScreen||Done||
+||OptionsWindow||Done||
 ||Player||Done||
 ||PopupMessageManager|| ||
 ||ProjectileManager|| ||
@@ -128,8 +132,7 @@
 ||ScreenEffectsManager|| ||
 ||SelectFileScreen||90%||
 ||Shop|| ||
-||Slider|| ||
-||SMH||50%||
+||Slider||Done||
 ||SmileletManager|| ||
 ||SnowBoss|| ||
 ||SoundManager||Done||
