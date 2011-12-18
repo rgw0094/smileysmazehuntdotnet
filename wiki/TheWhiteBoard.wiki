@@ -46,6 +46,7 @@
 ||RGW||12/16/11||Ported Slider||
 ||RGW||12/16/11||Ported OptionsScreen||
 ||RGW||12/16/11||Ported OptionsWindow||
+||RGW||12/17/11||Ported opening cinematic||
 
 = Port Progress =
 
@@ -59,7 +60,7 @@
 ||Button||Done||
 ||CandyBoss|| ||
 ||ChangeManager||Done||
-||CinematicScreen|| ||
+||CinematicScreen||Done||
 ||ClosingCinematic|| ||
 ||CollisionCircle||Done||
 ||ConservatoryBoss|| ||
