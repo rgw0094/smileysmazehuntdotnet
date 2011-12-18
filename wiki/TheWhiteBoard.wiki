@@ -49,6 +49,7 @@
 ||RGW||12/17/11||Ported opening cinematic||
 ||RGW||12/17/11||Ported MiniMenu||
 ||RGW||12/17/11||Finished porting SelectFileScreen new/continue game stuff||
+||RGW||12/18/11||Ported PopupMessageManager||
 
 = Port Progress =
 
@@ -129,7 +130,7 @@
 ||OptionsScreen||Done||
 ||OptionsWindow||Done||
 ||Player||Done||
-||PopupMessageManager|| ||
+||PopupMessageManager||Done||
 ||ProjectileManager|| ||
 ||SaveManager||Done||
 ||ScreenEffectsManager|| ||
