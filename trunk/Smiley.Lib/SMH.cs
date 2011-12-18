@@ -73,6 +73,7 @@ namespace Smiley.Lib
         public static ProjectileManager ProjectileManager { get; private set; }
         public static LootManager LootManager { get; private set; }
         public static AreaChanger AreaChanger { get; private set; }
+        public static PopupMessageManager PopupMessageManager { get; private set; }
 
         /// <summary>
         /// Shows the main menu.
@@ -180,6 +181,7 @@ namespace Smiley.Lib
             ProjectileManager = new ProjectileManager();
             LootManager = new LootManager();
             AreaChanger = new AreaChanger();
+            PopupMessageManager = new PopupMessageManager();
             Random = new Random();
         }
 
@@ -215,6 +217,7 @@ namespace Smiley.Lib
                 WindowManager.Update(DT);
                 AreaChanger.Update(DT);
                 GUI.Update(DT);
+                PopupMessageManager.Update(DT);
 
                 //Toggle options/exit
                 if (/*!deathEffectManager->isActive() && */!WindowManager.IsWindowOpen && SMH.Input.IsDown(Keys.Escape))
@@ -252,6 +255,7 @@ namespace Smiley.Lib
                 Player.DrawJesusBeam();
                 AreaChanger.Draw(DT);
                 GUI.Draw();
+                PopupMessageManager.Draw();
                 WindowManager.Draw();
                 Console.Draw();
             }

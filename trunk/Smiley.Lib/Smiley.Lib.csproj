@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Animations.cs" />
+    <Compile Include="Enums\Advice.cs" />
     <Compile Include="GameObjects\NPCs\NPC.cs" />
     <Compile Include="UI\Controls\Slider.cs" />
     <Compile Include="UI\DebugConsole.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="UI\Controls\Button.cs" />
     <Compile Include="Framework\BitStream.cs" />
     <Compile Include="Framework\Extensions.cs" />
+    <Compile Include="UI\PopupMessageManager.cs" />
     <Compile Include="UI\Windows\AdviceWindow.cs" />
     <Compile Include="UI\Windows\AreaMap.cs" />
     <Compile Include="UI\Windows\Inventory.cs" />

@@ -1349,7 +1349,7 @@ namespace Smiley.Lib.GameObjects.Player
                 //shop advice.
                 if (SMH.SaveManager.CurrentSave.GetTotalGemCount == 0)
                 {
-                    //TODO:smh->popupMessageManager->showNewAdvice(AdviceTypes::ADVICE_SHOP);
+                    SMH.PopupMessageManager.ShowNewAdvice(Advice.Shop);
                 }
 
                 SMH.SaveManager.CurrentSave.NumGems[SMH.SaveManager.CurrentSave.Level][SmileyUtil.GetGem((ItemTile)Tile.Item)]++;
@@ -1368,7 +1368,7 @@ namespace Smiley.Lib.GameObjects.Player
                 }
                 else
                 {
-                    //TODO:smh->popupMessageManager->showFullHealth();
+                    SMH.PopupMessageManager.ShowFullHealth();
                 }
             }
             else if (Tile.Item == (int)ItemTile.MANA_ITEM)
@@ -1382,7 +1382,7 @@ namespace Smiley.Lib.GameObjects.Player
                 }
                 else
                 {
-                    //TODO:smh->popupMessageManager->showFullMana();
+                    SMH.PopupMessageManager.ShowFullMana();
                 }
             }
 
