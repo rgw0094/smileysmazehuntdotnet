@@ -855,9 +855,6 @@ namespace Smiley.Lib.GameObjects.Player
             _baseX = X + 0;
             _baseY = Y + 15f * ShrinkScale;
             FeetTile = SMH.Environment.Tiles[(int)Math.Floor(_baseX / 64f), (int)Math.Floor(_baseY / 64f)];
-
-            SMH.SaveManager.CurrentSave.GridX = Tile.X;
-            SMH.SaveManager.CurrentSave.GridY = Tile.Y;
         }
 
         /// <summary>

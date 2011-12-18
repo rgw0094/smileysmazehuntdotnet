@@ -73,7 +73,7 @@ namespace Smiley.Lib.Data
 
         //Main Menu
         public static Sprite MenuBackground = new Sprite(SmileyTexture.TitleScreen, new Rectangle(0, 0, 1024, 768), new Vector2(0, 0));
-        public static Sprite MenuSpeechBubble = new Sprite(SmileyTexture.UserInterface, new Rectangle(0, 769, 245, 73));
+        public static Sprite MenuSpeechBubble = new Sprite(SmileyTexture.TitleScreen, new Rectangle(0, 769, 245, 73));
         public static Sprite ButtonBackground = new Sprite(SmileyTexture.UserInterface, new Rectangle(661, 22, 246, 71));
         public static Sprite ButtonBackgroundHighlighted = new Sprite(SmileyTexture.UserInterface, new Rectangle(661, 93, 246, 71));
         public static Sprite SmileyTitle = new Sprite(SmileyTexture.TitleScreen, new Rectangle(380, 769, 430, 214), new Vector2(215, 104));

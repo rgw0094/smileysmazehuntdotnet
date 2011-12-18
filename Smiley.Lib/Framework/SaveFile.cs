@@ -42,10 +42,10 @@ namespace Smiley.Lib.Framework
         public bool AdviceManEncounterCompleted { get; set; }
         public int Money { get; set; }
         public Level Level { get; set; }
-        public int GridX { get; set; }
-        public int GridY { get; set; }
-        public double PlayerHealth { get; set; }
-        public double PlayerMana { get; set; }
+        public int PlayerGridX { get; set; }
+        public int PlayerGridY { get; set; }
+        public float PlayerHealth { get; set; }
+        public float PlayerMana { get; set; }
         public Difficulty Difficulty { get; set; }
         public Dictionary<Ability, bool> HasAbility { get; private set; }
         public int[,] NumKeys { get; private set; }
@@ -101,7 +101,6 @@ namespace Smiley.Lib.Framework
         {
             _changes = new List<Change>();
             Level = Enums.Level.FOUNTAIN_AREA;
-            PlayerMana = 50.0;
             TimeFileLoaded = DateTime.Now.TimeOfDay;
 
             NumKeys = new int[5, 4];
