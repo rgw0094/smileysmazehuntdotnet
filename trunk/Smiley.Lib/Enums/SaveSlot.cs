@@ -8,13 +8,13 @@ namespace Smiley.Lib.Enums
 {
     public enum SaveSlot
     {
-        [Description("Data/Save/save4.sav")]
+        [Description("save1.sav")]
         Slot1 = 0,
-        [Description("Data/Save/save2.sav")]
+        [Description("save2.sav")]
         Slot2 = 1,
-        [Description("Data/Save/save3.sav")]
+        [Description("save3.sav")]
         Slot3 = 2,
-        [Description("Data/Save/save4.sav")]
+        [Description("save4.sav")]
         Slot4 = 3
     }
 }

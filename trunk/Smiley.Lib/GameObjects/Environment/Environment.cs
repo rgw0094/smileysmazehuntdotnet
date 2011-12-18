@@ -11,6 +11,7 @@ using Smiley.Lib.GameObjects.Player;
 using Smiley.Lib.GameObjects.Enemies;
 using Microsoft.Xna.Framework;
 using System.Threading;
+using Smiley.Lib.UI.Windows;
 
 namespace Smiley.Lib.GameObjects.Environment
 {
@@ -1051,7 +1052,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         Rect box = new Rect(i * 64, j * 64, 64, 64);
                         if (tongue.Intersects(box))
                         {
-                            //smh->windowManager->openMiniMenu(MiniMenuMode::MINIMENU_SAVEGAME);//TODO:
+                            SMH.WindowManager.OpenMiniMenu(MiniMenuMode.SaveGame);
                             return true;
                         }
                     }

@@ -87,10 +87,24 @@ namespace Smiley.Lib
         /// <summary>
         /// Starts the game.
         /// </summary>
-        public static void StartGame()
+        /// <param name="isNew"></param>
+        public static void StartGame(bool isNew)
         {
             State = GameState.Game;
             _mainMenu = null;
+
+            if (isNew)
+            {
+                Player.Health = Player.MaxHealth;
+                Player.Mana = Player.MaxMana;
+            }
+            else
+            {
+                SMH.Environment.LoadLevel(SMH.SaveManager.CurrentSave.Level, SMH.SaveManager.CurrentSave.Level, true);
+                Player.Health = SMH.SaveManager.CurrentSave.PlayerHealth;
+                Player.Mana = SMH.SaveManager.CurrentSave.PlayerMana;
+                Player.MoveTo(SMH.SaveManager.CurrentSave.PlayerGridX, SMH.SaveManager.CurrentSave.PlayerGridY);
+            }
         }
 
         /// <summary>
@@ -153,7 +167,7 @@ namespace Smiley.Lib
         {
             Console = new DebugConsole();
             Sound = new SoundManager(Content);
-            Graphics = new Graphics2DWrapper(_graphicsDeviceManager);            
+            Graphics = new Graphics2DWrapper(_graphicsDeviceManager);
             Data = new SmileyData(Content);
             Input = new InputManager();
             Environment = new SmileyEnvironment();
@@ -202,6 +216,12 @@ namespace Smiley.Lib
                 AreaChanger.Update(DT);
                 GUI.Update(DT);
 
+                //Toggle options/exit
+                if (/*!deathEffectManager->isActive() && */!WindowManager.IsWindowOpen && SMH.Input.IsDown(Keys.Escape))
+                {
+                    SMH.WindowManager.OpenMiniMenu(MiniMenuMode.Exit);
+                }
+
                 if (!WindowManager.IsWindowOpen && !AreaChanger.IsChangingAreas)
                 {
                     GameTime += DT;
@@ -223,7 +243,7 @@ namespace Smiley.Lib
             {
                 _mainMenu.Draw();
             }
-            else
+            else if (State == GameState.Game)
             {
                 Environment.Draw();
                 NPCManager.Draw();

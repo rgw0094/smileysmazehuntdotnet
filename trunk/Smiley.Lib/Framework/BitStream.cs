@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Microsoft.Xna.Framework.Storage;
 
 namespace Smiley.Lib.Framework
 {
@@ -19,55 +20,38 @@ namespace Smiley.Lib.Framework
         private BitStreamMode _mode;
         private int _numWritten;
         private int _numRead;
-        FileStream _stream;
+        Stream _stream;
         private byte _currentByte;
         private int _counter;
         private List<byte> _outBytes;
 
         #endregion
 
-        #region Properties
+        #region Constructors
 
-        /// <summary>
-        /// Returns whether or not the BitStream is already open.
-        /// </summary>
-        public bool IsOpen
+        public BitStream(StorageContainer storageContainer, string fileName, BitStreamMode mode)
         {
-            get;
-            private set;
+            if (mode == BitStreamMode.Read)
+            {
+                _stream = storageContainer.OpenFile(fileName, FileMode.Open);
+            }
+            else
+            {
+                _stream = storageContainer.OpenFile(fileName, FileMode.OpenOrCreate);
+            }
+
+            _outBytes = new List<byte>();
+            _mode = mode;
+            _numRead = 0;
+            _counter = 0;
         }
 
         #endregion
 
         #region Public Methods
 
-        public void Open(string fileName, BitStreamMode mode)
-        {
-            if (IsOpen) throw new Exception("BitStream is already open.");
-
-            IsOpen = true;
-
-            if (mode == BitStreamMode.Read)
-            {
-                _stream = File.Open(fileName, FileMode.Create);
-            }
-            else
-            {
-                _stream = File.Open(fileName, FileMode.Open);
-                _outBytes = new List<byte>();
-            }
-
-            _mode = mode;
-            _numRead = 0;
-            _counter = 0;
-        }
-
         public void Close()
         {
-            if (!IsOpen) throw new Exception("BitStream isn't open.");
-
-            IsOpen = false;
-
             if (_mode == BitStreamMode.Write)
             {
                 while (!WriteBit(false)) ; // fill out the last byte if necessary
@@ -222,10 +206,7 @@ namespace Smiley.Lib.Framework
 
         public void Dispose()
         {
-            if (IsOpen)
-            {
-                Close();
-            }
+            Close();
         }
 
         #endregion

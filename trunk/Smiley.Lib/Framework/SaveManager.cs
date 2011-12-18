@@ -6,6 +6,8 @@ using Smiley.Lib.Enums;
 using Smiley.Lib.Data;
 using System.IO;
 using Smiley.Lib.Framework;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Storage;
 
 namespace Smiley.Lib.Services
 {
@@ -104,19 +106,38 @@ namespace Smiley.Lib.Services
         /// <param name="saveSlot"></param>
         public void Delete(SaveSlot saveSlot)
         {
-            File.Delete(saveSlot.GetDescription());
+            StorageContainer container = GetStorageContainer();
+            container.DeleteFile(saveSlot.GetDescription());
+
+            Saves[saveSlot] = new SaveFile(saveSlot.GetDescription()) 
+            { 
+                IsEmpty = true
+            };
         }
 
         #endregion
 
         #region Private Methods
 
+        private StorageContainer GetStorageContainer()
+        {
+            IAsyncResult result = StorageDevice.BeginShowSelector(null, null);
+            result.AsyncWaitHandle.WaitOne();
+            StorageDevice device = StorageDevice.EndShowSelector(result);
+            result.AsyncWaitHandle.Close();
+
+            result = device.BeginOpenContainer("Smiley", null, null);
+            result.AsyncWaitHandle.WaitOne();
+            StorageContainer container = device.EndOpenContainer(result);
+            result.AsyncWaitHandle.Close();
+
+            return container;
+        }
+
         private void SaveFile(SaveFile file)
         {
-            using (BitStream output = new BitStream())
+            using (BitStream output = new BitStream(GetStorageContainer(), file.Name, BitStreamMode.Write))
             {
-                output.Open(file.Name, BitStreamMode.Write);
-
                 output.WriteBits(file.TimePlayed.Ticks, 64);
 
                 //Save abilties
@@ -160,8 +181,8 @@ namespace Smiley.Lib.Services
 
                 //Save player zone and location
                 output.WriteByte((int)file.Level);
-                output.WriteByte(file.GridX);
-                output.WriteByte(file.GridY);
+                output.WriteByte(file.PlayerGridX);
+                output.WriteByte(file.PlayerGridY);
 
                 //Health and mana
                 output.WriteByte((int)file.PlayerHealth * 4);
@@ -217,17 +238,16 @@ namespace Smiley.Lib.Services
         {
             SaveFile file = new SaveFile(fileName);
 
-            if (!File.Exists(fileName))
+            StorageContainer container = GetStorageContainer();
+            if (!container.FileExists(fileName))
             {
                 file.IsEmpty = true;
                 return file;
             }
 
             //Select the specified save file
-            using (BitStream input = new BitStream())
+            using (BitStream input = new BitStream(container, fileName, BitStreamMode.Read))
             {
-                input.Open(fileName, BitStreamMode.Read);
-
                 file.TimePlayed = TimeSpan.FromTicks(input.ReadBits(64));
 
                 //Load abilties
@@ -271,12 +291,12 @@ namespace Smiley.Lib.Services
 
                 //Load player zone and location
                 file.Level = (Level)input.ReadByte();
-                file.GridX = input.ReadByte();
-                file.GridY = input.ReadByte();
+                file.PlayerGridX = input.ReadByte();
+                file.PlayerGridY = input.ReadByte();
 
                 //Health and mana
-                file.PlayerHealth = Convert.ToDouble(input.ReadByte() / 4);
-                file.PlayerMana = Convert.ToDouble(input.ReadByte());
+                file.PlayerHealth = (float)(input.ReadByte() / 4);
+                file.PlayerMana = (float)(input.ReadByte());
 
                 //Load changed shit
                 int numChanges = input.ReadBits(16);
