@@ -35,7 +35,7 @@ namespace Smiley.Lib.Enums
         [Description("Music\\OldTowne")]
         OldeTown,
         [Description("Music\\SceneOneMusic")]
-        SceneOne,
+        OpeningCinematic,
         [Description("Music\\SerpentinePath")]
         SerpentinePath,
         [Description("Music\\Smolderhollow")]
