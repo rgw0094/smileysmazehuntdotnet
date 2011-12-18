@@ -47,6 +47,8 @@
 ||RGW||12/16/11||Ported OptionsScreen||
 ||RGW||12/16/11||Ported OptionsWindow||
 ||RGW||12/17/11||Ported opening cinematic||
+||RGW||12/17/11||Ported MiniMenu||
+||RGW||12/17/11||Finished porting SelectFileScreen new/continue game stuff||
 
 = Port Progress =
 
