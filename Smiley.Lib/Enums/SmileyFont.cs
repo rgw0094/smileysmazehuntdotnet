@@ -26,5 +26,7 @@ namespace Smiley.Lib.Data
         Number,
         [Description("Fonts\\NewArea")]
         NewArea,
+        [Description("Fonts\\Cinematic")]
+        Cinematic
     }
 }

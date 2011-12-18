@@ -27,6 +27,7 @@ namespace Smiley.Lib.Services
         private float _lastSwitchTime;
         private int _soundVolume;
         private int _musicVolume;
+        private bool _fadingOutMusic;
 
         #endregion
 
@@ -88,6 +89,22 @@ namespace Smiley.Lib.Services
         #endregion
 
         #region Public Methods
+
+        /// <summary>
+        /// Updates the SoundManager.
+        /// </summary>
+        /// <param name="dt"></param>
+        public void Update(float dt)
+        {
+            if (_fadingOutMusic)
+            {
+                _currentMusic.Volume = Math.Max(0f, _currentMusic.Volume - 0.5f * dt);
+                if (_currentMusic.Volume <= 0f)
+                {
+                    _fadingOutMusic = false;
+                }
+            }
+        }
 
         /// <summary>
         /// Changes the music channel to play the specified song.
@@ -155,8 +172,7 @@ namespace Smiley.Lib.Services
         /// </summary>
         public void FadeOutMusic()
         {
-            //TODO:
-            throw new NotImplementedException();
+            _fadingOutMusic = true;
         }
 
         /// <summary>

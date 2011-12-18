@@ -82,6 +82,11 @@
       <Processor>FontDescriptionProcessor</Processor>
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="Fonts\Cinematic.spritefont">
+      <Name>Cinematic</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Levels\castle.smh">
       <Name>castle</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

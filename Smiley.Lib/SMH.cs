@@ -91,7 +91,6 @@ namespace Smiley.Lib
         {
             State = GameState.Game;
             _mainMenu = null;
-            Environment.LoadLevel(SMH.SaveManager.CurrentSave.Level, SMH.SaveManager.CurrentSave.Level, true);
         }
 
         /// <summary>
@@ -190,6 +189,7 @@ namespace Smiley.Lib
             DT = (float)gameTime.ElapsedGameTime.Ticks / 10000000f;
 
             Input.Update(DT);
+            Sound.Update(DT);
 
             if (State == GameState.Menu)
             {

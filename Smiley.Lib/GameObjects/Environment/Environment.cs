@@ -10,6 +10,7 @@ using Smiley.Lib.Framework.Drawing;
 using Smiley.Lib.GameObjects.Player;
 using Smiley.Lib.GameObjects.Enemies;
 using Microsoft.Xna.Framework;
+using System.Threading;
 
 namespace Smiley.Lib.GameObjects.Environment
 {
@@ -63,6 +64,15 @@ namespace Smiley.Lib.GameObjects.Environment
         #endregion
 
         #region Public Methods
+
+        public void LoadLevelAsynch(Level level)
+        {
+            Thread thread = new Thread(new ParameterizedThreadStart(o =>
+                {
+                    LoadLevel(level, level, false);
+                }));
+            thread.Start();
+        }
 
         /// <summary>
         /// Loads a new level.

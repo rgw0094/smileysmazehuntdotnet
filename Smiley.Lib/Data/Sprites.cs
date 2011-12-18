@@ -103,8 +103,8 @@ namespace Smiley.Lib.Data
         public static Sprite OpenCinematicOne = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(0, 0, 440, 340), new Vector2(220, 170));
         public static Sprite OpenCinematicTwo = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(440, 0, 440, 340), new Vector2(220, 170));
         public static Sprite OpenCinematicThree = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(0, 340, 440, 340), new Vector2(220, 170));
-        public static Sprite OpenCinematicFour = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(0, 680, 440, 340), new Vector2(220, 215));
-        public static Sprite OpenCinematicFive = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(440, 340, 440, 400), new Vector2(220, 200));
+        public static Sprite OpenCinematicFour = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(0, 680, 440, 340), new Vector2(220, 170));
+        public static Sprite OpenCinematicFive = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(440, 340, 440, 400), new Vector2(220, 225));
         public static Sprite OpenCinematicSix = new Sprite(SmileyTexture.OpeningCinematic, new Rectangle(440, 740, 182, 182), new Vector2(91, 91));
 
         //Minimap
