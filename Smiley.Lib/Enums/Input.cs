@@ -32,7 +32,7 @@ namespace Smiley.Lib.Enums
 
     public enum InputDevice
     {
-        Keyboard,
-        GamePad
+        Keyboard = 0,
+        GamePad = 1
     }
 }

@@ -14,13 +14,11 @@ namespace Smiley.Lib.Services
 {
     public class InputManager
     {
-        private const string ConfigFileName = "Smiley.INI";
-        private const string InputSection = "Input";
-
         #region Private Variables
 
-        private Dictionary<Input, InputState> _inputs = new Dictionary<Input, InputState>();
         private bool _wasMouseDown;
+        private Dictionary<Input, bool> _inputIsDown = new Dictionary<Input, bool>();
+        private Dictionary<Input, bool> _inputWasDown = new Dictionary<Input, bool>();
         private Keys[] _keysDownLastFrame = new Keys[1];
         private Keys[] _keysDown = new Keys[1];
 
@@ -33,7 +31,11 @@ namespace Smiley.Lib.Services
         /// </summary>
         public InputManager()
         {
-            LoadInputs();
+            foreach (Input input in Enum.GetValues(typeof(Input)))
+            {
+                _inputIsDown[input] = false;
+                _inputWasDown[input] = false;
+            }
         }
 
         #endregion
@@ -71,22 +73,23 @@ namespace Smiley.Lib.Services
             _keysDown = keyboardState.GetPressedKeys();
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
 
-            foreach (InputState input in _inputs.Values)
+            foreach (SmileyInputConfig inputConfig in SMH.ConfigManager.Config.Inputs)
             {
-                input.WasDownLastFrame = input.IsDown;
-                input.IsDown = false;
-                if (input.Device == InputDevice.GamePad)
+                _inputWasDown[inputConfig.Input] = _inputIsDown[inputConfig.Input];
+                _inputIsDown[inputConfig.Input] = false;
+
+                if (inputConfig.Device == InputDevice.GamePad)
                 {
-                    if (gamePadState.IsButtonDown(input.Button))
+                    if (gamePadState.IsButtonDown((Buttons)inputConfig.Code))
                     {
-                        input.IsDown = true;
+                        _inputIsDown[inputConfig.Input] = true;
                     }
                 }
-                else if (input.Device == InputDevice.Keyboard)
+                else if (inputConfig.Device == InputDevice.Keyboard)
                 {
-                    if (keyboardState.IsKeyDown(input.Key))
+                    if (keyboardState.IsKeyDown((Keys)inputConfig.Code))
                     {
-                        input.IsDown = true;
+                        _inputIsDown[inputConfig.Input] = true;
                     }
                 }
             }
@@ -120,8 +123,8 @@ namespace Smiley.Lib.Services
             if (isMouseDown)
             {
                 if (!_wasMouseDown)
-                    _inputs[Input.Attack].WasDownLastFrame = false;
-                _inputs[Input.Attack].IsDown = true;
+                    _inputWasDown[Input.Attack] = false;
+                _inputIsDown[Input.Attack] = true;
             }
             _wasMouseDown = isMouseDown;
 #endif
@@ -138,7 +141,7 @@ namespace Smiley.Lib.Services
         /// <returns></returns>
         public bool IsDown(Input input)
         {
-            return _inputs[input].IsDown;
+            return _inputIsDown[input];
         }
 
         /// <summary>
@@ -158,7 +161,7 @@ namespace Smiley.Lib.Services
         /// <returns></returns>
         public bool IsPressed(Input input)
         {
-            return _inputs[input].IsDown && !_inputs[input].WasDownLastFrame;
+            return _inputIsDown[input] && !_inputWasDown[input];
         }
 
         /// <summary>
@@ -179,13 +182,15 @@ namespace Smiley.Lib.Services
         /// <returns>Whether or not a new input was accepted.</returns>
         public bool ListenForNewInput(Input input)
         {
+            SmileyInputConfig config = SMH.ConfigManager.Config.Inputs.Single(i => i.Input == input);
+
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             foreach (Buttons button in Enum.GetValues(typeof(Buttons)))
             {
                 if (gamePadState.IsButtonDown(button))
                 {
-                    _inputs[input].Button = button;
-                    _inputs[input].Device = InputDevice.GamePad;
+                    config.Device = InputDevice.GamePad;
+                    config.Code = (int)button;
                     return true;
                 }
             }
@@ -195,8 +200,8 @@ namespace Smiley.Lib.Services
             {
                 if (state.IsKeyDown(key))
                 {
-                    _inputs[input].Key = key;
-                    _inputs[input].Device = InputDevice.Keyboard;
+                    config.Device = InputDevice.Keyboard;
+                    config.Code = (int)key;
                     return true;
                 }
             }
@@ -211,54 +216,16 @@ namespace Smiley.Lib.Services
         /// <returns></returns>
         public string GetInputDescription(Input input)
         {
-            if (_inputs[input].Device == InputDevice.Keyboard)
+            SmileyInputConfig config = SMH.ConfigManager.Config.Inputs.Single(i => i.Input == input);
+
+            if (config.Device == InputDevice.Keyboard)
             {
-                return _inputs[input].Key.ToString();
+                return ((Keys)config.Code).ToString();
             }
             else //if (_inputs[input].Device == InputDevice.GamePad)
             {
-                return _inputs[input].Button.ToString();
+                return ((Buttons)config.Code).ToString();
             }
-        }
-
-        public void SaveInputs()
-        {
-            //TODO:
-        }
-
-        public void LoadInputs()
-        {
-            //TODO: load from config
-
-            foreach (Input input in Enum.GetValues(typeof(Input)))
-            {
-                _inputs[input] = new InputState { Device = InputDevice.Keyboard };
-            }
-
-            _inputs[Input.Ability].Key = Keys.LeftControl;
-            _inputs[Input.Aim].Key = Keys.LeftAlt;
-            _inputs[Input.Attack].Key = Keys.Space;
-            _inputs[Input.Up].Key = Keys.Up;
-            _inputs[Input.Down].Key = Keys.Down;
-            _inputs[Input.Left].Key = Keys.Left;
-            _inputs[Input.Right].Key = Keys.Right;
-            _inputs[Input.PreviousAbility].Key = Keys.Z;
-            _inputs[Input.NextAbility].Key = Keys.X;
-            _inputs[Input.Pause].Key = Keys.I;
-        }
-
-        #endregion
-
-        #region Private Classes
-
-        [Serializable]
-        private class InputState
-        {
-            public bool IsDown { get; set; }
-            public bool WasDownLastFrame { get; set; }
-            public InputDevice Device { get; set; }
-            public Keys Key { get; set; }
-            public Buttons Button { get; set; }
         }
 
         #endregion

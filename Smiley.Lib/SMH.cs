@@ -56,6 +56,7 @@ namespace Smiley.Lib
         public static GameState State { get; private set; }
         public static int CurrentFrame { get; private set; }
         public static float DT { get; private set; }
+        public static ConfigManager ConfigManager { get; private set; }
         public static DebugConsole Console { get; private set; }
         public static Random Random { get; private set; }
         public static InputManager Input { get; private set; }
@@ -166,6 +167,7 @@ namespace Smiley.Lib
 
         protected override void LoadContent()
         {
+            ConfigManager = new Framework.ConfigManager();
             Console = new DebugConsole();
             Sound = new SoundManager(Content);
             Graphics = new Graphics2DWrapper(_graphicsDeviceManager);
@@ -187,8 +189,7 @@ namespace Smiley.Lib
 
         protected override void UnloadContent()
         {
-            //TODO: save settings and shit
-
+            ConfigManager.SaveConfig();
             Content.Unload();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Smiley.Lib.Enums;
+using Microsoft.Xna.Framework.Storage;
 
 namespace Smiley.Lib.Util
 {
@@ -38,6 +39,21 @@ namespace Smiley.Lib.Util
             }
 
             return angle;
+        }
+
+        public static StorageContainer GetStorageContainer()
+        {
+            IAsyncResult result = StorageDevice.BeginShowSelector(null, null);
+            result.AsyncWaitHandle.WaitOne();
+            StorageDevice device = StorageDevice.EndShowSelector(result);
+            result.AsyncWaitHandle.Close();
+
+            result = device.BeginOpenContainer("Smiley", null, null);
+            result.AsyncWaitHandle.WaitOne();
+            StorageContainer container = device.EndOpenContainer(result);
+            result.AsyncWaitHandle.Close();
+
+            return container;
         }
 
         public static float GetFlashingAlpha(float n)
