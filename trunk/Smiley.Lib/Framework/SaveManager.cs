@@ -8,6 +8,7 @@ using System.IO;
 using Smiley.Lib.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Storage;
+using Smiley.Lib.Util;
 
 namespace Smiley.Lib.Services
 {
@@ -106,7 +107,7 @@ namespace Smiley.Lib.Services
         /// <param name="saveSlot"></param>
         public void Delete(SaveSlot saveSlot)
         {
-            StorageContainer container = GetStorageContainer();
+            StorageContainer container = SmileyUtil.GetStorageContainer();
             container.DeleteFile(saveSlot.GetDescription());
 
             Saves[saveSlot] = new SaveFile(saveSlot.GetDescription()) 
@@ -119,24 +120,9 @@ namespace Smiley.Lib.Services
 
         #region Private Methods
 
-        private StorageContainer GetStorageContainer()
-        {
-            IAsyncResult result = StorageDevice.BeginShowSelector(null, null);
-            result.AsyncWaitHandle.WaitOne();
-            StorageDevice device = StorageDevice.EndShowSelector(result);
-            result.AsyncWaitHandle.Close();
-
-            result = device.BeginOpenContainer("Smiley", null, null);
-            result.AsyncWaitHandle.WaitOne();
-            StorageContainer container = device.EndOpenContainer(result);
-            result.AsyncWaitHandle.Close();
-
-            return container;
-        }
-
         private void SaveFile(SaveFile file)
         {
-            using (BitStream output = new BitStream(GetStorageContainer(), file.Name, BitStreamMode.Write))
+            using (BitStream output = new BitStream(SmileyUtil.GetStorageContainer(), file.Name, BitStreamMode.Write))
             {
                 output.WriteBits(file.TimePlayed.Ticks, 64);
 
@@ -238,7 +224,7 @@ namespace Smiley.Lib.Services
         {
             SaveFile file = new SaveFile(fileName);
 
-            StorageContainer container = GetStorageContainer();
+            StorageContainer container = SmileyUtil.GetStorageContainer();
             if (!container.FileExists(fileName))
             {
                 file.IsEmpty = true;

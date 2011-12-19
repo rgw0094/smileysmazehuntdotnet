@@ -25,8 +25,6 @@ namespace Smiley.Lib.Services
         private Dictionary<Sound, float> _lastPlayedTimes = new Dictionary<Sound, float>();
         private ContentManager _contentManager;
         private float _lastSwitchTime;
-        private int _soundVolume;
-        private int _musicVolume;
         private bool _fadingOutMusic;
 
         #endregion
@@ -39,11 +37,6 @@ namespace Smiley.Lib.Services
         public SoundManager(ContentManager contentManager)
         {
             _contentManager = contentManager;
-
-            //Music volume starts at what it was when app was closed last
-            //TODO: load from config
-            MusicVolume = 100;
-            SoundVolume = 100;
         }
 
         #endregion
@@ -55,13 +48,12 @@ namespace Smiley.Lib.Services
         /// </summary>
         public int SoundVolume
         {
-            get { return _soundVolume; }
+            get { return SMH.ConfigManager.Config.SoundVolume; }
             set
             {
-                if (_soundVolume != value)
+                if (SMH.ConfigManager.Config.SoundVolume != value)
                 {
-                    _soundVolume = Math.Min(100, Math.Max(0, value));
-                    //TODO: update in config;
+                    SMH.ConfigManager.Config.SoundVolume = Math.Min(100, Math.Max(0, value));
                 }
             }
         }
@@ -71,17 +63,16 @@ namespace Smiley.Lib.Services
         /// </summary>
         public int MusicVolume
         {
-            get { return _musicVolume; }
+            get { return SMH.ConfigManager.Config.MusicVolume; }
             set
             {
-                if (_musicVolume != value)
+                if (SMH.ConfigManager.Config.MusicVolume != value)
                 {
-                    _musicVolume = Math.Min(100, Math.Max(0, value));
+                    SMH.ConfigManager.Config.MusicVolume = Math.Min(100, Math.Max(0, value));
                     if (_currentMusic != null)
                     {
-                        _currentMusic.Volume = (float)_musicVolume / 100f;
+                        _currentMusic.Volume = (float)SMH.ConfigManager.Config.MusicVolume / 100f;
                     }
-                    //TODO: update in config;
                 }
             }
         }
