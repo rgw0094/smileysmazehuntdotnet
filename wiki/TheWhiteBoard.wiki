@@ -134,7 +134,7 @@
 ||ProjectileManager|| ||
 ||SaveManager||Done||
 ||ScreenEffectsManager|| ||
-||SelectFileScreen||90%||
+||SelectFileScreen||Done||
 ||Shop|| ||
 ||Slider||Done||
 ||SmileletManager|| ||
