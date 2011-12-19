@@ -9,7 +9,6 @@
   * ParticleSystem SOLUTION
 
 = Rob's to-do list =
-  * Choose config mechanism (XML????? 3rd party?!??!!?)
 
 = Accomplished =
 
@@ -50,6 +49,7 @@
 ||RGW||12/17/11||Ported MiniMenu||
 ||RGW||12/17/11||Finished porting SelectFileScreen new/continue game stuff||
 ||RGW||12/18/11||Ported PopupMessageManager||
+||RGW||12/18/11||Implemented CONFIG SOLUTION||
 
 = Port Progress =
 
