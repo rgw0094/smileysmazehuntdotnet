@@ -85,9 +85,6 @@ namespace Smiley.Lib.GameObjects.Environment
             _loadingEffectScale = 3f;
             SMH.Sound.PlaySound(Sound.AreaChangeUp);
             SMH.Sound.StopAllLoopedSounds();
-
-            //TODO:smh->fadeScreenToNormal();
-            //TODO:smh->setScreenColor(Colors::BLACK,0.0);
         }
 
         /// <summary>
@@ -143,7 +140,6 @@ namespace Smiley.Lib.GameObjects.Environment
                         //Move smiley to a new location in the same area
                         SMH.Player.MoveTo(_destinationX, _destinationY);
                         SMH.Environment.Update(0f);
-                        //TODO:
                         SMH.EnemyManager.Update(0f);
                         SMH.LootManager.Update(0f);
                         SMH.ProjectileManager.Update(0f);

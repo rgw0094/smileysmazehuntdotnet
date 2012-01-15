@@ -191,8 +191,7 @@ namespace Smiley.Lib.Services
         {
             if (SMH.TimePassed(_lastSwitchTime, SwitchSoundDelay))
             {
-                //TODO:
-                bool inRange = true;// abs(gridX - smh->player->gridX) <= 8 && abs(gridY - smh->player->gridY) <= 6;
+                bool inRange = Math.Abs(gridX - SMH.Player.Tile.X) <= 8 && Math.Abs(gridY - SMH.Player.Tile.Y) <= 6;
                 if (alwaysPlaySound || inRange)
                 {
                     _lastSwitchTime = SMH.Now;

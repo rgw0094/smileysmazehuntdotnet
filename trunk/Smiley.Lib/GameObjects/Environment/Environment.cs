@@ -1027,7 +1027,7 @@ namespace Smiley.Lib.GameObjects.Environment
                         Rect box = new Rect(i * 64, j * 64, 64, 64);
                         if (tongue.Intersects(box))
                         {
-                            //smh->windowManager->openSignTextBox(ids[i][j]);//TODO:
+                            SMH.WindowManager.OpenSignTextBox(Tiles[i, j].ID);
                             return true;
                         }
                     }

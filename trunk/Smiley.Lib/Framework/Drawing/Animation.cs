@@ -15,6 +15,7 @@ namespace Smiley.Lib.Framework.Drawing
         private SpriteSet _sprites;
         private float _lastFrameChange;
         private int _activeFrame;
+        private bool _goingBackwards;
 
         #endregion
 
@@ -51,6 +52,11 @@ namespace Smiley.Lib.Framework.Drawing
             Reverse = reverse;
             Loop = loop;
             PingPong = pingPong;
+
+            if (reverse)
+            {
+                _goingBackwards = true;
+            }
         }
 
         #endregion
@@ -149,12 +155,32 @@ namespace Smiley.Lib.Framework.Drawing
         /// <param name="dt"></param>
         public void Update(float dt)
         {
-            //TODO: loop, reverse, pingpong
-
             if (IsPlaying && SMH.TimePassed(_lastFrameChange, 1f / FPS))
             {
-                _activeFrame = _activeFrame == _sprites.Count - 1 ? 0 : _activeFrame + 1;
-                _lastFrameChange = SMH.Now;
+                if ((_goingBackwards && _activeFrame == 0) || (!_goingBackwards && _activeFrame == _sprites.Count - 1))
+                {
+                    if (PingPong)
+                    {
+                        _goingBackwards = !_goingBackwards;
+                    }
+                    if (!Loop)
+                    {
+                        IsPlaying = false;
+                    }
+                }
+
+                if (IsPlaying)
+                {
+                    if (_goingBackwards)
+                    {
+                        _activeFrame = _activeFrame == 0 ? _sprites.Count - 1 : _activeFrame - 1;
+                    }
+                    else
+                    {
+                        _activeFrame = _activeFrame == _sprites.Count - 1 ? 0 : _activeFrame + 1;
+                    }
+                    _lastFrameChange = SMH.Now;
+                }
             }
         }
 
