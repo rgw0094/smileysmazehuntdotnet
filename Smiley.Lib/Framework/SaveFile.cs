@@ -207,7 +207,7 @@ namespace Smiley.Lib.Framework
             {
                 for (int y = gridY - 6; y <= gridY + 6; y++)
                 {
-                    if (true) //smh->environment->isInBounds(curGridX,curGridY)) {//TODO
+                    if (SMH.Environment.IsInBounds(x, y))
                     {
                         Explored[Level][gridX, gridY] = true;
                     }

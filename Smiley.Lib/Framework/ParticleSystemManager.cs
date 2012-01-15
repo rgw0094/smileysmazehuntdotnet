@@ -66,10 +66,7 @@ namespace Smiley.Lib.Framework
 
         public void KillPS(ParticleSystem ps)
         {
-            foreach (ParticleSystem p in _psList)
-            {
-                //IF p = ps then kill it. Need to add the EQUALS operation.
-            }
+            _psList.Remove(ps);
         }
 
         public void KillAll()
