@@ -129,6 +129,7 @@ namespace Smiley.Lib.Framework.Drawing
         {
             IsPlaying = true;
             _lastFrameChange = SMH.GameTime;
+            _goingBackwards = Reverse;
         }
 
         /// <summary>
