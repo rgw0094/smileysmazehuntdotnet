@@ -57,6 +57,7 @@ namespace Smiley.Lib.GameObjects.Player
             _timeStartedAttack = SMH.GameTime;
             _tongueOffsetAngle = -AttackRadius / 2f;
             IsAttacking = true;
+            Animations.SmileyTongue.Reverse = false;
             Animations.SmileyTongue.Play();
             _state = TongueState.Extending;
         }
